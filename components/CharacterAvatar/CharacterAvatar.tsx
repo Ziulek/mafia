@@ -1,20 +1,31 @@
 import React from "react";
-import { TouchableOpacity, Text, StyleSheet } from "react-native";
+import { StyleSheet, Image, View } from "react-native";
 
-export type MyButtonProps = {
-  onPress: () => void;
-  text: string;
+type Character = "M1" | "M2" | "M3" | "M4" | "F1" | "F2" | "F3" | "F4";
+
+type CharcterAvatarProps = {
+  character?: Character;
 };
 
-export const CharacterAvatar = ({ onPress, text }: MyButtonProps) => {
+export const CharacterAvatar = ({ character }: CharcterAvatarProps) => {
+  let path;
+
+  switch (character) {
+    case "M1":
+      path = require("../../assets/images/Male1.png");
+      break;
+    case "M2":
+      path = require("../../assets/images/Male2.png");
+      break;
+
+    default:
+      break;
+  }
+
   return (
-    <TouchableOpacity
-      style={styles.container}
-      onPress={onPress}
-      activeOpacity={0.8}
-    >
-      <Text style={styles.text}>{text}</Text>
-    </TouchableOpacity>
+    <View>
+      <Image source={path} />
+    </View>
   );
 };
 

@@ -27,6 +27,6 @@ export const Basic: StoryObj<typeof FlipAnimation> = {};
 
 export const AnotherExample: StoryObj<typeof FlipAnimation> = {
   args: {
-    text: "Another example",
+    text: "FlipAnimation",
   },
 };
