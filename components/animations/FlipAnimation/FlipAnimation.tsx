@@ -9,44 +9,54 @@ import Animated, {
 } from "react-native-reanimated";
 
 export type FlipAnimationProps = {
-  children: ReactNode;
+  // children: ReactNode;
+  test: string;
 };
 
-export const FlipAnimation = ({ children }: FlipAnimationProps) => {
+export const FlipAnimation = ({ test }: FlipAnimationProps) => {
   // zmiana childrena
   // rotacja 90
   // zmiana state(children)
   // rotacja nowego 90
-  const [activeChildren, setActiveChildren] = useState(children);
+
+  const [activeChildren, setActiveChildren] = useState(test);
   const rotate = useSharedValue(0);
 
   const frontAnimatedStyles = useAnimatedStyle(() => {
-    const rotateValue = interpolate(rotate.value, [0, 1], [0, 90]);
+    const rotateValue = interpolate(rotate.value, [0, 1], [0, 180]);
     return {
       transform: [
         {
-          rotateY: withTiming(`${rotateValue}deg`, { duration: 1000 }),
+          rotateY: withTiming(`${rotateValue}deg`, { duration: 10000 }),
         },
       ],
     };
   });
 
-  // useEffect(() => {
-  //   rotate.value = withTiming(
-  //     (rotate.value = rotate.value ? 0 : 1),
-  //     {
-  //       duration: 500,
-  //     },
-  //     (finished) => {
-  //       if (finished) {
-  //         setActiveChildren(children);
-  //         rotate.value = withTiming((rotate.value = rotate.value ? 0 : 1), {
-  //           duration: 500,
-  //         });
-  //       }
-  //     }
-  //   );
-  // }, [children]);
+  useEffect(() => {
+    const previousNumber = rotate.value,
+    
+    rotate.value = rotate.value
+    console.log(test, "2");
+    setTimeout(() => {
+      setActiveChildren(test);
+      // console.log(test, "w");
+    }, 5000);
+    //   {
+    //     duration: 500,
+    //   },
+    //   (finished) => {
+    //     if (finished) {
+    //       console.log(test, "2");
+    //       setActiveChildren(test);
+    //       console.log(test, "3");
+    //       rotate.value = withTiming((rotate.value = rotate.value ? 0 : 1), {
+    //         duration: 500,
+    //       });
+    //     }
+    //   }
+    // );
+  }, [test]);
 
   const backAnimatedStyles = useAnimatedStyle(() => {
     const rotateValue = interpolate(rotate.value, [1, 0], [180, 360]);
@@ -62,7 +72,7 @@ export const FlipAnimation = ({ children }: FlipAnimationProps) => {
     <View style={styles.container}>
       <View>
         <Animated.View style={[styles.frontcard, frontAnimatedStyles]}>
-          {activeChildren}
+          <CharacterAvatar character={activeChildren} />
         </Animated.View>
         {/* <Animated.View style={[styles.backCard, backAnimatedStyles]}>
           <CharacterAvatar character="M2" />

@@ -13,9 +13,12 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-  render: () => (
-    <FlipAnimation>
-      <CharacterAvatar character="M1" />
-    </FlipAnimation>
-  ),
+  // render: () => (
+  //   <FlipAnimation>
+  //     <CharacterAvatar character="M1" />
+  //   </FlipAnimation>
+  // ),
+  args: {
+    test: "M1",
+  },
 };
