@@ -6,7 +6,6 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from "react-native-reanimated";
-import { opacity } from "react-native-reanimated/lib/typescript/reanimated2/Colors";
 
 export type FlipAnimationProps = {
   children: ReactNode;
@@ -39,8 +38,9 @@ export const FlipAnimation = ({ children }: FlipAnimationProps) => {
         onPress={() => {
           rotate.value = rotate.value = 1 ? 0 : 1;
         }}
+        style={styles.container}
       >
-        {"button"}
+        <Text>button</Text>
       </TouchableOpacity>
     </>
   );

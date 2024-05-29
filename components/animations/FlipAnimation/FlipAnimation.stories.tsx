@@ -13,7 +13,9 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Male1: Story = {
-  args: {
-    children: <CharacterAvatar character="M1" />,
-  },
+  render: () => (
+    <FlipAnimation>
+      <CharacterAvatar character="M1" />
+    </FlipAnimation>
+  ),
 };
