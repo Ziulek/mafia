@@ -1,32 +1,14 @@
-import React from "react";
-import { View } from "react-native";
 import type { Meta, StoryObj } from "@storybook/react";
+import StoryDecorator from "@/decorators/StoryDecorator";
 import { FlipAnimation } from "./FlipAnimation";
 
-const FlipAnimationMeta: Meta<typeof FlipAnimation> = {
-  title: "FlipAnimation",
+const meta: Meta<typeof FlipAnimation> = {
   component: FlipAnimation,
-  argTypes: {
-    onPress: { action: "pressed the button" },
-  },
-  args: {
-    text: "Hello world",
-  },
-  decorators: [
-    (Story) => (
-      <View style={{ alignItems: "center", justifyContent: "center", flex: 1 }}>
-        <Story />
-      </View>
-    ),
-  ],
+  decorators: [StoryDecorator],
 };
 
-export default FlipAnimationMeta;
+export default meta;
 
-export const Basic: StoryObj<typeof FlipAnimation> = {};
+type Story = StoryObj<typeof meta>;
 
-export const AnotherExample: StoryObj<typeof FlipAnimation> = {
-  args: {
-    text: "FlipAnimation",
-  },
-};
+export const Male1: Story = {};

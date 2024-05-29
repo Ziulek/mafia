@@ -24,6 +24,7 @@ const GridDecorator: React.FC<StoryDecoratorProps> = ({ items, columns }) => {
       aspectRatio: 1,
       justifyContent: "center",
       alignItems: "center",
+      padding: 10,
     },
   });
 

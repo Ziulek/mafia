@@ -10,62 +10,72 @@ const CharacterAvatarDecorator = (Story: React.FC) => (
   </View>
 );
 
-const CharacterAvatarMeta: Meta<typeof CharacterAvatar> = {
-  title: "CharacterAvatar",
+const meta: Meta<typeof CharacterAvatar> = {
   component: CharacterAvatar,
-  decorators: [CharacterAvatarDecorator, StoryDecorator],
+  decorators: [StoryDecorator],
 };
 
-export default CharacterAvatarMeta;
+export default meta;
 
-export const Male1: StoryObj<typeof CharacterAvatar> = {
+type Story = StoryObj<typeof meta>;
+
+export const Male1: Story = {
   args: {
     character: "M1",
     nickname: "Szlajmi",
   },
+  decorators: [CharacterAvatarDecorator],
 };
 
-export const Male2: StoryObj<typeof CharacterAvatar> = {
+export const Male2: Story = {
   args: {
     character: "M2",
     nickname: "Shroomi",
   },
+  decorators: [CharacterAvatarDecorator],
 };
 
-export const Male3: StoryObj<typeof CharacterAvatar> = {
+export const Male3: Story = {
   args: {
     character: "M3",
   },
+  decorators: [CharacterAvatarDecorator],
 };
 
-export const Male4: StoryObj<typeof CharacterAvatar> = {
+export const Male4: Story = {
   args: {
     character: "M4",
   },
+  decorators: [CharacterAvatarDecorator],
 };
 
-export const Female1: StoryObj<typeof CharacterAvatar> = {
+export const Female1: Story = {
   args: {
     character: "F1",
+    nickname: "PlaceHolder",
   },
+  decorators: [CharacterAvatarDecorator],
 };
 
-export const Female2: StoryObj<typeof CharacterAvatar> = {
+export const Female2: Story = {
   args: {
     character: "F2",
   },
+  decorators: [CharacterAvatarDecorator],
 };
 
-export const Female3: StoryObj<typeof CharacterAvatar> = {
+export const Female3: Story = {
   args: {
     character: "F3",
   },
+  decorators: [CharacterAvatarDecorator],
 };
 
-export const Female4: StoryObj<typeof CharacterAvatar> = {
+export const Female4: Story = {
   args: {
     character: "F4",
   },
+  decorators: [CharacterAvatarDecorator],
 };
 
 const Avatars = [
@@ -79,7 +89,7 @@ const Avatars = [
   <CharacterAvatar character="F4" />,
 ];
 
-export const AllAvatars: StoryObj<typeof CharacterAvatar> = {
+export const AllAvatars: Story = {
   render: () => <GridDecorator items={Avatars} columns={2.5} />,
 };
 

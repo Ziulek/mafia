@@ -47,22 +47,23 @@ export const CharacterAvatar = ({
   return (
     <View style={styles.container}>
       <Image source={path} style={styles.image} />
-      {/* <Text>{nickname}</Text> */}
+      <Text style={styles.text}>{nickname}</Text>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    aspectRatio: 1,
+    width: "100%",
   },
   image: {
     width: "100%",
     height: "100%",
-    borderRadius: 300,
-    resizeMode: "contain",
+    borderRadius: 9999,
+    resizeMode: "cover",
   },
   text: {
     color: "white",
