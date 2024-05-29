@@ -12,7 +12,7 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const Male1: Story = {
+export const Default: Story = {
   render: () => (
     <FlipAnimation>
       <CharacterAvatar character="M1" />
