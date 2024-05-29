@@ -1,5 +1,6 @@
 import React from "react";
 import { StyleSheet, Image, View, Text } from "react-native";
+import CharacterNickname from "../CharacterNickname/CharacterNickname";
 
 type Character = "M1" | "M2" | "M3" | "M4" | "F1" | "F2" | "F3" | "F4";
 
@@ -47,7 +48,7 @@ export const CharacterAvatar = ({
   return (
     <View style={styles.container}>
       <Image source={path} style={styles.image} />
-      <Text style={styles.text}>{nickname}</Text>
+      {nickname && <CharacterNickname nickname={nickname} />}
     </View>
   );
 };

@@ -1,14 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { CharacterAvatar } from "./CharacterAvatar";
-import { StyleSheet, View } from "react-native";
 import StoryDecorator from "@/decorators/StoryDecorator";
 import GridDecorator from "@/decorators/GridDecorator";
-
-const CharacterAvatarDecorator = (Story: React.FC) => (
-  <View style={styles.container}>
-    <Story />
-  </View>
-);
+import BoxDecorator from "@/decorators/BoxDecorator";
 
 const meta: Meta<typeof CharacterAvatar> = {
   component: CharacterAvatar,
@@ -24,7 +18,7 @@ export const Male1: Story = {
     character: "M1",
     nickname: "Szlajmi",
   },
-  decorators: [CharacterAvatarDecorator],
+  decorators: [BoxDecorator],
 };
 
 export const Male2: Story = {
@@ -32,21 +26,21 @@ export const Male2: Story = {
     character: "M2",
     nickname: "Shroomi",
   },
-  decorators: [CharacterAvatarDecorator],
+  decorators: [BoxDecorator],
 };
 
 export const Male3: Story = {
   args: {
     character: "M3",
   },
-  decorators: [CharacterAvatarDecorator],
+  decorators: [BoxDecorator],
 };
 
 export const Male4: Story = {
   args: {
     character: "M4",
   },
-  decorators: [CharacterAvatarDecorator],
+  decorators: [BoxDecorator],
 };
 
 export const Female1: Story = {
@@ -54,48 +48,41 @@ export const Female1: Story = {
     character: "F1",
     nickname: "PlaceHolder",
   },
-  decorators: [CharacterAvatarDecorator],
+  decorators: [BoxDecorator],
 };
 
 export const Female2: Story = {
   args: {
     character: "F2",
   },
-  decorators: [CharacterAvatarDecorator],
+  decorators: [BoxDecorator],
 };
 
 export const Female3: Story = {
   args: {
     character: "F3",
   },
-  decorators: [CharacterAvatarDecorator],
+  decorators: [BoxDecorator],
 };
 
 export const Female4: Story = {
   args: {
     character: "F4",
   },
-  decorators: [CharacterAvatarDecorator],
+  decorators: [BoxDecorator],
 };
 
 const Avatars = [
-  <CharacterAvatar character="M1" />,
-  <CharacterAvatar character="M2" />,
+  <CharacterAvatar character="M1" nickname="placeholder" />,
+  <CharacterAvatar character="M2" nickname="placeholder" />,
   <CharacterAvatar character="M3" />,
-  <CharacterAvatar character="M4" />,
+  <CharacterAvatar character="M4" nickname="placeholder" />,
   <CharacterAvatar character="F1" />,
-  <CharacterAvatar character="F2" />,
-  <CharacterAvatar character="F3" />,
+  <CharacterAvatar character="F2" nickname="placeholder" />,
+  <CharacterAvatar character="F3" nickname="placeholder" />,
   <CharacterAvatar character="F4" />,
 ];
 
 export const AllAvatars: Story = {
   render: () => <GridDecorator items={Avatars} columns={2.5} />,
 };
-
-const styles = StyleSheet.create({
-  container: {
-    height: 175,
-    width: 175,
-  },
-});
