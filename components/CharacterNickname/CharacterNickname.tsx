@@ -27,7 +27,7 @@ export const CharacterNickname = ({ nickname }: CharacterNicknameProps) => {
           letterSpacing="3"
           fontWeight="bold"
           textAnchor="middle"
-          strokeWidth="1.5"
+          strokeWidth="0.5"
         >
           <TextPath href="#arc" startOffset="50%">
             {nickname}

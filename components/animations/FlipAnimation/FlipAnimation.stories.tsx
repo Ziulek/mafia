@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import StoryDecorator from "@/decorators/StoryDecorator";
 import { FlipAnimation } from "./FlipAnimation";
+import { CharacterAvatar } from "@/components/CharacterAvatar/CharacterAvatar";
 
 const meta: Meta<typeof FlipAnimation> = {
   component: FlipAnimation,
@@ -11,4 +12,8 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const Male1: Story = {};
+export const Male1: Story = {
+  args: {
+    children: <CharacterAvatar character="M1" />,
+  },
+};
