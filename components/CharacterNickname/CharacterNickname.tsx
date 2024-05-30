@@ -29,7 +29,7 @@ export const CharacterNickname = ({ nickname }: CharacterNicknameProps) => {
           textAnchor="middle"
           strokeWidth="0.5"
         >
-          <TextPath href="#arc" startOffset="50%">
+          <TextPath href="#arc" startOffset="52%">
             {nickname}
           </TextPath>
         </Text>

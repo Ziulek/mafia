@@ -1,114 +1,69 @@
-import { CharacterAvatar } from "@/components/CharacterAvatar/CharacterAvatar";
-import React, { ReactNode, useEffect, useState } from "react";
-import { TouchableOpacity, Text, StyleSheet, View } from "react-native";
+import {
+  Character,
+  CharacterAvatar,
+} from "@/components/CharacterAvatar/CharacterAvatar";
+import React, { useEffect, useRef, useState } from "react";
 import Animated, {
   interpolate,
   useAnimatedStyle,
   useSharedValue,
   withTiming,
+  Easing,
+  ReduceMotion,
 } from "react-native-reanimated";
 
-export type FlipAnimationProps = {
-  // children: ReactNode;
-  test: string;
+type FlipAnimationProps = {
+  character: Character;
 };
 
-export const FlipAnimation = ({ test }: FlipAnimationProps) => {
-  // zmiana childrena
-  // rotacja 90
-  // zmiana state(children)
-  // rotacja nowego 90
-
-  const [activeChildren, setActiveChildren] = useState(test);
+export const FlipAnimation = ({ character }: FlipAnimationProps) => {
+  const [activeCharacter, setActiveCharacter] = useState<Character>(character);
   const rotate = useSharedValue(0);
+  const animationDuration = 500;
+  const config = {
+    duration: animationDuration,
+    easing: Easing.linear,
+    reduceMotion: ReduceMotion.System,
+  };
 
   const frontAnimatedStyles = useAnimatedStyle(() => {
-    const rotateValue = interpolate(rotate.value, [0, 1], [0, 180]);
+    const rotateValue = interpolate(rotate.value, [0, 1], [0, 90]);
     return {
       transform: [
         {
-          rotateY: withTiming(`${rotateValue}deg`, { duration: 10000 }),
+          rotateY: `${rotateValue}deg`,
         },
       ],
     };
   });
+
+  const isFirstRender = useRef(true); // Ref to track initial render
 
   useEffect(() => {
-    const previousNumber = rotate.value,
-    
-    rotate.value = rotate.value
-    console.log(test, "2");
-    setTimeout(() => {
-      setActiveChildren(test);
-      // console.log(test, "w");
-    }, 5000);
-    //   {
-    //     duration: 500,
-    //   },
-    //   (finished) => {
-    //     if (finished) {
-    //       console.log(test, "2");
-    //       setActiveChildren(test);
-    //       console.log(test, "3");
-    //       rotate.value = withTiming((rotate.value = rotate.value ? 0 : 1), {
-    //         duration: 500,
-    //       });
-    //     }
-    //   }
-    // );
-  }, [test]);
+    if (isFirstRender.current) {
+      isFirstRender.current = false; // Update ref to indicate subsequent renders
+      return; // Skip the rest of the useEffect on initial render
+    }
 
-  const backAnimatedStyles = useAnimatedStyle(() => {
-    const rotateValue = interpolate(rotate.value, [1, 0], [180, 360]);
-    return {
-      transform: [
-        {
-          rotateY: withTiming(`${rotateValue}deg`, { duration: 1000 }),
-        },
-      ],
+    const startRotation = () => {
+      rotate.value = withTiming(1, config);
     };
-  });
+    const finishRotation = () => {
+      rotate.value = withTiming(0, config);
+    };
+
+    startRotation();
+    setTimeout(() => {
+      setActiveCharacter(character);
+      finishRotation();
+    }, animationDuration);
+  }, [character]);
+
   return (
-    <View style={styles.container}>
-      <View>
-        <Animated.View style={[styles.frontcard, frontAnimatedStyles]}>
-          <CharacterAvatar character={activeChildren} />
-        </Animated.View>
-        {/* <Animated.View style={[styles.backCard, backAnimatedStyles]}>
-          <CharacterAvatar character="M2" />
-        </Animated.View> */}
-        <TouchableOpacity
-          onPress={() => {
-            rotate.value = rotate.value ? 0 : 1;
-          }}
-          style={styles.container}
-        >
-          <Text>button</Text>
-        </TouchableOpacity>
-      </View>
-    </View>
+    <Animated.View style={frontAnimatedStyles}>
+      <CharacterAvatar character={activeCharacter} nickname="placeholder" />
+    </Animated.View>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  frontcard: {
-    // position: "absolute",
-    // backfaceVisibility: "hidden",
-  },
-  backCard: {
-    backfaceVisibility: "hidden",
-  },
-  button: {
-    paddingHorizontal: 25,
-    paddingVertical: 5,
-    backgroundColor: "#8ecae6",
-    marginTop: 10,
-    borderRadius: 5,
-  },
-});
+export default FlipAnimation;

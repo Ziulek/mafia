@@ -1,11 +1,16 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import StoryDecorator from "@/decorators/StoryDecorator";
 import { FlipAnimation } from "./FlipAnimation";
-import { CharacterAvatar } from "@/components/CharacterAvatar/CharacterAvatar";
 
 const meta: Meta<typeof FlipAnimation> = {
   component: FlipAnimation,
   decorators: [StoryDecorator],
+  argTypes: {
+    character: {
+      options: ["M1", "M2", "M3", "M4", "F1", "F2", "F3", "F4"],
+      control: { type: "radio" },
+    },
+  },
 };
 
 export default meta;
@@ -13,12 +18,7 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-  // render: () => (
-  //   <FlipAnimation>
-  //     <CharacterAvatar character="M1" />
-  //   </FlipAnimation>
-  // ),
   args: {
-    test: "M1",
+    character: "M1",
   },
 };

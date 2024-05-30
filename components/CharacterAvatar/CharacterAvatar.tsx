@@ -2,17 +2,17 @@ import React from "react";
 import { StyleSheet, Image, View, Text } from "react-native";
 import CharacterNickname from "../CharacterNickname/CharacterNickname";
 
-type Character = "M1" | "M2" | "M3" | "M4" | "F1" | "F2" | "F3" | "F4";
+export type Character = "M1" | "M2" | "M3" | "M4" | "F1" | "F2" | "F3" | "F4";
 
-type CharcterAvatarProps = {
-  character?: string;
+type CharacterAvatarProps = {
+  character: Character;
   nickname?: string;
 };
 
 export const CharacterAvatar = ({
   character,
   nickname,
-}: CharcterAvatarProps) => {
+}: CharacterAvatarProps) => {
   let path;
 
   switch (character) {
