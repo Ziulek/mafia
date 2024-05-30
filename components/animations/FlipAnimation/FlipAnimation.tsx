@@ -15,7 +15,7 @@ import Animated, {
 type FlipAnimationProps = {
   character: Character;
 };
-
+// animated Character Avatar
 export const FlipAnimation = ({ character }: FlipAnimationProps) => {
   const [activeCharacter, setActiveCharacter] = useState<Character>(character);
   const rotate = useSharedValue(0);
@@ -37,12 +37,11 @@ export const FlipAnimation = ({ character }: FlipAnimationProps) => {
     };
   });
 
-  const isFirstRender = useRef(true); // Ref to track initial render
+  const isFirstRender = useRef(true);
 
   useEffect(() => {
     if (isFirstRender.current) {
-      isFirstRender.current = false; // Update ref to indicate subsequent renders
-      return; // Skip the rest of the useEffect on initial render
+      isFirstRender.current = false; 
     }
 
     const startRotation = () => {

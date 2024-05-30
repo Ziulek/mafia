@@ -73,14 +73,14 @@ export const Female4: Story = {
 };
 
 const Avatars = [
-  <CharacterAvatar character="M1" nickname="placeholder" />,
-  <CharacterAvatar character="M2" nickname="placeholder" />,
-  <CharacterAvatar character="M3" />,
-  <CharacterAvatar character="M4" nickname="placeholder" />,
-  <CharacterAvatar character="F1" />,
-  <CharacterAvatar character="F2" nickname="placeholder" />,
-  <CharacterAvatar character="F3" nickname="placeholder" />,
-  <CharacterAvatar character="F4" />,
+  <CharacterAvatar character="M1" nickname="Szroomi" />,
+  <CharacterAvatar character="M2" nickname="Szlajmi" />,
+  <CharacterAvatar character="M3" nickname="Szmichał" />,
+  <CharacterAvatar character="M4" nickname="Jakupik" />,
+  <CharacterAvatar character="F1" nickname="Fajny nick" />,
+  <CharacterAvatar character="F2" nickname="bardzo długi nick" />,
+  <CharacterAvatar character="F3" nickname="P0J3b!%!#Ny*^%^$" />,
+  <CharacterAvatar character="F4" nickname="xD" />,
 ];
 
 export const AllAvatars: Story = {

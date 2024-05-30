@@ -11,8 +11,8 @@ const BoxDecorator = (Story: React.FC) => {
 
 const styles = StyleSheet.create({
   containter: {
-    width: 200,
-    height: 200,
+    width: 400,
+    height: 400,
   },
 });
 

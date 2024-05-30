@@ -1,12 +1,6 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import Svg, {
-  Path,
-  Text as SvgText,
-  TextPath,
-  Defs,
-  Text,
-} from "react-native-svg";
+import Svg, { Path, TextPath, Defs, Text } from "react-native-svg";
 
 type CharacterNicknameProps = {
   nickname: string;
@@ -27,10 +21,11 @@ export const CharacterNickname = ({ nickname }: CharacterNicknameProps) => {
           letterSpacing="3"
           fontWeight="bold"
           textAnchor="middle"
-          strokeWidth="0.5"
+          strokeWidth="1"
+          fontFamily="arial"
         >
           <TextPath href="#arc" startOffset="52%">
-            {nickname}
+            {nickname.toUpperCase()}
           </TextPath>
         </Text>
       </Svg>

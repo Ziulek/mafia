@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Image, View, Text } from "react-native";
+import { StyleSheet, Image, View } from "react-native";
 import CharacterNickname from "../CharacterNickname/CharacterNickname";
 
 export type Character = "M1" | "M2" | "M3" | "M4" | "F1" | "F2" | "F3" | "F4";
@@ -65,9 +65,5 @@ const styles = StyleSheet.create({
     height: "100%",
     borderRadius: 9999,
     resizeMode: "cover",
-  },
-  text: {
-    color: "white",
-    marginTop: 10,
   },
 });
