@@ -1,6 +1,7 @@
 import {
   Character,
   CharacterAvatar,
+  Role,
 } from "@/components/CharacterAvatar/CharacterAvatar";
 import React, { useEffect, useRef, useState } from "react";
 import Animated, {
@@ -14,9 +15,13 @@ import Animated, {
 
 type FlipAnimationProps = {
   character: Character;
+  CharacterRole: Role;
 };
 // animated Character Avatar
-export const FlipAnimation = ({ character }: FlipAnimationProps) => {
+export const FlipAnimation = ({
+  character,
+  CharacterRole,
+}: FlipAnimationProps) => {
   const [activeCharacter, setActiveCharacter] = useState<Character>(character);
   const rotate = useSharedValue(0);
   const animationDuration = 500;
@@ -41,7 +46,7 @@ export const FlipAnimation = ({ character }: FlipAnimationProps) => {
 
   useEffect(() => {
     if (isFirstRender.current) {
-      isFirstRender.current = false; 
+      isFirstRender.current = false;
     }
 
     const startRotation = () => {
@@ -60,7 +65,11 @@ export const FlipAnimation = ({ character }: FlipAnimationProps) => {
 
   return (
     <Animated.View style={frontAnimatedStyles}>
-      <CharacterAvatar character={activeCharacter} nickname="placeholder" />
+      <CharacterAvatar
+        character={activeCharacter}
+        role={CharacterRole}
+        nickname="placeholder"
+      />
     </Animated.View>
   );
 };

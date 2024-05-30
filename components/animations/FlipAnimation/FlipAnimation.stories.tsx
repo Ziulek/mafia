@@ -10,6 +10,10 @@ const meta: Meta<typeof FlipAnimation> = {
       options: ["M1", "M2", "M3", "M4", "F1", "F2", "F3", "F4"],
       control: { type: "radio" },
     },
+    CharacterRole: {
+      options: ["mafia", "police", "detective"],
+      control: { type: "radio" },
+    },
   },
 };
 
@@ -20,5 +24,6 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     character: "M1",
+    CharacterRole: "police",
   },
 };
