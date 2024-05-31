@@ -7,15 +7,10 @@ export type Role = "mafia" | "police" | "detective";
 
 type CharacterAvatarProps = {
   character: Character;
-  nickname?: string;
   role: Role;
 };
 
-export const CharacterAvatar = ({
-  character,
-  nickname,
-  role,
-}: CharacterAvatarProps) => {
+export const CharacterAvatar = ({ character, role }: CharacterAvatarProps) => {
   let path;
 
   // type Props = {
@@ -155,7 +150,6 @@ export const CharacterAvatar = ({
   return (
     <View style={styles.container}>
       <Image source={path} style={styles.image} />
-      {nickname && <CharacterNickname nickname={nickname} />}
     </View>
   );
 };

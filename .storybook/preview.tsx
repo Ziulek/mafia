@@ -6,7 +6,7 @@ const preview: Preview = {
   parameters: {
     noSafeArea: false,
     backgrounds: {
-      default: "default",
+      default: "white",
       values: [
         {
           name: "default",
