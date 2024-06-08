@@ -1,7 +1,6 @@
 import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
 import React, { ReactNode, useMemo, useRef } from "react";
 import { View, StyleSheet, Text, Button } from "react-native";
-import { ButtonGroup } from "../ButtonGroup/ButtonGroup";
 
 type BottomSheetProps = {
   title: string;
@@ -10,6 +9,8 @@ type BottomSheetProps = {
 
 export const BottomSheetComponent = ({ title, content }: BottomSheetProps) => {
   const snapPoints = useMemo(() => ["55%"], []);
+
+  console.log(content);
 
   const bottomSheetRef = useRef<BottomSheet>(null);
   const handleOpenPress = () => bottomSheetRef.current?.expand();
@@ -41,6 +42,7 @@ const styles = StyleSheet.create({
     backgroundColor: "grey",
   },
   indicator: {
+    width: 35,
     backgroundColor: "#8D8D8D",
   },
   contentContainer: {
