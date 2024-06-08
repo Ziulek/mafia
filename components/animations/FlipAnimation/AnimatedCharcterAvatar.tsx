@@ -5,7 +5,7 @@ import {
 } from "@/components/CharacterAvatar/CharacterAvatar";
 import CharacterNickname from "@/components/CharacterNickname/CharacterNickname";
 import React, { useEffect, useRef, useState } from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
 import Animated, {
   interpolate,
   useAnimatedStyle,
@@ -15,24 +15,23 @@ import Animated, {
   ReduceMotion,
 } from "react-native-reanimated";
 
-type AnimatedCharcterAvatarProps = {
+type AnimatedCharacterAvatarProps = {
   character: Character;
   role: Role;
   nickname?: string;
-  state: "default" | "dead" | "pressable" | "selected";
+  state: "default" | "revealed" | "dead";
 };
 
-export const AnimatedCharcterAvatar = ({
+export const AnimatedCharacterAvatar = ({
   character,
   role,
   nickname,
   state,
-}: AnimatedCharcterAvatarProps) => {
+}: AnimatedCharacterAvatarProps) => {
   const [activeCharacter, setActiveCharacter] = useState<Character>(character);
   const [activeRole, setActiveRole] = useState<Role>(role);
+  const [borderColor, setBorderColor] = useState("#EAECD6");
   const rotate = useSharedValue(0);
-  const borderWidth = useSharedValue(0);
-  const overlayOpacity = useSharedValue(0);
   const flipDuration = 500;
   const configFlip = {
     duration: flipDuration,
@@ -48,6 +47,7 @@ export const AnimatedCharcterAvatar = ({
   const FlipAnimationStyles = useAnimatedStyle(() => {
     const rotateValue = interpolate(rotate.value, [0, 1], [0, 90]);
     return {
+      flexShrink: 1,
       transform: [
         {
           rotateY: `${rotateValue}deg`,
@@ -56,24 +56,42 @@ export const AnimatedCharcterAvatar = ({
     };
   });
 
-  const StateAnimationStyles = useAnimatedStyle(() => {
-    return {
-      borderWidth: borderWidth.value,
-      borderColor: "#32a534",
-      borderRadius: 9999,
-    };
-  });
-
-  const OverlayAnimationStyles = useAnimatedStyle(() => {
-    return {
-      opacity: overlayOpacity.value,
-      ...StyleSheet.absoluteFillObject,
-      backgroundColor: "rgb(0, 0, 0)",
-      borderRadius: 9999,
-    };
+  const styles = StyleSheet.create({
+    border: {
+      borderRadius: 999,
+      borderWidth: 45,
+      borderColor: borderColor,
+    },
   });
 
   const isFirstRender = useRef(true);
+
+  const handleBorderColor = (state: string, role: string) => {
+    let newColor;
+    switch (state) {
+      case "default":
+        newColor = "#EAECD6";
+        break;
+      case "revealed":
+        if (role === "police") {
+          newColor = "blue";
+        } else if (role === "mafia") {
+          newColor = "red";
+        } else if (role === "detective") {
+          newColor = "cyan";
+        } else {
+          newColor = "#EAECD6";
+        }
+        break;
+      case "dead":
+        newColor = "#000";
+        break;
+      default:
+        newColor = "#EAECD6";
+        break;
+    }
+    return newColor;
+  };
 
   useEffect(() => {
     if (isFirstRender.current) {
@@ -92,32 +110,19 @@ export const AnimatedCharcterAvatar = ({
     setTimeout(() => {
       setActiveCharacter(character);
       setActiveRole(role);
+      setBorderColor(handleBorderColor(state, role));
       finishRotation();
     }, flipDuration);
-  }, [character, role]);
-
-  useEffect(() => {
-    if (state === "selected") {
-      borderWidth.value = withTiming(12, configState);
-    } else {
-      borderWidth.value = withTiming(0, configState);
-    }
-    if (state === "dead") {
-      overlayOpacity.value = withTiming(0.6, configState);
-    } else {
-      overlayOpacity.value = withTiming(0, configState);
-    }
-  }, [state]);
+  }, [character, role, state]);
 
   return (
     <Animated.View style={FlipAnimationStyles}>
-      <Animated.View style={StateAnimationStyles}>
+      <View style={styles.border}>
         <CharacterAvatar character={activeCharacter} role={activeRole} />
-        <Animated.View style={OverlayAnimationStyles} />
-        {nickname && <CharacterNickname nickname={nickname} />}
-      </Animated.View>
+      </View>
+      {nickname && <CharacterNickname nickname={nickname} />}
     </Animated.View>
   );
 };
 
-export default AnimatedCharcterAvatar;
+export default AnimatedCharacterAvatar;

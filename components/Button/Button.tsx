@@ -63,7 +63,7 @@ export const Button = ({
       alignItems: "center",
       borderRadius: 50,
       width: "100%",
-      paddingVertical: 15,
+      paddingVertical: 12,
     },
     text: {
       fontSize: 27,

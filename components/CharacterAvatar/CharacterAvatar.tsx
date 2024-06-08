@@ -1,6 +1,5 @@
 import React from "react";
 import { StyleSheet, Image, View } from "react-native";
-import CharacterNickname from "../CharacterNickname/CharacterNickname";
 
 export type Character = "M1" | "M2" | "M3" | "M4" | "F1" | "F2" | "F3" | "F4";
 export type Role = "mafia" | "police" | "detective";
@@ -12,15 +11,6 @@ type CharacterAvatarProps = {
 
 export const CharacterAvatar = ({ character, role }: CharacterAvatarProps) => {
   let path;
-
-  // type Props = {
-  //   characterProps: {
-  //     character: "M1" | ...;
-  //     role: "mafia" | "police" | "detective"
-  //   },
-  //   state: "default" | "dead" | "pressable" | "selected"
-  //   onPress: () => void;
-  // }
 
   switch (character) {
     case "M1":
@@ -147,24 +137,13 @@ export const CharacterAvatar = ({ character, role }: CharacterAvatarProps) => {
       break;
   }
 
-  return (
-    <View style={styles.container}>
-      <Image source={path} style={styles.image} />
-    </View>
-  );
+  return <Image source={path} style={styles.image} />;
 };
 
 const styles = StyleSheet.create({
-  container: {
-    justifyContent: "center",
-    alignItems: "center",
-    aspectRatio: 1,
-    width: "100%",
-  },
   image: {
     width: "100%",
     height: "100%",
     borderRadius: 9999,
-    resizeMode: "cover",
   },
 });

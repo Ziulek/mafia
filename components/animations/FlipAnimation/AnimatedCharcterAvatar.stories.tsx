@@ -1,11 +1,12 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import StoryDecorator from "@/decorators/StoryDecorator";
-import { AnimatedCharcterAvatar } from "./AnimatedCharcterAvatar";
+
 import BoxDecorator from "@/decorators/BoxDecorator";
 import GridDecorator from "@/decorators/GridDecorator";
+import AnimatedCharacterAvatar from "./AnimatedCharcterAvatar";
 
-const meta: Meta<typeof AnimatedCharcterAvatar> = {
-  component: AnimatedCharcterAvatar,
+const meta: Meta<typeof AnimatedCharacterAvatar> = {
+  component: AnimatedCharacterAvatar,
   decorators: [StoryDecorator],
   argTypes: {
     character: {
@@ -17,7 +18,7 @@ const meta: Meta<typeof AnimatedCharcterAvatar> = {
       control: { type: "radio" },
     },
     state: {
-      options: ["default", "dead", "pressable", "selected"],
+      options: ["default", "revealed", "dead"],
       control: { type: "radio" },
     },
   },
@@ -32,55 +33,55 @@ export const Default: Story = {
     character: "M1",
     role: "police",
     nickname: "Placeholder",
-    state: "pressable",
+    state: "default",
   },
   decorators: [BoxDecorator],
 };
 
 const Avatars = [
-  <AnimatedCharcterAvatar
+  <AnimatedCharacterAvatar
     state="default"
     character="M1"
     role="mafia"
     nickname="Szroomi"
   />,
-  <AnimatedCharcterAvatar
+  <AnimatedCharacterAvatar
     state="default"
     character="M2"
     role="mafia"
     nickname="Szlajmi"
   />,
-  <AnimatedCharcterAvatar
+  <AnimatedCharacterAvatar
     state="default"
     character="M3"
     role="detective"
     nickname="Szmichał"
   />,
-  <AnimatedCharcterAvatar
+  <AnimatedCharacterAvatar
     state="default"
     character="M4"
     role="police"
     nickname="Jakupik"
   />,
-  <AnimatedCharcterAvatar
+  <AnimatedCharacterAvatar
     state="default"
     character="F1"
     role="police"
     nickname="Fajny nick"
   />,
-  <AnimatedCharcterAvatar
+  <AnimatedCharacterAvatar
     state="default"
     character="F2"
     role="police"
     nickname="bardzo długi nick"
   />,
-  <AnimatedCharcterAvatar
+  <AnimatedCharacterAvatar
     state="default"
     character="F3"
     role="police"
     nickname="P0J3b!%!#Ny*^%^$"
   />,
-  <AnimatedCharcterAvatar
+  <AnimatedCharacterAvatar
     state="default"
     character="F4"
     role="police"
