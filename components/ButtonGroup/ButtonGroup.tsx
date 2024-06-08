@@ -1,6 +1,5 @@
 import React from "react";
-import { FlatList, View, StyleSheet, VirtualizedList } from "react-native";
-import { Button } from "../Button/Button";
+import { View, StyleSheet } from "react-native";
 
 type ButtonListProps = {
   children: React.ReactNode;
