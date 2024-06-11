@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Image, View, TouchableOpacity, Text } from "react-native";
+import { StyleSheet, TouchableOpacity, Text } from "react-native";
 
 export type ButtonProps = {
   children: string;

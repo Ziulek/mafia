@@ -46,20 +46,18 @@ export const Test: Story = {
 export const PlayerActions: Story = {
   render: () => {
     const [showBottomSheet, setShowBottomSheet] = useState(false);
-    const bottomSheetRef = useRef<GorhomBottomSheet>(null);
-    const handleClosePress = () => bottomSheetRef.current?.close();
+
     return (
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
         <TouchableOpacity
           style={{ width: 200, height: 50, backgroundColor: "red" }}
           onPress={() => setShowBottomSheet(true)}
         />
-        {showBottomSheet && (
+        
           <BottomSheet
             title="Lorem Ipsum Dupol"
             handleClose={() => setShowBottomSheet(false)}
-            handleClosePress={handleClosePress}
-            bottomSheetRef={bottomSheetRef}
+            isVisible={showBottomSheet}
           >
             <ButtonGroup>
               <Button color="kill" onPress={() => {}}>
@@ -69,57 +67,57 @@ export const PlayerActions: Story = {
                 {"Kick Player"}
               </Button>
 
-              <Button color="back" onPress={() => handleClosePress()}>
+              <Button color="back" onPress={() => (setShowBottomSheet(false))}>
                 {"Cancel"}
               </Button>
             </ButtonGroup>
           </BottomSheet>
-        )}
+        
       </View>
     );
   },
 };
-export const AvatarSelect: Story = {
-  render: () => {
-    const [showBottomSheet, setShowBottomSheet] = useState(false);
-    const bottomSheetRef = useRef<GorhomBottomSheet>(null);
-    const handleClosePress = () => bottomSheetRef.current?.close();
-    return (
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <TouchableOpacity
-          style={{ width: 200, height: 50, backgroundColor: "red" }}
-          onPress={() => setShowBottomSheet(true)}
-        />
-        {showBottomSheet && (
-          <BottomSheet
-            title="Choose Avatar"
-            handleClose={() => setShowBottomSheet(false)}
-            handleClosePress={handleClosePress}
-            bottomSheetRef={bottomSheetRef}
-          >
-            <View style={{ flexDirection: "row" }}>
-              <AnimatedCharcterAvatar
-                character="F1"
-                role="police"
-                state="default"
-              />
-              <AnimatedCharcterAvatar
-                character="F1"
-                role="police"
-                state="default"
-              />
-              <AnimatedCharcterAvatar
-                character="F1"
-                role="police"
-                state="default"
-              />
-            </View>
-          </BottomSheet>
-        )}
-      </View>
-    );
-  },
-};
+// export const AvatarSelect: Story = {
+//   render: () => {
+//     const [showBottomSheet, setShowBottomSheet] = useState(false);
+//     const bottomSheetRef = useRef<GorhomBottomSheet>(null);
+//     const handleClosePress = () => bottomSheetRef.current?.close();
+//     return (
+//       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+//         <TouchableOpacity
+//           style={{ width: 200, height: 50, backgroundColor: "red" }}
+//           onPress={() => setShowBottomSheet(true)}
+//         />
+//         {showBottomSheet && (
+//           <BottomSheet
+//             title="Choose Avatar"
+//             handleClose={() => setShowBottomSheet(false)}
+//             handleClosePress={handleClosePress}
+//             bottomSheetRef={bottomSheetRef}
+//           >
+//             <View style={{ flexDirection: "row" }}>
+//               <AnimatedCharcterAvatar
+//                 character="F1"
+//                 role="police"
+//                 state="default"
+//               />
+//               <AnimatedCharcterAvatar
+//                 character="F1"
+//                 role="police"
+//                 state="default"
+//               />
+//               <AnimatedCharcterAvatar
+//                 character="F1"
+//                 role="police"
+//                 state="default"
+//               />
+//             </View>
+//           </BottomSheet>
+//         )}
+//       </View>
+//     );
+//   },
+// };
 
 // import type { Meta, StoryObj } from "@storybook/react";
 // import { useEffect, useState } from "react";

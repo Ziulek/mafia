@@ -1,31 +1,42 @@
-import React, { MutableRefObject, useMemo } from "react";
+import React, { MutableRefObject, useEffect, useMemo, useRef } from "react";
 import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
 import GorhomBottomSheet from "@gorhom/bottom-sheet";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 type BottomSheetProps = {
   title: string;
-  bottomSheetRef: MutableRefObject<GorhomBottomSheet | null>;
   handleClose: () => void;
-  handleClosePress: () => void;
+  isVisible: boolean;
   children: React.ReactNode;
 };
 
 export const BottomSheet = ({
   title,
-  bottomSheetRef,
   handleClose,
-  handleClosePress,
+  isVisible,
   children,
 }: BottomSheetProps) => {
   const snapPoints = useMemo(() => ["45%"], []);
 
+  const bottomSheetRef = useRef<GorhomBottomSheet>(null);
+
+  useEffect(() => {
+    if (bottomSheetRef) {
+      if (isVisible) {
+        bottomSheetRef.current?.expand();
+      } else {
+        bottomSheetRef.current?.close();
+      }
+    }
+  }, [isVisible, bottomSheetRef]);
+
   return (
-    <GestureHandlerRootView style={styles.container}>
-      <TouchableOpacity style={styles.background} onPress={handleClosePress} />
+    <View style={styles.container} pointerEvents="box-none">
+      {isVisible && (
+        <TouchableOpacity style={styles.background} onPress={handleClose} />
+      )}
       <GorhomBottomSheet
         ref={bottomSheetRef}
-        index={0}
+        index={isVisible ? 0 : -1}
         snapPoints={snapPoints}
         enablePanDownToClose={true}
         backgroundStyle={{ backgroundColor: "#EAECD6", borderRadius: 25 }}
@@ -37,7 +48,7 @@ export const BottomSheet = ({
           <View style={styles.childrenContianer}>{children}</View>
         </View>
       </GorhomBottomSheet>
-    </GestureHandlerRootView>
+    </View>
   );
 };
 
@@ -53,6 +64,7 @@ const styles = StyleSheet.create({
   background: {
     flex: 1,
     backgroundColor: "transparent",
+    // backgroundColor: "rgba(132, 132, 132, 0.377)",
   },
   indicator: {
     width: 35,

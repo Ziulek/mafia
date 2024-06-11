@@ -19,14 +19,18 @@ type AnimatedCharacterAvatarProps = {
   character: Character;
   role: Role;
   nickname?: string;
-  state: "default" | "revealed" | "dead";
+  // default = shows always police form
+  // revealed = shows real role
+  // pressable = shows real role on press
+  mode: "default" | "revealed" | "pressable";
+  isDead?: boolean;
 };
 
 export const AnimatedCharacterAvatar = ({
   character,
   role,
   nickname,
-  state,
+  mode,
 }: AnimatedCharacterAvatarProps) => {
   const [activeCharacter, setActiveCharacter] = useState<Character>(character);
   const [activeRole, setActiveRole] = useState<Role>(role);
@@ -35,11 +39,6 @@ export const AnimatedCharacterAvatar = ({
   const flipDuration = 500;
   const configFlip = {
     duration: flipDuration,
-    easing: Easing.linear,
-    reduceMotion: ReduceMotion.System,
-  };
-  const configState = {
-    duration: 250,
     easing: Easing.linear,
     reduceMotion: ReduceMotion.System,
   };
@@ -66,9 +65,9 @@ export const AnimatedCharacterAvatar = ({
 
   const isFirstRender = useRef(true);
 
-  const handleBorderColor = (state: string, role: string) => {
+  const handleBorderColor = (mode: string, role: string) => {
     let newColor;
-    switch (state) {
+    switch (mode) {
       case "default":
         newColor = "#EAECD6";
         break;
@@ -110,10 +109,10 @@ export const AnimatedCharacterAvatar = ({
     setTimeout(() => {
       setActiveCharacter(character);
       setActiveRole(role);
-      setBorderColor(handleBorderColor(state, role));
+      setBorderColor(handleBorderColor(mode, role));
       finishRotation();
     }, flipDuration);
-  }, [character, role, state]);
+  }, [character, role, mode]);
 
   return (
     <Animated.View style={FlipAnimationStyles}>
