@@ -7,7 +7,6 @@ import StoryDecorator from "@/decorators/StoryDecorator";
 import { useRef, useState } from "react";
 import GorhomBottomSheet from "@gorhom/bottom-sheet";
 import { CharacterAvatar } from "../CharacterAvatar/CharacterAvatar";
-import AnimatedCharcterAvatar from "../animations/FlipAnimation/AnimatedCharcterAvatar";
 
 const meta: Meta<typeof BottomSheet> = {
   component: BottomSheet,
@@ -53,26 +52,25 @@ export const PlayerActions: Story = {
           style={{ width: 200, height: 50, backgroundColor: "red" }}
           onPress={() => setShowBottomSheet(true)}
         />
-        
-          <BottomSheet
-            title="Lorem Ipsum Dupol"
-            handleClose={() => setShowBottomSheet(false)}
-            isVisible={showBottomSheet}
-          >
-            <ButtonGroup>
-              <Button color="kill" onPress={() => {}}>
-                {"Kill Player"}
-              </Button>
-              <Button color="secondary" onPress={() => {}}>
-                {"Kick Player"}
-              </Button>
 
-              <Button color="back" onPress={() => (setShowBottomSheet(false))}>
-                {"Cancel"}
-              </Button>
-            </ButtonGroup>
-          </BottomSheet>
-        
+        <BottomSheet
+          title="Lorem Ipsum Dupol"
+          handleClose={() => setShowBottomSheet(false)}
+          isVisible={showBottomSheet}
+        >
+          <ButtonGroup>
+            <Button color="kill" onPress={() => {}}>
+              {"Kill Player"}
+            </Button>
+            <Button color="secondary" onPress={() => {}}>
+              {"Kick Player"}
+            </Button>
+
+            <Button color="back" onPress={() => setShowBottomSheet(false)}>
+              {"Cancel"}
+            </Button>
+          </ButtonGroup>
+        </BottomSheet>
       </View>
     );
   },

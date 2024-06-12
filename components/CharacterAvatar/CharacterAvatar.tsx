@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Image, View } from "react-native";
+import { StyleSheet, Image } from "react-native";
 
 export type Character = "M1" | "M2" | "M3" | "M4" | "F1" | "F2" | "F3" | "F4";
 export type Role = "mafia" | "police" | "detective";
@@ -7,135 +7,75 @@ export type Role = "mafia" | "police" | "detective";
 type CharacterAvatarProps = {
   character: Character;
   role: Role;
+  isDead: boolean;
 };
 
-export const CharacterAvatar = ({ character, role }: CharacterAvatarProps) => {
-  let path;
+const imagePathMap: { [key: string]: any } = {
+  M1: {
+    mafia: require("../../assets/images/Male1/male1_mafia.png"),
+    police: require("../../assets/images/Male1/male1_police.png"),
+    detective: require("../../assets/images/Male1/male1_detective.png"),
+    dead: require("../../assets/images/Male1/male1_dead.png"),
+  },
+  M2: {
+    mafia: require("../../assets/images/Male2/male2_mafia.png"),
+    police: require("../../assets/images/Male2/male2_police.png"),
+    detective: require("../../assets/images/Male2/male2_detective.png"),
+    dead: require("../../assets/images/Male2/male2_dead.png"),
+  },
+  M3: {
+    mafia: require("../../assets/images/Male3/male3_mafia.png"),
+    police: require("../../assets/images/Male3/male3_police.png"),
+    detective: require("../../assets/images/Male3/male3_detective.png"),
+    dead: require("../../assets/images/Male3/male3_dead.png"),
+  },
+  M4: {
+    mafia: require("../../assets/images/Male4/male4_mafia.png"),
+    police: require("../../assets/images/Male4/male4_police.png"),
+    detective: require("../../assets/images/Male4/male4_detective.png"),
+    dead: require("../../assets/images/Male4/male4_dead.png"),
+  },
+  F1: {
+    mafia: require("../../assets/images/Female1/female1_mafia.png"),
+    police: require("../../assets/images/Female1/female1_police.png"),
+    detective: require("../../assets/images/Female1/female1_detective.png"),
+    dead: require("../../assets/images/Female1/female1_dead.png"),
+  },
+  F2: {
+    mafia: require("../../assets/images/Female2/female2_mafia.png"),
+    police: require("../../assets/images/Female2/female2_police.png"),
+    detective: require("../../assets/images/Female2/female2_detective.png"),
+    dead: require("../../assets/images/Female2/female2_dead.png"),
+  },
+  F3: {
+    mafia: require("../../assets/images/Female3/female3_mafia.png"),
+    police: require("../../assets/images/Female3/female3_police.png"),
+    detective: require("../../assets/images/Female3/female3_detective.png"),
+    dead: require("../../assets/images/Female3/female3_dead.png"),
+  },
+  F4: {
+    mafia: require("../../assets/images/Female4/female4_mafia.png"),
+    police: require("../../assets/images/Female4/female4_police.png"),
+    detective: require("../../assets/images/Female4/female4_detective.png"),
+    dead: require("../../assets/images/Female4/female4_dead.png"),
+  },
+};
 
-  switch (character) {
-    case "M1":
-      switch (role) {
-        case "mafia":
-          path = require("../../assets/images/Male1/male1_mafia.png");
-          break;
-        case "police":
-          path = require("../../assets/images/Male1/male1_police.png");
-          break;
-        case "detective":
-          path = require("../../assets/images/Male1/male1_detective.png");
-          break;
-        default:
-          break;
-      }
-      break;
-    case "M2":
-      switch (role) {
-        case "mafia":
-          path = require("../../assets/images/Male2/male2_mafia.png");
-          break;
-        case "police":
-          path = require("../../assets/images/Male2/male2_police.png");
-          break;
-        case "detective":
-          path = require("../../assets/images/Male2/male2_detective.png");
-          break;
-        default:
-          break;
-      }
-      break;
-    case "M3":
-      switch (role) {
-        case "mafia":
-          path = require("../../assets/images/Male3/male3_mafia.png");
-          break;
-        case "police":
-          path = require("../../assets/images/Male3/male3_police.png");
-          break;
-        case "detective":
-          path = require("../../assets/images/Male3/male3_detective.png");
-          break;
-        default:
-          break;
-      }
-      break;
-    case "M4":
-      switch (role) {
-        case "mafia":
-          path = require("../../assets/images/Male4/male4_mafia.png");
-          break;
-        case "police":
-          path = require("../../assets/images/Male4/male4_police.png");
-          break;
-        case "detective":
-          path = require("../../assets/images/Male4/male4_detective.png");
-          break;
-        default:
-          break;
-      }
-      break;
-    case "F1":
-      switch (role) {
-        case "mafia":
-          path = require("../../assets/images/Female1/female1_mafia.png");
-          break;
-        case "police":
-          path = require("../../assets/images/Female1/female1_police.png");
-          break;
-        case "detective":
-          path = require("../../assets/images/Female1/female1_detective.png");
-          break;
-        default:
-          break;
-      }
-      break;
-    case "F2":
-      switch (role) {
-        case "mafia":
-          path = require("../../assets/images/Female2/female2_mafia.png");
-          break;
-        case "police":
-          path = require("../../assets/images/Female2/female2_police.png");
-          break;
-        case "detective":
-          path = require("../../assets/images/Female2/female2_detective.png");
-          break;
-        default:
-          break;
-      }
-      break;
-    case "F3":
-      switch (role) {
-        case "mafia":
-          path = require("../../assets/images/Female3/female3_mafia.png");
-          break;
-        case "police":
-          path = require("../../assets/images/Female3/female3_police.png");
-          break;
-        case "detective":
-          path = require("../../assets/images/Female3/female3_detective.png");
-          break;
-        default:
-          break;
-      }
-      break;
-    case "F4":
-      switch (role) {
-        case "mafia":
-          path = require("../../assets/images/Female4/female4_mafia.png");
-          break;
-        case "police":
-          path = require("../../assets/images/Female4/female4_police.png");
-          break;
-        case "detective":
-          path = require("../../assets/images/Female4/female4_detective.png");
-          break;
-        default:
-          break;
-      }
-      break;
-    default:
-      break;
-  }
+export const CharacterAvatar = ({
+  character,
+  role,
+  isDead,
+}: CharacterAvatarProps) => {
+  const handleRole = (isDead: boolean, role: string) => {
+    if (isDead) {
+      return "dead";
+    } else {
+      return role;
+    }
+  };
+
+  const rolePath = handleRole(isDead, role);
+  const path = imagePathMap[character][rolePath];
 
   return <Image source={path} style={styles.image} />;
 };
