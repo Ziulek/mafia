@@ -2,8 +2,8 @@ import {
   Character,
   CharacterAvatar,
   Role,
-} from "@/components/CharacterAvatar/CharacterAvatar";
-import CharacterNickname from "@/components/CharacterNickname/CharacterNickname";
+} from "@/components/base/CharacterAvatar/CharacterAvatar";
+import CharacterNickname from "@/components/base/CharacterNickname/CharacterNickname";
 import React, { useEffect, useRef, useState } from "react";
 import { StyleSheet, TouchableHighlight, View } from "react-native";
 import Animated, {
@@ -139,7 +139,6 @@ export const AnimatedCharacterAvatar = ({
 
   const handlePressOut = () => {
     if (mode === "pressable" && wasPressed) {
-      console.log("xddd");
       setTimeout(() => {
         startRotation();
         setWasPressed(false);

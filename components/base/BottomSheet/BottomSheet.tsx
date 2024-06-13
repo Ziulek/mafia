@@ -6,7 +6,7 @@ type BottomSheetProps = {
   title: string;
   handleClose: () => void;
   isVisible: boolean;
-  children: React.ReactNode;
+  children?: React.ReactNode;
 };
 
 export const BottomSheet = ({
@@ -54,8 +54,6 @@ export const BottomSheet = ({
 
 const styles = StyleSheet.create({
   container: {
-    // jak jest kolor to miga jak się pojawia (???)
-    // backgroundColor: "rgba(132, 132, 132, 0.377)",
     height: "100%",
     width: "100%",
     position: "absolute",
@@ -64,7 +62,6 @@ const styles = StyleSheet.create({
   background: {
     flex: 1,
     backgroundColor: "transparent",
-    // backgroundColor: "rgba(132, 132, 132, 0.377)",
   },
   indicator: {
     width: 35,

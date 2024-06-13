@@ -1,6 +1,6 @@
-import { BottomSheet } from "../BottomSheet/BottomSheet";
-import { ButtonGroup } from "../ButtonGroup/ButtonGroup";
-import { Button } from "../Button/Button";
+import { BottomSheet } from "../../base/BottomSheet/BottomSheet";
+import { ButtonGroup } from "../../base/ButtonGroup/ButtonGroup";
+import { Button } from "../../base/Button/Button";
 import { useState } from "react";
 
 type PlayerActionsBottomSheetProps = {
@@ -14,7 +14,7 @@ export const PlayerActionsBottomSheet = ({
   onKick,
   onKill,
 }: PlayerActionsBottomSheetProps) => {
-  const [showBottomSheet, setShowBottomSheet] = useState(false);
+  const [showBottomSheet, setShowBottomSheet] = useState(true);
   return (
     <BottomSheet
       title={nickname}

@@ -48,7 +48,7 @@ export function SelectListItem() {
         onValueChange={setVal}
         disablePreventBodyScroll={false}
       >
-        <Select.Trigger width={"98%"} iconAfter={ChevronDown}>
+        <Select.Trigger width={"100%"} iconAfter={ChevronDown}>
           <Select.Value placeholder="Something" />
         </Select.Trigger>
         <Adapt when="sm" platform="touch">
