@@ -15,7 +15,7 @@ import Animated, {
   ReduceMotion,
 } from "react-native-reanimated";
 
-type AnimatedCharacterAvatarProps = {
+export type AnimatedCharacterAvatarProps = {
   character: Character;
   role: Role;
   nickname?: string;
@@ -49,6 +49,7 @@ export const AnimatedCharacterAvatar = ({
   const FlipAnimationStyles = useAnimatedStyle(() => {
     const rotateValue = interpolate(rotate.value, [0, 1], [0, 90]);
     return {
+      flex: 1,
       flexShrink: 1,
       transform: [
         {
@@ -61,7 +62,7 @@ export const AnimatedCharacterAvatar = ({
   const styles = StyleSheet.create({
     border: {
       borderRadius: 999,
-      borderWidth: 45,
+      borderWidth: 22,
       borderColor: borderColor,
     },
   });
@@ -157,7 +158,7 @@ export const AnimatedCharacterAvatar = ({
     <Animated.View style={FlipAnimationStyles}>
       <TouchableHighlight
         style={{ borderRadius: 9999 }}
-        delayLongPress={2000}
+        delayLongPress={1000}
         onLongPress={handleLongPress}
         onPressOut={handlePressOut}
         disabled={mode === "pressable" ? false : true}

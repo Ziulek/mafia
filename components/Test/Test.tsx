@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
     color: "#151E26",
   },
   dropdownItemStyle: {
-    width: "100%",
+    width: "90%",
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
     color: "#151E26",
   },
   dropdownMenuStyle: {
-    width: "100%",
+    width: "90%",
     backgroundColor: "#E9ECEF",
     borderRadius: 8,
   },

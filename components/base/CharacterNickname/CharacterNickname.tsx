@@ -22,7 +22,7 @@ export const CharacterNickname = ({ nickname }: CharacterNicknameProps) => {
           fontWeight="bold"
           textAnchor="middle"
           strokeWidth="1"
-          fontFamily="arial"
+          fontFamily="AmericanTypewriter"
         >
           <TextPath href="#arc" startOffset="50%">
             {nickname.toUpperCase()}
