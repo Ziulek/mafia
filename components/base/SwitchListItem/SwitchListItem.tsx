@@ -9,6 +9,27 @@ type SwitchListItemProps = {
 };
 
 export function SwitchListItem({ title, isOn, setIsOn }: SwitchListItemProps) {
+  const styles = StyleSheet.create({
+    container: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
+      width: "100%",
+      paddingLeft: 10,
+    },
+    switch: {
+      backgroundColor: isOn ? "#1fbb03" : "#232323",
+
+      borderColor: isOn ? "#1fbb03" : "#232323",
+    },
+    thumb: {
+      backgroundColor: "#EAECD6",
+    },
+    text: {
+      fontSize: 20,
+    },
+  });
+
   return (
     <View style={styles.container}>
       <Text style={styles.text}>{title}</Text>
@@ -25,24 +46,3 @@ export function SwitchListItem({ title, isOn, setIsOn }: SwitchListItemProps) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    width: "100%",
-    paddingLeft: 10,
-  },
-  switch: {
-    backgroundColor: "#232323",
-
-    borderColor: "#232323",
-  },
-  thumb: {
-    backgroundColor: "#EAECD6",
-  },
-  text: {
-    fontSize: 20,
-  },
-});

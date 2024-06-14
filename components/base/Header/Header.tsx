@@ -15,7 +15,7 @@ export const Header = ({ children }: HeaderProps) => {
   useEffect(() => {
     // Run the animation based on visibility state
     Animated.timing(translateY, {
-      toValue: isVisible ? 0 : -300, // Adjust to fit your layout
+      toValue: isVisible ? 0 : -500, // Adjust to fit your layout
       duration: 500,
       useNativeDriver: true,
     }).start();
@@ -45,7 +45,7 @@ export const Header = ({ children }: HeaderProps) => {
       <Animated.View style={styles.box}>
         <View style={styles.container}>{children}</View>
       </Animated.View>
-      <View style={{ marginTop: "50%" }}>
+      <View style={{ marginTop: "100%" }}>
         <Button title="Open" onPress={handleOpen} />
         <Button title="Close" onPress={handleClose} />
       </View>
