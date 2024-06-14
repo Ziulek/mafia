@@ -16,4 +16,15 @@ export const Default: Story = {
   args: {
     placeholder: "Your nickname",
   },
+  render: () => {
+    const [text, setText] = useState("");
+
+    return (
+      <TextEditListItem
+        placeholder="Your nickname"
+        text={text}
+        setText={setText}
+      />
+    );
+  },
 };

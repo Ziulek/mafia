@@ -1,5 +1,6 @@
 import { Check, ChevronDown } from "@tamagui/lucide-icons";
 import { useMemo, useState } from "react";
+import { StyleSheet } from "react-native";
 
 import {
   Label,
@@ -48,7 +49,11 @@ export function SelectListItem() {
         onValueChange={setVal}
         disablePreventBodyScroll={false}
       >
-        <Select.Trigger width={"100%"} iconAfter={ChevronDown}>
+        <Select.Trigger
+          style={styles.container}
+          size="$5"
+          iconAfter={ChevronDown}
+        >
           <Select.Value placeholder="Something" />
         </Select.Trigger>
         <Adapt when="sm" platform="touch">
@@ -82,3 +87,15 @@ export function SelectListItem() {
     </PortalProvider>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    width: "100%",
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: "gray",
+  },
+  input: {
+    flex: 1,
+  },
+});
