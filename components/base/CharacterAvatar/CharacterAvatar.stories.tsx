@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { CharacterAvatar } from "./CharacterAvatar";
 import StoryDecorator from "@/decorators/StoryDecorator";
-import GridDecorator from "@/decorators/GridDecorator";
 import BoxDecorator from "@/decorators/BoxDecorator";
 
 const meta: Meta<typeof CharacterAvatar> = {

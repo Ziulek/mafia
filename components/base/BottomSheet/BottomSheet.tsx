@@ -1,6 +1,7 @@
-import React, { MutableRefObject, useEffect, useMemo, useRef } from "react";
-import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
+import React, { useEffect, useMemo, useRef } from "react";
+import { View, StyleSheet, TouchableOpacity } from "react-native";
 import GorhomBottomSheet from "@gorhom/bottom-sheet";
+import Text from "../Text/Text";
 
 type BottomSheetProps = {
   title: string;
@@ -44,8 +45,12 @@ export const BottomSheet = ({
         onClose={handleClose}
       >
         <View style={styles.contentContainer}>
-          <Text style={styles.text}>{title}</Text>
-          <View style={styles.childrenContianer}>{children}</View>
+          <View style={styles.textContainer}>
+            <Text size="headline" isBold={true}>
+              {title}
+            </Text>
+          </View>
+          {children}
         </View>
       </GorhomBottomSheet>
     </View>
@@ -66,24 +71,16 @@ const styles = StyleSheet.create({
   indicator: {
     width: 35,
     backgroundColor: "#8D8D8D",
-    marginVertical: 12,
+    marginVertical: 10,
   },
   contentContainer: {
     flex: 1,
     alignItems: "center",
     justifyContent: "space-between",
-    marginHorizontal: 20,
+    marginHorizontal: 30,
     marginBottom: 20,
   },
-  text: {
-    fontWeight: "bold",
-    fontSize: 30,
+  textContainer: {
     marginVertical: 30,
-  },
-  childrenContianer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    width: "100%",
   },
 });

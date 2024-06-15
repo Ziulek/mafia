@@ -5,7 +5,7 @@ import {
 } from "@/components/base/CharacterAvatar/CharacterAvatar";
 import CharacterNickname from "@/components/base/CharacterNickname/CharacterNickname";
 import React, { useEffect, useRef, useState } from "react";
-import { StyleSheet, TouchableHighlight, View } from "react-native";
+import { Dimensions, StyleSheet, TouchableHighlight, View } from "react-native";
 import Animated, {
   interpolate,
   useAnimatedStyle,
@@ -20,17 +20,21 @@ export type AnimatedCharacterAvatarProps = {
   role: Role;
   nickname?: string;
   isDead: boolean;
+  onPress: () => void
   // default = shows always police form
   // revealed = shows real role
   // pressable = shows real role on press
   mode: "default" | "revealed" | "pressable";
 };
 
+const width = Dimensions.get("window").width * 0.45;
+
 export const AnimatedCharacterAvatar = ({
   character,
   role,
   nickname,
   isDead = false,
+  onPress,
   mode,
 }: AnimatedCharacterAvatarProps) => {
   const [activeCharacter, setActiveCharacter] = useState<Character>(character);
@@ -49,8 +53,10 @@ export const AnimatedCharacterAvatar = ({
   const FlipAnimationStyles = useAnimatedStyle(() => {
     const rotateValue = interpolate(rotate.value, [0, 1], [0, 90]);
     return {
-      flex: 1,
-      flexShrink: 1,
+      // flex: 1,
+      // flexShrink: 1,
+      width: width,
+      aspectRatio: 1,
       transform: [
         {
           rotateY: `${rotateValue}deg`,
@@ -62,7 +68,7 @@ export const AnimatedCharacterAvatar = ({
   const styles = StyleSheet.create({
     border: {
       borderRadius: 999,
-      borderWidth: 22,
+      borderWidth: width / 9,
       borderColor: borderColor,
     },
   });
@@ -158,6 +164,7 @@ export const AnimatedCharacterAvatar = ({
     <Animated.View style={FlipAnimationStyles}>
       <TouchableHighlight
         style={{ borderRadius: 9999 }}
+        onPress={onPress}
         delayLongPress={1000}
         onLongPress={handleLongPress}
         onPressOut={handlePressOut}

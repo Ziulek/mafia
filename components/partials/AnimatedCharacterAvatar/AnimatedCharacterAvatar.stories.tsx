@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import StoryDecorator from "@/decorators/StoryDecorator";
 
 import BoxDecorator from "@/decorators/BoxDecorator";
-import AnimatedCharacterAvatar from "./AnimatedCharcterAvatar";
+import AnimatedCharacterAvatar from "./AnimatedCharacterAvatar";
 
 const meta: Meta<typeof AnimatedCharacterAvatar> = {
   component: AnimatedCharacterAvatar,
@@ -35,5 +35,4 @@ export const Default: Story = {
     isDead: false,
     mode: "pressable",
   },
-  decorators: [BoxDecorator],
 };

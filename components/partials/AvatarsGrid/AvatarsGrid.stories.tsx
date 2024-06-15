@@ -20,7 +20,7 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     mode: "pressable",
-    characters: [
+    items: [
       {
         character: "M1",
         role: "police",

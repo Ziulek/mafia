@@ -1,6 +1,7 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { Switch } from "tamagui";
+import Text from "../Text/Text";
 
 type SwitchListItemProps = {
   title: string;
@@ -15,7 +16,7 @@ export function SwitchListItem({ title, isOn, setIsOn }: SwitchListItemProps) {
       justifyContent: "space-between",
       alignItems: "center",
       width: "100%",
-      paddingLeft: 10,
+      paddingLeft: 12,
     },
     switch: {
       backgroundColor: isOn ? "#1fbb03" : "#232323",
@@ -25,14 +26,11 @@ export function SwitchListItem({ title, isOn, setIsOn }: SwitchListItemProps) {
     thumb: {
       backgroundColor: "#EAECD6",
     },
-    text: {
-      fontSize: 20,
-    },
   });
 
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>{title}</Text>
+      <Text size="listItem">{title}</Text>
       <Switch
         size="$5"
         checked={isOn}

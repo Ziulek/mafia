@@ -4,7 +4,7 @@ import { withBackgrounds } from "@storybook/addon-ondevice-backgrounds";
 const preview: Preview = {
   decorators: [withBackgrounds],
   parameters: {
-    noSafeArea: false,
+    noSafeArea: true,
     backgrounds: {
       default: "white",
       values: [

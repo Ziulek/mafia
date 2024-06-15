@@ -7,15 +7,17 @@ import { Text, View } from "react-native";
 type HeaderLobbyHostProps = {
   players: number;
   gameCode: string;
+  isVisible: boolean;
 };
 
 export const HeaderLobbyHost = ({
   players,
   gameCode,
+  isVisible,
 }: HeaderLobbyHostProps) => {
   const [isSwitchOn, setIsSwitchOn] = useState(false);
   return (
-    <Header>
+    <Header isVisible={isVisible}>
       <View
         style={{
           marginVertical: 50,
