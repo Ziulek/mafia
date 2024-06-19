@@ -1,30 +1,50 @@
 import Header from "@/components/base/Header/Header";
-import { Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
+import Text from "../../base/Text/Text";
 
 type HeaderLobbyPlayerProps = {
   players: number;
   gameCode: string;
+  isVisible: boolean;
 };
 
 export const HeaderLobbyPlayer = ({
   players,
   gameCode,
+  isVisible,
 }: HeaderLobbyPlayerProps) => {
   return (
-    <Header>
-      <View style={{ marginVertical: 50, alignItems: "center" }}>
-        <Text style={{ fontSize: 30 }}>
-          Game Code:
-          <Text style={{ fontSize: 30, fontWeight: "bold" }}> {gameCode}</Text>
-        </Text>
-        <Text style={{ fontSize: 30 }}>
-          Players:
-          <Text style={{ fontSize: 30, fontWeight: "bold" }}> {players}</Text>
-        </Text>
-        <Text style={{ fontSize: 30, fontWeight: "bold" }}>
-          Waiting for players...
-        </Text>
+    <Header isVisible={isVisible}>
+      <View style={styles.container}>
+        <View style={styles.inlineText}>
+          <Text size="headline">Game Code: </Text>
+          <Text size="headline" isBold={true}>
+            {gameCode}
+          </Text>
+        </View>
+        <View style={styles.inlineText}>
+          <Text size="headline">Players: </Text>
+          <Text size="headline" isBold={true}>
+            {players.toString()}
+          </Text>
+        </View>
+        <View style={{ marginTop: 15 }}>
+          <Text size="headline" isBold={true}>
+            Waiting for players...
+          </Text>
+        </View>
       </View>
     </Header>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    marginVertical: 30,
+    alignItems: "center",
+  },
+  inlineText: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+});
