@@ -4,24 +4,25 @@ import Svg, { Path, TextPath, Defs, Text } from "react-native-svg";
 
 type CharacterNicknameProps = {
   nickname: string;
+  color: "black" | "white";
 };
 
-export const CharacterNickname = ({ nickname }: CharacterNicknameProps) => {
+export const CharacterNickname = ({
+  nickname,
+  color,
+}: CharacterNicknameProps) => {
   return (
     <View style={styles.container}>
       <Svg height="100%" width="100%" viewBox="0 0 200 200">
         <Defs>
-          <Path id="arc" d="M 0,100 A 100,100 0 0,0 200,100" fill="none" />
+          <Path id="arc" d="M 3,100 A 97,97 0 0,0 197,100" fill="none" />
         </Defs>
         <Text
           fillOpacity="100"
-          fill="white"
-          stroke="black"
-          fontSize="30"
-          letterSpacing="3"
-          fontWeight="bold"
+          fill={color}
+          fontSize="23"
+          // letterSpacing="3"
           textAnchor="middle"
-          strokeWidth="1"
           fontFamily="AmericanTypewriter"
         >
           <TextPath href="#arc" startOffset="50%">

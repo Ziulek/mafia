@@ -31,7 +31,7 @@ export const Default: Story = {
   args: {
     character: "M1",
     role: "mafia",
-    nickname: "Placeholder",
+    nickname: "Lorem Ipsum Dupol",
     isDead: false,
     mode: "pressable",
   },
