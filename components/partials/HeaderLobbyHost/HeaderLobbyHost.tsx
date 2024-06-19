@@ -1,10 +1,10 @@
-import SelectListItem from "@/components/Test/Test";
 import Header from "@/components/base/Header/Header";
 import { SwitchListItem } from "@/components/base/SwitchListItem/SwitchListItem";
 import { useState } from "react";
 import { StyleSheet, View } from "react-native";
 
 import Text from "../../base/Text/Text";
+import SelectListItem from "@/components/base/SelectListItem/SelectListItem";
 
 type HeaderLobbyHostProps = {
   players: number;
@@ -18,6 +18,14 @@ export const HeaderLobbyHost = ({
   isVisible,
 }: HeaderLobbyHostProps) => {
   const [isSwitchOn, setIsSwitchOn] = useState(false);
+
+  const items = [
+    { label: "Detective", value: "detective" },
+    { label: "Medic", value: "medic" },
+    { label: "Serial Killer", value: "serial killer" },
+    { label: "Medium", value: "medium" },
+  ];
+
   return (
     <Header isVisible={isVisible}>
       <View style={styles.box}>
@@ -37,7 +45,7 @@ export const HeaderLobbyHost = ({
         </View>
 
         <View style={styles.itemsStyle}>
-          <SelectListItem />
+          <SelectListItem items={items} />
           <SwitchListItem
             title="Reveal roles after death "
             isOn={isSwitchOn}

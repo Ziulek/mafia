@@ -1,101 +1,84 @@
-import { Check, ChevronDown } from "@tamagui/lucide-icons";
-import { useMemo, useState } from "react";
-import { StyleSheet } from "react-native";
+import { FC, useState } from "react";
+import DropDownPicker from "react-native-dropdown-picker";
 
-import {
-  Label,
-  Select,
-  Sheet,
-  YStack,
-  XStack,
-  PortalProvider,
-  Adapt,
-  SelectProps,
-} from "tamagui";
-
-interface ListItem {
-  id: number;
-  name: string;
+interface SelectItem {
+  label: string;
+  value: string;
 }
 
-type SelectListItemProps = {
-  items: ListItem[];
-};
+interface SelectListItemProps {
+  items: SelectItem[];
+  isMultiSelected?: boolean;
+}
 
-export function SelectListItem() {
-  const [val, setVal] = useState("Choose options");
-
-  const items = [
-    { id: 1, name: "Detective" },
-    { id: 2, name: "Medic" },
-    { id: 3, name: "Serial Killer" },
-    { id: 4, name: "Medium" },
-  ];
-
-  // Memoize the list items
-  const listItems = items.map((item, i) => (
-    <Select.Item index={i} key={item.id} value={item.name.toLowerCase()}>
-      <Select.ItemText fontFamily="unset">{item.name}</Select.ItemText>
-      <Select.ItemIndicator marginLeft="auto">
-        <Check size={16} />
-      </Select.ItemIndicator>
-    </Select.Item>
-  ));
+const SelectListItem: FC<SelectListItemProps> = ({
+  items,
+  isMultiSelected = false, // do zrobienia
+}) => {
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState<string[]>([]);
+  const [dropDownItems, setDropDownItems] = useState(items);
 
   return (
-    <PortalProvider>
-      <Select
-        value={val}
-        onValueChange={setVal}
-        disablePreventBodyScroll={false}
-      >
-        <Select.Trigger
-          style={styles.container}
-          size="$5"
-          iconAfter={ChevronDown}
-        >
-          <Select.Value placeholder="Something" />
-        </Select.Trigger>
-        <Adapt when="sm" platform="touch">
-          <Sheet
-          // native={!!props.native}
-          // modal
-          // dismissOnSnapToBottom
-          // animationConfig={{
-          //   type: "spring",
-          //   damping: 20,
-          //   mass: 1.2,
-          //   stiffness: 250,
-          // }}
-          >
-            <Sheet.Frame>
-              <Sheet.ScrollView>
-                <Adapt.Contents />
-              </Sheet.ScrollView>
-            </Sheet.Frame>
-            <Sheet.Overlay
-            // animation="lazy"
-            // enterStyle={{ opacity: 0 }}
-            // exitStyle={{ opacity: 0 }}
-            />
-          </Sheet>
-        </Adapt>
-        <Select.Content>
-          <Select.Viewport>{listItems}</Select.Viewport>
-        </Select.Content>
-      </Select>
-    </PortalProvider>
+    <DropDownPicker
+      placeholder="No extra roles"
+      multiple={true}
+      min={0}
+      max={4}
+      open={open}
+      value={value}
+      items={dropDownItems}
+      setOpen={setOpen}
+      setValue={setValue}
+      setItems={setDropDownItems}
+      mode="BADGE"
+      showBadgeDot={false}
+      // https://hossein-zare.github.io/react-native-dropdown-picker-website/docs/advanced/modes
+      // badgeColors={["white", "green", "red"]}
+    />
   );
-}
+};
 
-const styles = StyleSheet.create({
-  container: {
-    width: "100%",
-    borderRadius: 10,
-    borderWidth: 1,
-    borderColor: "gray",
-  },
-  input: {
-    flex: 1,
-  },
-});
+// const styles = StyleSheet.create({
+//   dropdownButtonStyle: {
+//     width: "100%",
+//     height: 50,
+//     backgroundColor: "#E9ECEF",
+//     borderRadius: 12,
+//     flexDirection: "row",
+//     justifyContent: "center",
+//     alignItems: "center",
+//     paddingHorizontal: 12,
+//   },
+//   dropdownButtonTxtStyle: {
+//     flex: 1,
+//     fontSize: 18,
+//     fontWeight: "500",
+//     color: "#151E26",
+//   },
+//   dropdownItemStyle: {
+//     width: "90%",
+//     flexDirection: "row",
+//     justifyContent: "space-between",
+//     alignItems: "center",
+//     paddingHorizontal: 12,
+//     paddingVertical: 8,
+//   },
+//   dropdownItemTxtStyle: {
+//     flex: 1,
+//     fontSize: 18,
+//     fontWeight: "500",
+//     color: "#151E26",
+//   },
+//   icon: {
+//     fontSize: 24,
+//     color: "#151E26",
+//   },
+//   dropdownMenuStyle: {
+//     width: "90%",
+//     backgroundColor: "#E9ECEF",
+//     borderRadius: 8,
+//   },
+// });
+
+export default SelectListItem;
