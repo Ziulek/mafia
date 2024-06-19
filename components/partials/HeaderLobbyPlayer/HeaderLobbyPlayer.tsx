@@ -28,9 +28,9 @@ export const HeaderLobbyPlayer = ({
             {players.toString()}
           </Text>
         </View>
-        <View style={{ marginTop: 15 }}>
+        <View style={styles.waitingPlayersSpace}>
           <Text size="headline" isBold={true}>
-            Waiting for players...
+            Waiting for players
           </Text>
         </View>
       </View>
@@ -40,11 +40,13 @@ export const HeaderLobbyPlayer = ({
 
 const styles = StyleSheet.create({
   container: {
-    marginVertical: 30,
     alignItems: "center",
   },
   inlineText: {
     flexDirection: "row",
     alignItems: "center",
+  },
+  waitingPlayersSpace: {
+    marginTop: 30,
   },
 });
