@@ -20,7 +20,7 @@ export type AnimatedCharacterAvatarProps = {
   role: Role;
   nickname?: string;
   isDead: boolean;
-  onPress: () => void
+  onPress: () => void;
   // default = shows always police form
   // revealed = shows real role
   // pressable = shows real role on press
@@ -42,6 +42,9 @@ export const AnimatedCharacterAvatar = ({
   const [activeDead, setActiveDead] = useState<boolean>(isDead);
   const [borderColor, setBorderColor] = useState("#EAECD6");
   const [wasPressed, setWasPressed] = useState(false);
+  const [nicknameColor, setNicknameColor] = useState<"black" | "white">(
+    "black"
+  );
   const rotate = useSharedValue(0);
   const flipDuration = 500;
   const configFlip = {
@@ -102,6 +105,19 @@ export const AnimatedCharacterAvatar = ({
     return newColor;
   };
 
+  const handleNicknameColor = (mode: string, isDead: boolean) => {
+    let newColor: "white" | "black";
+
+    if (isDead) {
+      newColor = "white";
+    } else if (mode !== "revealed") {
+      newColor = "black";
+    } else {
+      newColor = "white";
+    }
+    return newColor;
+  };
+
   const isFirstRender = useRef(true);
 
   const startRotation = () => {
@@ -126,6 +142,7 @@ export const AnimatedCharacterAvatar = ({
       );
 
       setBorderColor(handleBorderColor(mode, role, isDead));
+      setNicknameColor(handleNicknameColor(mode, isDead));
       finishRotation();
     }, flipDuration);
   }, [character, role, mode, isDead]);
@@ -139,6 +156,7 @@ export const AnimatedCharacterAvatar = ({
         setActiveCharacter(character);
         setActiveRole(role);
         setBorderColor(handleBorderColor("revealed", role, isDead));
+        setNicknameColor("white");
         finishRotation();
       }, flipDuration);
     }
@@ -154,6 +172,7 @@ export const AnimatedCharacterAvatar = ({
           setActiveCharacter(character);
           setActiveRole("police");
           setBorderColor(handleBorderColor(mode, role, isDead));
+          setNicknameColor(handleNicknameColor(mode, isDead));
           finishRotation();
         }, flipDuration);
       }, flipDuration);
@@ -178,7 +197,9 @@ export const AnimatedCharacterAvatar = ({
               isDead={activeDead}
             />
           </View>
-          {nickname && <CharacterNickname nickname={nickname} />}
+          {nickname && (
+            <CharacterNickname nickname={nickname} color={nicknameColor} />
+          )}
         </View>
       </TouchableHighlight>
     </Animated.View>
