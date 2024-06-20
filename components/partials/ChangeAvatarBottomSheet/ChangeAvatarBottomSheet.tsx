@@ -1,5 +1,6 @@
-import React, { useEffect, useRef, useState } from "react";
-import { Dimensions, FlatList, StyleSheet, View } from "react-native";
+import React, { useRef, useState } from "react";
+import { Dimensions, StyleSheet, View } from "react-native";
+import Carousel from "react-native-snap-carousel";
 import { BottomSheet } from "../../base/BottomSheet/BottomSheet";
 import AnimatedCharacterAvatar from "../AnimatedCharacterAvatar/AnimatedCharacterAvatar";
 import { Character } from "@/components/base/CharacterAvatar/CharacterAvatar";
@@ -9,6 +10,8 @@ type ChangeAvatarBottomSheetProps = {
   onKick: () => void;
   onKill: () => void;
 };
+
+const { width } = Dimensions.get("window");
 
 export const ChangeAvatarBottomSheet = ({
   nickname,
@@ -28,26 +31,11 @@ export const ChangeAvatarBottomSheet = ({
     "F4",
   ];
 
-  const flatListRef = useRef<FlatList>(null);
+  const carouselRef = useRef<Carousel<Character>>(null);
 
   const handleAvatarPress = (index: number) => {
-    flatListRef.current?.scrollToIndex({
-      index,
-      animated: true,
-      viewPosition: 0.5, // Centers the item in the middle
-    });
+    carouselRef.current?.snapToItem(index);
   };
-
-  useEffect(() => {
-    // Ensure FlatList has time to render before scrolling to index
-    setTimeout(() => {
-      flatListRef.current?.scrollToIndex({
-        index: 0,
-        animated: true,
-        viewPosition: 0.5, // Centers the first item in the middle
-      });
-    }, 100); // Adjust the timeout duration if needed
-  }, []);
 
   return (
     <BottomSheet
@@ -55,38 +43,33 @@ export const ChangeAvatarBottomSheet = ({
       handleClose={() => setShowBottomSheet(false)}
       isVisible={showBottomSheet}
     >
-      <FlatList
-        ref={flatListRef}
+      <Carousel
+        ref={carouselRef}
         data={AllAvailableCharacters}
-        horizontal={true}
-        showsHorizontalScrollIndicator={false}
-        scrollEnabled={false} // Disables user scrolling
-        contentContainerStyle={styles.contentContainer} // Add padding to the start and end
-        keyExtractor={(item) => item}
         renderItem={({ item, index }) => (
-          <View style={styles.itemContainer}>
-            <AnimatedCharacterAvatar
-              character={item}
-              role="mafia" // or any default role
-              isDead={false} // or any default state
-              onPress={() => handleAvatarPress(index)} // Scrolls to the clicked avatar
-              mode="pressable" // or any default mode
-              nickname="Lorem Ipsum Dupol"
-            />
-          </View>
+          <AnimatedCharacterAvatar
+            character={item}
+            role="mafia" // or any default role
+            isDead={false} // or any default state
+            onPress={() => handleAvatarPress(index)} // Scrolls to the clicked avatar
+            mode="pressable" // or any default mode
+            nickname="Lorem Ipsum Dupol"
+          />
         )}
+        sliderWidth={width}
+        itemWidth={width * 0.45}
+        loop={true}
+        inactiveSlideScale={0.94}
+        inactiveSlideOpacity={0.7}
+        enableMomentum={true}
+        activeSlideAlignment={"center"}
       />
     </BottomSheet>
   );
 };
 
 const styles = StyleSheet.create({
-  contentContainer: {
-    paddingHorizontal: Dimensions.get("window").width * 0.225, // Adjust this value based on the width of the items to center them correctly
-    backgroundColor: "#fff",
-  },
   itemContainer: {
-    width: Dimensions.get("window").width * 0.45, // Ensure the width matches the items' width
     alignItems: "center",
   },
 });
