@@ -14,13 +14,25 @@ const items = [
   { label: "Medium", value: "medium" },
 ];
 
+const items2 = [
+  { label: "Male", value: "male" },
+  { label: "Female", value: "female" },
+];
+
 export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {
+export const MultiSelectable: Story = {
   args: {
     items: items,
     isMultiSelected: true,
+  },
+};
+
+export const SingleSelectable: Story = {
+  args: {
+    items: items2,
+    isMultiSelected: false,
   },
 };

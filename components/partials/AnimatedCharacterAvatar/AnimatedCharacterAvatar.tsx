@@ -1,9 +1,8 @@
-import {
-  Character,
-  CharacterAvatar,
-  Role,
-} from "@/components/base/CharacterAvatar/CharacterAvatar";
+import { CharacterAvatar } from "@/components/base/CharacterAvatar/CharacterAvatar";
 import CharacterNickname from "@/components/base/CharacterNickname/CharacterNickname";
+import { Character } from "@/components/types/Characters";
+import { Role } from "@/components/types/Role";
+import { Mode } from "@/components/types/mode";
 import React, { useEffect, useRef, useState } from "react";
 import { Dimensions, StyleSheet, TouchableHighlight, View } from "react-native";
 import Animated, {
@@ -19,12 +18,13 @@ export type AnimatedCharacterAvatarProps = {
   character: Character;
   role: Role;
   nickname?: string;
-  isDead: boolean;
-  onPress: () => void;
+  isDead?: boolean;
+  onPress?: () => void;
   // default = shows always police form
   // revealed = shows real role
   // pressable = shows real role on press
-  mode: "default" | "revealed" | "pressable";
+  mode: Mode;
+  avatarSelect?: boolean;
 };
 
 const width = Dimensions.get("window").width * 0.45;
@@ -36,11 +36,14 @@ export const AnimatedCharacterAvatar = ({
   isDead = false,
   onPress,
   mode,
+  avatarSelect,
 }: AnimatedCharacterAvatarProps) => {
   const [activeCharacter, setActiveCharacter] = useState<Character>(character);
   const [activeRole, setActiveRole] = useState<Role>("police");
   const [activeDead, setActiveDead] = useState<boolean>(isDead);
-  const [borderColor, setBorderColor] = useState("#EAECD6");
+  const [borderColor, setBorderColor] = useState(
+    avatarSelect ? "white" : "#EAECD6"
+  );
   const [wasPressed, setWasPressed] = useState(false);
   const [nicknameColor, setNicknameColor] = useState<"black" | "white">(
     "black"
@@ -73,14 +76,22 @@ export const AnimatedCharacterAvatar = ({
       borderRadius: 999,
       borderWidth: width / 9,
       borderColor: borderColor,
+      // borderBottomColor: borderColor,
     },
   });
 
-  const handleBorderColor = (mode: string, role: string, isDead: boolean) => {
+  const handleBorderColor = (
+    mode: string,
+    role: string,
+    isDead: boolean,
+    avatarSelect?: boolean
+  ) => {
     let newColor;
 
     if (isDead) {
       newColor = "#000";
+    } else if (avatarSelect && (mode === "default" || mode === "pressable")) {
+      newColor = "white";
     } else {
       switch (mode) {
         case "default":
@@ -97,6 +108,7 @@ export const AnimatedCharacterAvatar = ({
             newColor = "#EAECD6";
           }
           break;
+
         default:
           newColor = "#EAECD6";
           break;
@@ -141,7 +153,7 @@ export const AnimatedCharacterAvatar = ({
         mode === "default" || mode === "pressable" ? "police" : role
       );
 
-      setBorderColor(handleBorderColor(mode, role, isDead));
+      setBorderColor(handleBorderColor(mode, role, isDead, avatarSelect));
       setNicknameColor(handleNicknameColor(mode, isDead));
       finishRotation();
     }, flipDuration);
@@ -155,7 +167,9 @@ export const AnimatedCharacterAvatar = ({
         setActiveDead(isDead);
         setActiveCharacter(character);
         setActiveRole(role);
-        setBorderColor(handleBorderColor("revealed", role, isDead));
+        setBorderColor(
+          handleBorderColor("revealed", role, isDead, avatarSelect)
+        );
         setNicknameColor("white");
         finishRotation();
       }, flipDuration);
@@ -171,7 +185,7 @@ export const AnimatedCharacterAvatar = ({
           setActiveDead(isDead);
           setActiveCharacter(character);
           setActiveRole("police");
-          setBorderColor(handleBorderColor(mode, role, isDead));
+          setBorderColor(handleBorderColor(mode, role, isDead, avatarSelect));
           setNicknameColor(handleNicknameColor(mode, isDead));
           finishRotation();
         }, flipDuration);

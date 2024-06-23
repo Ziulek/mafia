@@ -6,7 +6,7 @@ const OpenController = ({
 }: {
   renderContent: (isVisible: boolean) => ReactNode;
 }) => {
-  const [isVisible, setIsVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
 
   const handleOpen = () => setIsVisible(true);
   const handleClose = () => setIsVisible(false);

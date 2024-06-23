@@ -36,21 +36,24 @@ export default Header;
 
 const styles = StyleSheet.create({
   box: {
-    position: "absolute",
-    top: 0,
-    left: 0,
-    right: 0,
+    // position: "absolute",
+    flexShrink: 1,
+    // top: 0,
+    // left: 0,
+    // right: 0,
     // height: "20%",
 
     backgroundColor: "#EAECD6",
     alignItems: "center",
     justifyContent: "center",
+    paddingBottom: 30,
+    // paddingTop: 400,
   },
   container: {
     justifyContent: "center",
     alignItems: "center",
     width: "100%",
-    marginBottom: 30,
-    marginTop: 20,
+    // marginBottom: 30,
+    marginTop: 40,
   },
 });

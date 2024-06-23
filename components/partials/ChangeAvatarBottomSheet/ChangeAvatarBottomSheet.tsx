@@ -1,22 +1,18 @@
 import React, { useRef, useState } from "react";
-import { Dimensions, StyleSheet, View } from "react-native";
+import { Dimensions } from "react-native";
 import Carousel from "react-native-snap-carousel";
 import { BottomSheet } from "../../base/BottomSheet/BottomSheet";
 import AnimatedCharacterAvatar from "../AnimatedCharacterAvatar/AnimatedCharacterAvatar";
-import { Character } from "@/components/base/CharacterAvatar/CharacterAvatar";
+import { Character } from "@/components/types/Characters";
 
 type ChangeAvatarBottomSheetProps = {
   nickname: string;
-  onKick: () => void;
-  onKill: () => void;
 };
 
 const { width } = Dimensions.get("window");
 
 export const ChangeAvatarBottomSheet = ({
   nickname,
-  onKick,
-  onKill,
 }: ChangeAvatarBottomSheetProps) => {
   const [showBottomSheet, setShowBottomSheet] = useState(true);
 
@@ -33,8 +29,10 @@ export const ChangeAvatarBottomSheet = ({
 
   const carouselRef = useRef<Carousel<Character>>(null);
 
-  const handleAvatarPress = (index: number) => {
-    carouselRef.current?.snapToItem(index);
+  const handleSnapToItem = (index: number) => {
+    const snappedItem = AllAvailableCharacters[index];
+    console.log("Snapped to:", snappedItem);
+    // You can use snappedItem as needed here
   };
 
   return (
@@ -46,30 +44,26 @@ export const ChangeAvatarBottomSheet = ({
       <Carousel
         ref={carouselRef}
         data={AllAvailableCharacters}
-        renderItem={({ item, index }) => (
-          <AnimatedCharacterAvatar
-            character={item}
-            role="mafia" // or any default role
-            isDead={false} // or any default state
-            onPress={() => handleAvatarPress(index)} // Scrolls to the clicked avatar
-            mode="pressable" // or any default mode
-            nickname="Lorem Ipsum Dupol"
-          />
-        )}
+        renderItem={({ item }) => {
+          return (
+            <AnimatedCharacterAvatar
+              character={item}
+              role="mafia"
+              mode="pressable"
+              nickname={nickname}
+              avatarSelect={true}
+            />
+          );
+        }}
         sliderWidth={width}
         itemWidth={width * 0.45}
+        layout="default"
         loop={true}
-        inactiveSlideScale={0.94}
+        inactiveSlideScale={0.8}
         inactiveSlideOpacity={0.7}
-        enableMomentum={true}
-        activeSlideAlignment={"center"}
+        inactiveSlideShift={-10}
+        onSnapToItem={handleSnapToItem}
       />
     </BottomSheet>
   );
 };
-
-const styles = StyleSheet.create({
-  itemContainer: {
-    alignItems: "center",
-  },
-});

@@ -1,8 +1,7 @@
+import { Character } from "@/components/types/Characters";
+import { Role } from "@/components/types/Role";
 import React from "react";
 import { StyleSheet, Image } from "react-native";
-
-export type Character = "M1" | "M2" | "M3" | "M4" | "F1" | "F2" | "F3" | "F4";
-export type Role = "mafia" | "police" | "detective";
 
 type CharacterAvatarProps = {
   character: Character;

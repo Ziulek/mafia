@@ -13,31 +13,45 @@ interface SelectListItemProps {
 
 const SelectListItem: FC<SelectListItemProps> = ({
   items,
-  isMultiSelected = false, // do zrobienia
+  isMultiSelected = false,
 }) => {
   const [open, setOpen] = useState(false);
-  const [value, setValue] = useState<string[]>([]);
+  const [singleValue, setSingleValue] = useState<string | null>(null);
+  const [multiValue, setMultiValue] = useState<string[]>([]);
   const [dropDownItems, setDropDownItems] = useState(items);
+
+  const dropDownProps = isMultiSelected
+    ? {
+        multiple: true as true,
+        min: 0,
+        max: items.length,
+        value: multiValue,
+        setValue: setMultiValue,
+      }
+    : {
+        value: singleValue,
+        setValue: setSingleValue,
+      };
 
   return (
     <DropDownPicker
       placeholder="No extra roles"
-      multiple={true}
-      min={0}
-      max={4}
       open={open}
-      value={value}
       items={dropDownItems}
       setOpen={setOpen}
-      setValue={setValue}
       setItems={setDropDownItems}
       mode="BADGE"
       showBadgeDot={false}
+      {...dropDownProps}
+      // badgeStyle={{ backgroundColor: "red" }}
       // https://hossein-zare.github.io/react-native-dropdown-picker-website/docs/advanced/modes
-      // badgeColors={["white", "green", "red"]}
+
+      // badgeColors={["white", "green", "orange", "red"]}
     />
   );
 };
+
+export default SelectListItem;
 
 // const styles = StyleSheet.create({
 //   dropdownButtonStyle: {
@@ -80,5 +94,3 @@ const SelectListItem: FC<SelectListItemProps> = ({
 //     borderRadius: 8,
 //   },
 // });
-
-export default SelectListItem;

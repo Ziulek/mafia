@@ -23,14 +23,14 @@ export const PlayerActionsBottomSheet = ({
     >
       <ButtonGroup>
         <Button color="kill" onPress={onKill}>
-          {"Kill Player"}
+          Kill Player
         </Button>
         <Button color="secondary" onPress={onKick}>
-          {"Kick Player"}
+          Kick Player
         </Button>
 
         <Button color="back" onPress={() => setShowBottomSheet(false)}>
-          {"Cancel"}
+          Cancel
         </Button>
       </ButtonGroup>
     </BottomSheet>

@@ -1,21 +1,20 @@
 import React from "react";
 import { FlatList, StyleSheet, View } from "react-native";
 
-import {
-  Character,
-  Role,
-} from "@/components/base/CharacterAvatar/CharacterAvatar";
 import AnimatedCharacterAvatar from "../AnimatedCharacterAvatar/AnimatedCharacterAvatar";
+import { Character } from "@/components/types/Characters";
+import { Role } from "@/components/types/Role";
+import { Mode } from "@/components/types/mode";
 
 type AvatarGridItem = {
   character: Character;
   role: Role;
-  nickname?: string;
+  nickname: string;
   isDead: boolean;
 };
 
 type AvatarGridProps = {
-  mode: "default" | "revealed" | "pressable";
+  mode: Mode;
   onPressItem: (item: AvatarGridItem) => void;
   items: AvatarGridItem[];
 };
@@ -50,20 +49,17 @@ const styles = StyleSheet.create({
   grid: {
     justifyContent: "center",
     // paddingHorizontal: "10%",
-    backgroundColor: "green",
   },
   avatarContainer: {
     width: "45%",
     aspectRatio: 1,
     // marginHorizontal: "2.5%",
     marginVertical: 10,
-    backgroundColor: "blue",
   },
   column: {
     width: "100%",
     justifyContent: "space-between",
-    backgroundColor: "red",
-    borderColor: "purple",
+
     // borderWidth: 10,
   },
 });
