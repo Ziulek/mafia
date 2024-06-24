@@ -82,6 +82,41 @@ const players = [
     isDead: false,
     nickname: "Player8",
   },
+  {
+    id: "8",
+    character: "F4" as Character,
+    role: "mafia" as Role,
+    isDead: false,
+    nickname: "Player8",
+  },
+  {
+    id: "8",
+    character: "F4" as Character,
+    role: "mafia" as Role,
+    isDead: false,
+    nickname: "Player8",
+  },
+  {
+    id: "8",
+    character: "F4" as Character,
+    role: "mafia" as Role,
+    isDead: false,
+    nickname: "Player8",
+  },
+  {
+    id: "8",
+    character: "F4" as Character,
+    role: "mafia" as Role,
+    isDead: false,
+    nickname: "Player8",
+  },
+  {
+    id: "8",
+    character: "F4" as Character,
+    role: "mafia" as Role,
+    isDead: false,
+    nickname: "Player8",
+  },
 ];
 
 const gameState: GameState = {

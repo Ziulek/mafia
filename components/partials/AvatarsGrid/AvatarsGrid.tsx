@@ -4,7 +4,7 @@ import { FlatList, StyleSheet, View } from "react-native";
 import AnimatedCharacterAvatar from "../AnimatedCharacterAvatar/AnimatedCharacterAvatar";
 import { Character } from "@/components/types/Characters";
 import { Role } from "@/components/types/Role";
-import { Mode } from "@/components/types/mode";
+import { Mode } from "@/components/types/Mode";
 
 type AvatarGridItem = {
   character: Character;
@@ -41,6 +41,7 @@ const AvatarGrid = ({ mode, onPressItem, items }: AvatarGridProps) => {
       numColumns={2}
       contentContainerStyle={styles.grid}
       columnWrapperStyle={styles.column}
+      showsVerticalScrollIndicator={false}
     />
   );
 };
@@ -48,10 +49,10 @@ const AvatarGrid = ({ mode, onPressItem, items }: AvatarGridProps) => {
 const styles = StyleSheet.create({
   grid: {
     justifyContent: "center",
+    paddingTop: 230,
     // paddingHorizontal: "10%",
   },
   avatarContainer: {
-    width: "45%",
     aspectRatio: 1,
     // marginHorizontal: "2.5%",
     marginVertical: 10,
@@ -59,6 +60,7 @@ const styles = StyleSheet.create({
   column: {
     width: "100%",
     justifyContent: "space-between",
+    backgroundColor: "red",
 
     // borderWidth: 10,
   },

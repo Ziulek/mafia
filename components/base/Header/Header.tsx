@@ -1,6 +1,11 @@
-import React, { ReactNode, useRef, useEffect } from "react";
-import { Animated, StyleSheet, View } from "react-native";
+import React, { ReactNode, useEffect } from "react";
+import { StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withTiming,
+} from "react-native-reanimated";
 
 type HeaderProps = {
   isVisible: boolean;
@@ -8,24 +13,22 @@ type HeaderProps = {
 };
 
 export const Header = ({ children, isVisible }: HeaderProps) => {
-  const translateY = useRef(new Animated.Value(-100)).current; // Start off-screen
   const insets = useSafeAreaInsets();
+  const translateY = useSharedValue(-100); // Start off-screen
 
   useEffect(() => {
-    // Run the animation based on visibility state
-    Animated.timing(translateY, {
-      toValue: isVisible ? 0 : -500, // Adjust to fit your layout
-      duration: 500,
-      useNativeDriver: true,
-    }).start();
+    translateY.value = withTiming(isVisible ? 0 : -500, { duration: 500 }); // Adjust to fit your layout
   }, [isVisible]);
+
+  const animatedStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{ translateY: translateY.value }],
+    };
+  });
 
   return (
     <Animated.View
-      style={[
-        styles.box,
-        { transform: [{ translateY }], paddingTop: insets.top },
-      ]}
+      style={[styles.box, animatedStyle, { paddingTop: insets.top }]}
     >
       <View style={styles.container}>{children}</View>
     </Animated.View>
@@ -36,24 +39,19 @@ export default Header;
 
 const styles = StyleSheet.create({
   box: {
-    // position: "absolute",
-    flexShrink: 1,
-    // top: 0,
-    // left: 0,
-    // right: 0,
-    // height: "20%",
-
+    position: "absolute",
+    flex: 1,
+    height: "35%",
     backgroundColor: "#EAECD6",
     alignItems: "center",
     justifyContent: "center",
-    paddingBottom: 30,
-    // paddingTop: 400,
+    paddingBottom: 40,
+    // marginTop: 20,
+    zIndex: 100,
   },
   container: {
     justifyContent: "center",
     alignItems: "center",
     width: "100%",
-    // marginBottom: 30,
-    marginTop: 15,
   },
 });

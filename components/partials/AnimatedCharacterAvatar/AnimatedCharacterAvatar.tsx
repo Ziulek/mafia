@@ -2,7 +2,7 @@ import { CharacterAvatar } from "@/components/base/CharacterAvatar/CharacterAvat
 import CharacterNickname from "@/components/base/CharacterNickname/CharacterNickname";
 import { Character } from "@/components/types/Characters";
 import { Role } from "@/components/types/Role";
-import { Mode } from "@/components/types/mode";
+import { Mode } from "@/components/types/Mode";
 import React, { useEffect, useRef, useState } from "react";
 import { Dimensions, StyleSheet, TouchableHighlight, View } from "react-native";
 import Animated, {
@@ -27,7 +27,7 @@ export type AnimatedCharacterAvatarProps = {
   avatarSelect?: boolean;
 };
 
-const width = Dimensions.get("window").width * 0.45;
+const width = Dimensions.get("window").width * 0.4;
 
 export const AnimatedCharacterAvatar = ({
   character,
