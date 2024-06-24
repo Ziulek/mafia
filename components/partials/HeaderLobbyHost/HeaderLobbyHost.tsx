@@ -45,7 +45,7 @@ export const HeaderLobbyHost = ({
         </View>
 
         <View style={styles.itemsStyle}>
-          <SelectListItem items={items} />
+          <SelectListItem items={items} isMultiSelected={true} />
           <SwitchListItem
             title="Reveal roles after death "
             isOn={isSwitchOn}

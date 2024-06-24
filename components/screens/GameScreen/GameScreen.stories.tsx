@@ -95,10 +95,24 @@ const gameState: GameState = {
   winner: undefined,
 };
 
-export const Default: Story = {
+export const Host: Story = {
   args: {
     gameState,
     mode: "host",
+    onNewGame: () => console.log("New Game"),
+    onKillPlayer: (player) => console.log("Kill Player", player),
+    onKickPlayer: (player) => console.log("Kick Player", player),
+    onUpdateGameRules: (gameRules) =>
+      console.log("Update Game Rules", gameRules),
+    onUpdateCharacter: (character) =>
+      console.log("Update Character", character),
+  },
+};
+
+export const Player: Story = {
+  args: {
+    gameState,
+    mode: "player",
     onNewGame: () => console.log("New Game"),
     onKillPlayer: (player) => console.log("Kill Player", player),
     onKickPlayer: (player) => console.log("Kick Player", player),

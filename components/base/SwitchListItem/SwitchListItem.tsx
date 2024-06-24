@@ -19,9 +19,9 @@ export function SwitchListItem({ title, isOn, setIsOn }: SwitchListItemProps) {
       paddingLeft: 12,
     },
     switch: {
-      backgroundColor: isOn ? "#1fbb03" : "#232323",
+      backgroundColor: isOn ? "#0f0f0f" : "#232323",
 
-      borderColor: isOn ? "#1fbb03" : "#232323",
+      borderColor: isOn ? "#0f0f0f" : "#232323",
     },
     thumb: {
       backgroundColor: "#EAECD6",
@@ -39,7 +39,8 @@ export function SwitchListItem({ title, isOn, setIsOn }: SwitchListItemProps) {
         }}
         style={styles.switch}
       >
-        <Switch.Thumb animation="quicker" style={styles.thumb} />
+        {/* <Switch.Thumb animation="quicker" style={styles.thumb} /> */}
+        <Switch.Thumb animation="quickest" style={styles.thumb} />
       </Switch>
     </View>
   );
