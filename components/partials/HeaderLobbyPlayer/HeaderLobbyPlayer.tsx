@@ -40,7 +40,11 @@ export const HeaderLobbyPlayer = ({
 
 const styles = StyleSheet.create({
   container: {
+    paddingTop: 30,
+    paddingBottom: 5,
+
     alignItems: "center",
+    width: "100%",
   },
   inlineText: {
     flexDirection: "row",

@@ -7,19 +7,23 @@ type PlayerActionsBottomSheetProps = {
   nickname: string;
   onKick: () => void;
   onKill: () => void;
+  isVisible: boolean;
+  setIsVisible: (e: boolean) => void;
 };
 
 export const PlayerActionsBottomSheet = ({
   nickname,
   onKick,
   onKill,
+  isVisible,
+  setIsVisible,
 }: PlayerActionsBottomSheetProps) => {
-  const [showBottomSheet, setShowBottomSheet] = useState(true);
+  // const [showBottomSheet, setShowBottomSheet] = useState(true);
   return (
     <BottomSheet
       title={nickname}
-      handleClose={() => setShowBottomSheet(false)}
-      isVisible={showBottomSheet}
+      handleClose={() => setIsVisible(false)}
+      isVisible={isVisible}
     >
       <ButtonGroup>
         <Button color="kill" onPress={onKill}>
@@ -29,7 +33,7 @@ export const PlayerActionsBottomSheet = ({
           Kick Player
         </Button>
 
-        <Button color="back" onPress={() => setShowBottomSheet(false)}>
+        <Button color="back" onPress={() => setIsVisible(false)}>
           Cancel
         </Button>
       </ButtonGroup>

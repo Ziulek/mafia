@@ -7,16 +7,22 @@ export type ButtonProps = {
   isBold?: boolean;
   isDisabled?: boolean;
   color: "accent" | "primary" | "kill" | "secondary" | "back";
-  onPress: () => void;
+  PressOutDelay?: number;
   onLongPress?: () => void;
+  onPressOut?: () => void;
+  onPressIn?: () => void;
+  onPress?: () => void;
 };
 
 export const Button = ({
   isBold = false,
   isDisabled = false,
   color,
-  onPress,
+  PressOutDelay = 0,
   onLongPress = () => {},
+  onPressOut = () => {},
+  onPressIn = () => {},
+  onPress = () => {},
   children,
 }: ButtonProps) => {
   let buttonColor: string;
@@ -67,6 +73,9 @@ export const Button = ({
       style={styles.button}
       onPress={() => onPress()}
       onLongPress={() => onLongPress()}
+      onPressIn={() => onPressIn()}
+      delayPressOut={PressOutDelay}
+      onPressOut={() => onPressOut()}
     >
       <Text size="button" isBold={isBold} color={textColor}>
         {children}

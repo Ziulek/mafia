@@ -1,34 +1,35 @@
 import React from "react";
 import { FlatList, StyleSheet, View } from "react-native";
-
 import AnimatedCharacterAvatar from "../AnimatedCharacterAvatar/AnimatedCharacterAvatar";
-import { Character } from "@/components/types/Characters";
-import { Role } from "@/components/types/Role";
 import { Mode } from "@/components/types/Mode";
-
-type AvatarGridItem = {
-  character: Character;
-  role: Role;
-  nickname: string;
-  isDead: boolean;
-};
+import { Player } from "@/components/types/Player";
+import { SharedValue } from "react-native-reanimated";
 
 type AvatarGridProps = {
   mode: Mode;
-  onPressItem: (item: AvatarGridItem) => void;
-  items: AvatarGridItem[];
+  revealRolesAnimation: SharedValue<number>;
+  onPressItem: (item: Player) => void;
+  items: Player[];
 };
 
-const AvatarGrid = ({ mode, onPressItem, items }: AvatarGridProps) => {
-  const renderItem = ({ item }: { item: AvatarGridItem }) => (
+const AvatarGrid = ({
+  mode,
+  onPressItem,
+  items,
+  revealRolesAnimation,
+}: AvatarGridProps) => {
+  const renderItem = ({ item }: { item: Player }) => (
     <View style={styles.avatarContainer}>
       <AnimatedCharacterAvatar
+        revealRolesAnimation={
+          mode === "revealed" ? revealRolesAnimation : undefined
+        }
         character={item.character}
         role={item.role}
         nickname={item.nickname}
         isDead={item.isDead}
         onPress={() => onPressItem(item)}
-        mode={mode}
+        isPressable={mode === "pressable"}
       />
     </View>
   );
@@ -49,7 +50,7 @@ const AvatarGrid = ({ mode, onPressItem, items }: AvatarGridProps) => {
 const styles = StyleSheet.create({
   grid: {
     justifyContent: "center",
-    paddingTop: 230,
+    // paddingTop: 230,
     // paddingHorizontal: "10%",
   },
   avatarContainer: {
@@ -60,7 +61,6 @@ const styles = StyleSheet.create({
   column: {
     width: "100%",
     justifyContent: "space-between",
-    backgroundColor: "red",
 
     // borderWidth: 10,
   },

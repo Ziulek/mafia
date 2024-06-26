@@ -12,18 +12,21 @@ import Animated, {
   withTiming,
   Easing,
   ReduceMotion,
+  SharedValue,
 } from "react-native-reanimated";
+import {
+  handleBorderColor,
+  handleNicknameColor,
+} from "./AnimatedCharacterAvatar.utils";
 
 export type AnimatedCharacterAvatarProps = {
   character: Character;
-  role: Role;
+  role?: Role;
   nickname?: string;
   isDead?: boolean;
+  revealRolesAnimation?: SharedValue<number>;
   onPress?: () => void;
-  // default = shows always police form
-  // revealed = shows real role
-  // pressable = shows real role on press
-  mode: Mode;
+  isPressable?: boolean;
   avatarSelect?: boolean;
 };
 
@@ -31,193 +34,137 @@ const width = Dimensions.get("window").width * 0.4;
 
 export const AnimatedCharacterAvatar = ({
   character,
-  role,
+  role = "police",
   nickname,
   isDead = false,
+  revealRolesAnimation,
   onPress,
-  mode,
+  isPressable,
   avatarSelect,
 }: AnimatedCharacterAvatarProps) => {
-  const [activeCharacter, setActiveCharacter] = useState<Character>(character);
-  const [activeRole, setActiveRole] = useState<Role>("police");
-  const [activeDead, setActiveDead] = useState<boolean>(isDead);
-  const [borderColor, setBorderColor] = useState(
-    avatarSelect ? "white" : "#EAECD6"
-  );
   const [wasPressed, setWasPressed] = useState(false);
-  const [nicknameColor, setNicknameColor] = useState<"black" | "white">(
-    "black"
-  );
   const rotate = useSharedValue(0);
   const flipDuration = 500;
+
   const configFlip = {
-    duration: flipDuration,
+    duration: 1000,
     easing: Easing.linear,
     reduceMotion: ReduceMotion.System,
   };
 
-  const FlipAnimationStyles = useAnimatedStyle(() => {
-    const rotateValue = interpolate(rotate.value, [0, 1], [0, 90]);
+  const statefulStyles = StyleSheet.create({
+    defaultBorder: {
+      borderRadius: 999,
+      borderWidth: width / 9,
+      borderColor: handleBorderColor("default", role, isDead, avatarSelect),
+    },
+    revealedBorder: {
+      borderRadius: 999,
+      borderWidth: width / 9,
+      borderColor: handleBorderColor("revealed", role, isDead, avatarSelect),
+    },
+  });
+
+  const frontAnimatedStyles = useAnimatedStyle(() => {
+    const rotateValue = interpolate(
+      revealRolesAnimation ? revealRolesAnimation.value : rotate.value,
+      [0, 1],
+      [0, 180]
+    );
     return {
-      // flex: 1,
-      // flexShrink: 1,
-      width: width,
-      aspectRatio: 1,
       transform: [
         {
           rotateY: `${rotateValue}deg`,
         },
       ],
     };
-  });
+  }, [revealRolesAnimation]);
 
-  const styles = StyleSheet.create({
-    border: {
-      borderRadius: 999,
-      borderWidth: width / 9,
-      borderColor: borderColor,
-      // borderBottomColor: borderColor,
-    },
-  });
-
-  const handleBorderColor = (
-    mode: string,
-    role: string,
-    isDead: boolean,
-    avatarSelect?: boolean
-  ) => {
-    let newColor;
-
-    if (isDead) {
-      newColor = "#000";
-    } else if (avatarSelect && (mode === "default" || mode === "pressable")) {
-      newColor = "white";
-    } else {
-      switch (mode) {
-        case "default":
-          newColor = "#EAECD6";
-          break;
-        case "revealed":
-          if (role === "police") {
-            newColor = "#208197";
-          } else if (role === "mafia") {
-            newColor = "#A14141";
-          } else if (role === "detective") {
-            newColor = "#284e93";
-          } else {
-            newColor = "#EAECD6";
-          }
-          break;
-
-        default:
-          newColor = "#EAECD6";
-          break;
-      }
-    }
-    return newColor;
-  };
-
-  const handleNicknameColor = (mode: string, isDead: boolean) => {
-    let newColor: "white" | "black";
-
-    if (isDead) {
-      newColor = "white";
-    } else if (mode !== "revealed") {
-      newColor = "black";
-    } else {
-      newColor = "white";
-    }
-    return newColor;
-  };
-
-  const isFirstRender = useRef(true);
-
-  const startRotation = () => {
-    rotate.value = withTiming(1, configFlip);
-  };
-  const finishRotation = () => {
-    rotate.value = withTiming(0, configFlip);
-  };
-
-  useEffect(() => {
-    if (isFirstRender.current) {
-      isFirstRender.current = false;
-      return;
-    }
-
-    startRotation();
-    setTimeout(() => {
-      setActiveDead(isDead);
-      setActiveCharacter(character);
-      setActiveRole(
-        mode === "default" || mode === "pressable" ? "police" : role
-      );
-
-      setBorderColor(handleBorderColor(mode, role, isDead, avatarSelect));
-      setNicknameColor(handleNicknameColor(mode, isDead));
-      finishRotation();
-    }, flipDuration);
-  }, [character, role, mode, isDead]);
-
-  const handleLongPress = () => {
-    if (mode === "pressable") {
-      startRotation();
-      setWasPressed(true);
-      setTimeout(() => {
-        setActiveDead(isDead);
-        setActiveCharacter(character);
-        setActiveRole(role);
-        setBorderColor(
-          handleBorderColor("revealed", role, isDead, avatarSelect)
-        );
-        setNicknameColor("white");
-        finishRotation();
-      }, flipDuration);
-    }
-  };
-
-  const handlePressOut = () => {
-    if (mode === "pressable" && wasPressed) {
-      setTimeout(() => {
-        startRotation();
-        setWasPressed(false);
-        setTimeout(() => {
-          setActiveDead(isDead);
-          setActiveCharacter(character);
-          setActiveRole("police");
-          setBorderColor(handleBorderColor(mode, role, isDead, avatarSelect));
-          setNicknameColor(handleNicknameColor(mode, isDead));
-          finishRotation();
-        }, flipDuration);
-      }, flipDuration);
-    }
-  };
+  const backAnimatedStyles = useAnimatedStyle(() => {
+    const rotateValue = interpolate(
+      revealRolesAnimation ? revealRolesAnimation.value : rotate.value,
+      [0, 1],
+      [180, 360]
+    );
+    return {
+      transform: [
+        {
+          rotateY: `${rotateValue}deg`,
+        },
+      ],
+    };
+  }, [revealRolesAnimation]);
 
   return (
-    <Animated.View style={FlipAnimationStyles}>
-      <TouchableHighlight
-        style={{ borderRadius: 9999 }}
-        onPress={onPress}
-        delayLongPress={1000}
-        onLongPress={handleLongPress}
-        onPressOut={handlePressOut}
-        disabled={mode === "pressable" ? false : true}
-      >
-        <View>
-          <View style={styles.border}>
-            <CharacterAvatar
-              character={activeCharacter}
-              role={activeRole}
-              isDead={activeDead}
-            />
+    <TouchableHighlight
+      style={{ borderRadius: 9999, backgroundColor: "transparent" }}
+      onPress={onPress}
+      delayLongPress={300}
+      onLongPress={() => {
+        if (rotate.value === 0) {
+          rotate.value = withTiming(1, configFlip);
+        }
+      }}
+      onPressIn={() => {
+        if (rotate.value > 0) {
+          rotate.value = withTiming(1, configFlip);
+        }
+      }}
+      onPressOut={() => {
+        rotate.value = withTiming(0, configFlip);
+      }}
+      disabled={isPressable}
+    >
+      <View>
+        <Animated.View style={[styles.frontcard, frontAnimatedStyles]}>
+          <View style={{ width: width, aspectRatio: 1 }}>
+            <View style={statefulStyles.defaultBorder}>
+              <CharacterAvatar
+                character={character}
+                role={"police"}
+                isDead={isDead}
+              />
+            </View>
+            {nickname && (
+              <CharacterNickname
+                nickname={nickname}
+                color={handleNicknameColor("default", isDead)}
+              />
+            )}
           </View>
-          {nickname && (
-            <CharacterNickname nickname={nickname} color={nicknameColor} />
-          )}
-        </View>
-      </TouchableHighlight>
-    </Animated.View>
+        </Animated.View>
+
+        <Animated.View style={[styles.backCard, backAnimatedStyles]}>
+          <View style={{ width: width, aspectRatio: 1 }}>
+            <View style={statefulStyles.revealedBorder}>
+              <CharacterAvatar
+                character={character}
+                role={role}
+                isDead={isDead}
+              />
+            </View>
+            {nickname && (
+              <CharacterNickname
+                nickname={nickname}
+                color={handleNicknameColor("revealed", isDead)}
+              />
+            )}
+          </View>
+        </Animated.View>
+      </View>
+    </TouchableHighlight>
   );
 };
 
 export default AnimatedCharacterAvatar;
+const styles = StyleSheet.create({
+  frontcard: {
+    position: "absolute",
+    backfaceVisibility: "hidden",
+    backgroundColor: "transparent",
+  },
+  backCard: {
+    backfaceVisibility: "hidden",
+    backgroundColor: "transparent",
+  },
+});

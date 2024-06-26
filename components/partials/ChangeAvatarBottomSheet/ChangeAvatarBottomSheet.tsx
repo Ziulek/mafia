@@ -6,16 +6,20 @@ import AnimatedCharacterAvatar from "../AnimatedCharacterAvatar/AnimatedCharacte
 import { Character } from "@/components/types/Characters";
 
 type ChangeAvatarBottomSheetProps = {
-  nickname: string;
+  nickname?: string;
+  isVisible: boolean;
+  setIsVisible: (e: boolean) => void;
+  onCharacterSelected: (character: Character) => void;
 };
 
 const { width } = Dimensions.get("window");
 
 export const ChangeAvatarBottomSheet = ({
-  nickname,
+  nickname = "No Nick Found",
+  isVisible,
+  setIsVisible,
+  onCharacterSelected,
 }: ChangeAvatarBottomSheetProps) => {
-  const [showBottomSheet, setShowBottomSheet] = useState(true);
-
   const AllAvailableCharacters: Character[] = [
     "M1",
     "M2",
@@ -32,14 +36,15 @@ export const ChangeAvatarBottomSheet = ({
   const handleSnapToItem = (index: number) => {
     const snappedItem = AllAvailableCharacters[index];
     console.log("Snapped to:", snappedItem);
+    onCharacterSelected(snappedItem);
     // You can use snappedItem as needed here
   };
 
   return (
     <BottomSheet
       title={nickname}
-      handleClose={() => setShowBottomSheet(false)}
-      isVisible={showBottomSheet}
+      handleClose={() => setIsVisible(false)}
+      isVisible={isVisible}
     >
       <Carousel
         ref={carouselRef}
@@ -49,14 +54,14 @@ export const ChangeAvatarBottomSheet = ({
             <AnimatedCharacterAvatar
               character={item}
               role="mafia"
-              mode="pressable"
+              isPressable
               nickname={nickname}
               avatarSelect={true}
             />
           );
         }}
         sliderWidth={width}
-        itemWidth={width * 0.45}
+        itemWidth={width * 0.4}
         layout="default"
         loop={true}
         inactiveSlideScale={0.8}

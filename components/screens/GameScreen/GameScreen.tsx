@@ -1,12 +1,26 @@
-import Button from "@/components/base/Button/Button";
-import Text from "@/components/base/Text/Text";
-import AvatarGrid from "@/components/partials/AvatarsGrid/AvatarsGrid";
+import { PlayerActionsBottomSheet } from "@/components/partials/PlayerActionsBottomSheet/PlayerActionsBottomSheet";
+import { ChangeAvatarBottomSheet } from "@/components/partials/ChangeAvatarBottomSheet/ChangeAvatarBottomSheet";
+import { HeaderLobbyPlayer } from "@/components/partials/HeaderLobbyPlayer/HeaderLobbyPlayer";
 import { HeaderLobbyHost } from "@/components/partials/HeaderLobbyHost/HeaderLobbyHost";
+import AvatarGrid from "@/components/partials/AvatarsGrid/AvatarsGrid";
 import { Character } from "@/components/types/Characters";
-import { Role } from "@/components/types/Role";
-import { FC, useEffect, useRef, useState } from "react";
-import { Animated, ImageBackground, StyleSheet, View } from "react-native";
+import Button from "@/components/base/Button/Button";
+import { Player } from "@/components/types/Player";
+import { Mode } from "@/components/types/Mode";
+
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { ImageBackground, StyleSheet, View } from "react-native";
+import { FC, useEffect, useState } from "react";
+import { StatusBar } from "react-native";
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withTiming,
+  Easing,
+  ReduceMotion,
+  runOnJS,
+} from "react-native-reanimated";
+import { HeaderResult } from "@/components/partials/HeaderResult/HeaderResult";
 
 type GameScreenProps = {
   gameState: GameState;
@@ -19,7 +33,7 @@ type GameScreenProps = {
   onUpdateGameRules: (gameRules: GameRules) => void;
 
   // player
-  player?: Player;
+  playerID?: string;
   onUpdateCharacter: (character: Character) => void;
 };
 
@@ -38,14 +52,6 @@ type GameRules = {
 
 type ExtraRole = "detective" | "medic" | "serialKiller" | "medium";
 
-type Player = {
-  id: string;
-  character: Character;
-  role: Role;
-  isDead: boolean;
-  nickname: string;
-};
-
 export const GameScreen: FC<GameScreenProps> = ({
   gameState,
   mode,
@@ -53,48 +59,205 @@ export const GameScreen: FC<GameScreenProps> = ({
   onKillPlayer,
   onKickPlayer,
   onUpdateGameRules,
-  player,
+  playerID,
   onUpdateCharacter,
 }) => {
   const [isHeaderVisible, setIsHeaderVisible] = useState(true);
+  const [isBottomSheetVisible, setIsBottomSheetVisible] = useState(false);
+  const [isAvatarSelectVisible, setIsAvatarSelectVisible] = useState(false);
+  const [selectedPlayer, setSelectedPlayer] = useState<Player | null>(null);
+  const [players, setPlayers] = useState<Player[]>(gameState.players);
+  const [winner, setWinner] = useState(gameState.winner);
+
+  const [avatarGridMode, setAvatarGridMode] = useState<Mode>("default");
+
+  const insets = useSafeAreaInsets();
+  const paddingTop = useSharedValue(mode === "host" ? 270 : 200); // Initial paddingTop value
+  const config = {
+    duration: 500,
+    easing: Easing.linear,
+  };
+
+  const currentPlayer = players.find((player) => player.id === playerID);
+
+  const HandleStartGame = () => {
+    setIsHeaderVisible(false);
+    gameState.stage = "game";
+    setAvatarGridMode("pressable");
+  };
+
+  const revealRolesAnimation = useSharedValue(0);
+
+  const HandleAvatarChange = () => {
+    setIsAvatarSelectVisible(true);
+  };
+
+  const HandleAvatarData = (item: Player) => {
+    console.log(item);
+    setSelectedPlayer(item);
+    setIsBottomSheetVisible(true);
+  };
+
+  const HandleOnKill = (item: Player) => {
+    console.log(`Player ${item.id} was killed`);
+    setPlayers((prevPlayers) =>
+      prevPlayers.map((player) =>
+        player.id === item.id ? { ...player, isDead: true } : player
+      )
+    );
+    setIsBottomSheetVisible(false);
+  };
+
+  const HandleOnKick = (item: Player) => {
+    console.log(`Player ${item.id} was kicked`);
+    setPlayers((prevPlayers) =>
+      prevPlayers.filter((player) => player.id !== item.id)
+    );
+    setIsBottomSheetVisible(false);
+  };
+
+  const HandleCharacterSelect = (character: Character) => {
+    setPlayers((prevPlayers) =>
+      prevPlayers.map((player) =>
+        player.id === playerID ? { ...player, character } : player
+      )
+    );
+    onUpdateCharacter(character);
+  };
+
+  useEffect(() => {
+    // Update paddingTop based on header visibility
+    paddingTop.value = withTiming(
+      isHeaderVisible ? (mode === "host" ? 270 : 200) : winner ? 110 : 0,
+      config
+    );
+  }, [isHeaderVisible, winner]);
+
+  const animatedStyle = useAnimatedStyle(() => {
+    return {
+      paddingTop: paddingTop.value,
+    };
+  });
+
+  const backgroundStyle = {
+    marginTop: -insets.top,
+    marginBottom: -insets.bottom,
+  };
 
   return (
     <>
-      <View>
-        <HeaderLobbyHost
-          players={gameState.players.length}
-          gameCode={gameState.gameCode}
-          isVisible={isHeaderVisible}
-        />
-
-        <View style={styles.overlay}>
-          <View style={styles.AvatarGrid}>
-            <AvatarGrid
-              mode={"pressable"}
-              onPressItem={() => console.log("aha")}
-              items={gameState.players}
+      <StatusBar
+        animated={true}
+        barStyle={isHeaderVisible ? "dark-content" : "light-content"}
+      />
+      <ImageBackground
+        source={require("@/assets/images/Backgrounds/GameScreenBackground.png")} // Replace with your image path
+        style={[styles.background, backgroundStyle]}
+        resizeMode="cover"
+      >
+        <View>
+          {mode === "host" && (
+            <HeaderLobbyHost
+              players={players.length}
+              gameCode={gameState.gameCode}
+              isVisible={isHeaderVisible}
             />
+          )}
+          {mode === "player" && (
+            <HeaderLobbyPlayer
+              players={players.length}
+              gameCode={gameState.gameCode}
+              isVisible={isHeaderVisible}
+            />
+          )}
+          {winner && (
+            <HeaderResult
+              winner={winner}
+              isVisible={typeof winner === "string"}
+            />
+          )}
+          <View style={styles.overlay}>
+            <Animated.View style={[styles.AvatarGrid, animatedStyle]}>
+              <AvatarGrid
+                mode={avatarGridMode}
+                revealRolesAnimation={revealRolesAnimation}
+                onPressItem={HandleAvatarData}
+                items={players}
+              />
+            </Animated.View>
           </View>
         </View>
-      </View>
-      <View style={styles.buttonStyle}>
-        <Button
-          color="accent"
-          onPress={() => {
-            setIsHeaderVisible((x) => !x);
-          }}
-        >
-          Start Game
-        </Button>
-      </View>
+
+        <View style={styles.buttonStyle}>
+          {mode === "player" && (
+            <Button color="accent" onPress={() => HandleAvatarChange()}>
+              Change Avatar
+            </Button>
+          )}
+
+          {gameState.stage === "waitingForPlayers" && mode === "host" && (
+            <Button color="accent" onPress={() => HandleStartGame()}>
+              Start Game
+            </Button>
+          )}
+
+          {gameState.stage === "game" && mode === "host" && (
+            <Button
+              color="primary"
+              // onPress={() => setWinner("mafia")}
+              onPressIn={() => {
+                setAvatarGridMode("revealed");
+                revealRolesAnimation.value = withTiming(1, {
+                  duration: 1000,
+                  easing: Easing.linear,
+                  reduceMotion: ReduceMotion.System,
+                });
+              }}
+              PressOutDelay={1000}
+              onPressOut={() => {
+                revealRolesAnimation.value = withTiming(
+                  0,
+                  {
+                    duration: 1000,
+                    easing: Easing.linear,
+                    reduceMotion: ReduceMotion.System,
+                  },
+                  () => {
+                    // happens on end of the animation
+                    runOnJS(setAvatarGridMode)("pressable");
+                  }
+                );
+              }}
+            >
+              Show Roles
+            </Button>
+          )}
+        </View>
+
+        {mode === "player" && playerID && isAvatarSelectVisible && (
+          <ChangeAvatarBottomSheet
+            nickname={currentPlayer?.nickname}
+            isVisible={isAvatarSelectVisible}
+            setIsVisible={setIsAvatarSelectVisible}
+            onCharacterSelected={HandleCharacterSelect}
+          />
+        )}
+
+        {selectedPlayer && mode === "host" && (
+          <PlayerActionsBottomSheet
+            nickname={selectedPlayer.nickname}
+            onKill={() => HandleOnKill(selectedPlayer)}
+            onKick={() => HandleOnKick(selectedPlayer)}
+            isVisible={isBottomSheetVisible}
+            setIsVisible={setIsBottomSheetVisible}
+          />
+        )}
+      </ImageBackground>
     </>
   );
 };
 
 const styles = StyleSheet.create({
-  AvatarGridContainerFull: { flexGrow: 1, backgroundColor: "red" },
-  AvatarGridContainer: {},
-
   overlay: {
     backgroundColor: "rgba(0,0,0,0.5)",
   },
@@ -104,14 +267,12 @@ const styles = StyleSheet.create({
     height: "100%",
   },
   AvatarGrid: {
-    paddingTop: 50,
+    marginTop: 50,
     paddingHorizontal: 20,
-    // marginHorizontal:10 ,
   },
-
   buttonStyle: {
     position: "absolute",
-    bottom: 20,
+    bottom: 50,
     left: 15,
     right: 15,
     justifyContent: "center",
@@ -119,14 +280,4 @@ const styles = StyleSheet.create({
   },
 });
 
-// <ImageBackground
-//   source={require("@/assets/images/Backgrounds/GameScreenBackground.png")} // Replace with your image path
-//   style={styles.background}
-//   resizeMode="cover"
-// > owrapowac cos  </ImageBackground>
-
-// {/* <HeaderLobbyHost
-// players={gameState.players.length}
-// gameCode={gameState.gameCode}
-// isVisible={isHeaderVisible}
-// /> */}
+export default GameScreen;

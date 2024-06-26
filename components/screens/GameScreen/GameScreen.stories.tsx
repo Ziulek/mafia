@@ -15,9 +15,6 @@ const meta: Meta<typeof GameScreen> = {
     gameState: {
       control: "object",
     },
-    player: {
-      control: "object",
-    },
   },
 };
 
@@ -25,11 +22,13 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
+const playerID = "1";
+
 const players = [
   {
     id: "1",
     character: "M1" as Character,
-    role: "police" as Role,
+
     isDead: false,
     nickname: "Player1",
   },
@@ -83,35 +82,42 @@ const players = [
     nickname: "Player8",
   },
   {
-    id: "8",
+    id: "9",
     character: "F4" as Character,
     role: "mafia" as Role,
     isDead: false,
     nickname: "Player8",
   },
   {
-    id: "8",
+    id: "10",
     character: "F4" as Character,
     role: "mafia" as Role,
     isDead: false,
     nickname: "Player8",
   },
   {
-    id: "8",
+    id: "11",
     character: "F4" as Character,
     role: "mafia" as Role,
     isDead: false,
     nickname: "Player8",
   },
   {
-    id: "8",
+    id: "12",
     character: "F4" as Character,
     role: "mafia" as Role,
     isDead: false,
     nickname: "Player8",
   },
   {
-    id: "8",
+    id: "13",
+    character: "F4" as Character,
+    role: "mafia" as Role,
+    isDead: false,
+    nickname: "Player8",
+  },
+  {
+    id: "14",
     character: "F4" as Character,
     role: "mafia" as Role,
     isDead: false,
@@ -155,5 +161,6 @@ export const Player: Story = {
       console.log("Update Game Rules", gameRules),
     onUpdateCharacter: (character) =>
       console.log("Update Character", character),
+    playerID,
   },
 };
