@@ -7,7 +7,6 @@ import { Character } from "@/components/types/Characters";
 import Button from "@/components/base/Button/Button";
 import { Player } from "@/components/types/Player";
 import { Mode } from "@/components/types/Mode";
-
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { ImageBackground, StyleSheet, View } from "react-native";
 import { FC, useEffect, useState } from "react";
@@ -92,7 +91,7 @@ export const GameScreen: FC<GameScreenProps> = ({
     setIsAvatarSelectVisible(true);
   };
 
-  const HandleAvatarData = (item: Player) => {
+  const HandleSelectPlayer = (item: Player) => {
     console.log(item);
     setSelectedPlayer(item);
     setIsBottomSheetVisible(true);
@@ -151,8 +150,8 @@ export const GameScreen: FC<GameScreenProps> = ({
         barStyle={isHeaderVisible ? "dark-content" : "light-content"}
       />
       <ImageBackground
-        source={require("@/assets/images/Backgrounds/GameScreenBackground.png")} // Replace with your image path
-        style={[styles.background, backgroundStyle]}
+        source={require("@/assets/images/Backgrounds/GameScreenBackground.png")}
+        style={backgroundStyle}
         resizeMode="cover"
       >
         <View>
@@ -181,30 +180,31 @@ export const GameScreen: FC<GameScreenProps> = ({
               <AvatarGrid
                 mode={avatarGridMode}
                 revealRolesAnimation={revealRolesAnimation}
-                onPressItem={HandleAvatarData}
+                onPressItem={HandleSelectPlayer}
                 items={players}
               />
             </Animated.View>
           </View>
         </View>
 
-        <View style={styles.buttonStyle}>
+        <View style={styles.button}>
+          {/* Player Side Change Avatar Button */}
           {mode === "player" && (
             <Button color="accent" onPress={() => HandleAvatarChange()}>
               Change Avatar
             </Button>
           )}
-
+          {/* Host Side Start Game Button */}
           {gameState.stage === "waitingForPlayers" && mode === "host" && (
             <Button color="accent" onPress={() => HandleStartGame()}>
               Start Game
             </Button>
           )}
 
+          {/* Host Side Show Roles Button */}
           {gameState.stage === "game" && mode === "host" && (
             <Button
               color="primary"
-              // onPress={() => setWinner("mafia")}
               onPressIn={() => {
                 setAvatarGridMode("revealed");
                 revealRolesAnimation.value = withTiming(1, {
@@ -232,6 +232,25 @@ export const GameScreen: FC<GameScreenProps> = ({
               Show Roles
             </Button>
           )}
+          {/* Both Sides New Game Button */}
+          {gameState.stage === "result" && (
+            <Button color="accent" onPress={() => HandleStartGame()}>
+              New Game
+            </Button>
+          )}
+        </View>
+        {/* Temp Set Winner Button */}
+        <View style={styles.buttonTemp}>
+          <Button
+            color="kill"
+            onPress={() => {
+              gameState.stage = "result";
+              setWinner("mafia");
+              setAvatarGridMode("revealed");
+            }}
+          >
+            Set Winner
+          </Button>
         </View>
 
         {mode === "player" && playerID && isAvatarSelectVisible && (
@@ -261,18 +280,21 @@ const styles = StyleSheet.create({
   overlay: {
     backgroundColor: "rgba(0,0,0,0.5)",
   },
-  background: {
-    flex: 1,
-    width: "100%",
-    height: "100%",
-  },
   AvatarGrid: {
     marginTop: 50,
     paddingHorizontal: 20,
   },
-  buttonStyle: {
+  button: {
     position: "absolute",
     bottom: 50,
+    left: 15,
+    right: 15,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  buttonTemp: {
+    position: "absolute",
+    bottom: 110,
     left: 15,
     right: 15,
     justifyContent: "center",

@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
 import { Dimensions } from "react-native";
 import Carousel from "react-native-snap-carousel";
 import { BottomSheet } from "../../base/BottomSheet/BottomSheet";
@@ -55,7 +55,6 @@ export const ChangeAvatarBottomSheet = ({
               character={item}
               role="mafia"
               isPressable
-              nickname={nickname}
               avatarSelect={true}
             />
           );

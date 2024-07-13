@@ -40,7 +40,6 @@ const AvatarGrid = ({
       renderItem={renderItem}
       keyExtractor={(item, index) => index.toString()}
       numColumns={2}
-      contentContainerStyle={styles.grid}
       columnWrapperStyle={styles.column}
       showsVerticalScrollIndicator={false}
     />
@@ -48,21 +47,12 @@ const AvatarGrid = ({
 };
 
 const styles = StyleSheet.create({
-  grid: {
-    justifyContent: "center",
-    // paddingTop: 230,
-    // paddingHorizontal: "10%",
-  },
   avatarContainer: {
-    aspectRatio: 1,
-    // marginHorizontal: "2.5%",
     marginVertical: 10,
   },
   column: {
     width: "100%",
     justifyContent: "space-between",
-
-    // borderWidth: 10,
   },
 });
 

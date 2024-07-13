@@ -14,6 +14,5 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "space-evenly",
     width: "100%",
-    // gap: 20,
   },
 });

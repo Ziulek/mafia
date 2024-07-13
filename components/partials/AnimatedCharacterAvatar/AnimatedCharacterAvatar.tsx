@@ -2,8 +2,7 @@ import { CharacterAvatar } from "@/components/base/CharacterAvatar/CharacterAvat
 import CharacterNickname from "@/components/base/CharacterNickname/CharacterNickname";
 import { Character } from "@/components/types/Characters";
 import { Role } from "@/components/types/Role";
-import { Mode } from "@/components/types/Mode";
-import React, { useEffect, useRef, useState } from "react";
+import React from "react";
 import { Dimensions, StyleSheet, TouchableHighlight, View } from "react-native";
 import Animated, {
   interpolate,
@@ -42,9 +41,7 @@ export const AnimatedCharacterAvatar = ({
   isPressable,
   avatarSelect,
 }: AnimatedCharacterAvatarProps) => {
-  const [wasPressed, setWasPressed] = useState(false);
   const rotate = useSharedValue(0);
-  const flipDuration = 500;
 
   const configFlip = {
     duration: 1000,
@@ -54,13 +51,9 @@ export const AnimatedCharacterAvatar = ({
 
   const statefulStyles = StyleSheet.create({
     defaultBorder: {
-      borderRadius: 999,
-      borderWidth: width / 9,
       borderColor: handleBorderColor("default", role, isDead, avatarSelect),
     },
     revealedBorder: {
-      borderRadius: 999,
-      borderWidth: width / 9,
       borderColor: handleBorderColor("revealed", role, isDead, avatarSelect),
     },
   });
@@ -97,7 +90,8 @@ export const AnimatedCharacterAvatar = ({
 
   return (
     <TouchableHighlight
-      style={{ borderRadius: 9999, backgroundColor: "transparent" }}
+      style={{ borderRadius: 999 }}
+      underlayColor={"transparent"}
       onPress={onPress}
       delayLongPress={300}
       onLongPress={() => {
@@ -113,43 +107,42 @@ export const AnimatedCharacterAvatar = ({
       onPressOut={() => {
         rotate.value = withTiming(0, configFlip);
       }}
-      disabled={isPressable}
+      disabled={!isPressable}
     >
       <View>
-        <Animated.View style={[styles.frontcard, frontAnimatedStyles]}>
-          <View style={{ width: width, aspectRatio: 1 }}>
-            <View style={statefulStyles.defaultBorder}>
-              <CharacterAvatar
-                character={character}
-                role={"police"}
-                isDead={isDead}
-              />
-            </View>
-            {nickname && (
-              <CharacterNickname
-                nickname={nickname}
-                color={handleNicknameColor("default", isDead)}
-              />
-            )}
+        <Animated.View
+          style={[styles.frontCard, styles.card, frontAnimatedStyles]}
+        >
+          <View style={[statefulStyles.defaultBorder, styles.border]}>
+            <CharacterAvatar
+              character={character}
+              role={"police"}
+              isDead={isDead}
+            />
           </View>
+
+          {nickname && (
+            <CharacterNickname
+              nickname={nickname}
+              color={handleNicknameColor("default", isDead)}
+            />
+          )}
         </Animated.View>
 
-        <Animated.View style={[styles.backCard, backAnimatedStyles]}>
-          <View style={{ width: width, aspectRatio: 1 }}>
-            <View style={statefulStyles.revealedBorder}>
-              <CharacterAvatar
-                character={character}
-                role={role}
-                isDead={isDead}
-              />
-            </View>
-            {nickname && (
-              <CharacterNickname
-                nickname={nickname}
-                color={handleNicknameColor("revealed", isDead)}
-              />
-            )}
+        <Animated.View style={[styles.card, backAnimatedStyles]}>
+          <View style={[statefulStyles.revealedBorder, styles.border]}>
+            <CharacterAvatar
+              character={character}
+              role={role}
+              isDead={isDead}
+            />
           </View>
+          {nickname && (
+            <CharacterNickname
+              nickname={nickname}
+              color={handleNicknameColor("revealed", isDead)}
+            />
+          )}
         </Animated.View>
       </View>
     </TouchableHighlight>
@@ -158,13 +151,17 @@ export const AnimatedCharacterAvatar = ({
 
 export default AnimatedCharacterAvatar;
 const styles = StyleSheet.create({
-  frontcard: {
+  frontCard: {
     position: "absolute",
-    backfaceVisibility: "hidden",
-    backgroundColor: "transparent",
   },
-  backCard: {
+  card: {
     backfaceVisibility: "hidden",
     backgroundColor: "transparent",
+    width: width,
+    aspectRatio: 1,
+  },
+  border: {
+    borderRadius: 999,
+    borderWidth: width / 9,
   },
 });

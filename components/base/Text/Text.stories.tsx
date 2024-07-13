@@ -21,7 +21,7 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const Male1: Story = {
+export const Default: Story = {
   args: {
     size: "headline",
     isBold: true,
