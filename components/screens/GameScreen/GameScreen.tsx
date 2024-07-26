@@ -20,6 +20,8 @@ import Animated, {
   runOnJS,
 } from "react-native-reanimated";
 import { HeaderResult } from "@/components/partials/HeaderResult/HeaderResult";
+import { useMutation } from "@apollo/client";
+import { START_GAME } from "@/GraphQL/Mutations/StartGame";
 
 type GameScreenProps = {
   gameState: GameState;
@@ -79,7 +81,14 @@ export const GameScreen: FC<GameScreenProps> = ({
 
   const currentPlayer = players.find((player) => player.id === playerID);
 
+  const [startGame, { error }] = useMutation(START_GAME);
+
   const HandleStartGame = () => {
+    startGame({
+      variables: {
+        gameCode: "MAMJXDS5",
+      },
+    });
     setIsHeaderVisible(false);
     gameState.stage = "game";
     setAvatarGridMode("pressable");
