@@ -40,7 +40,7 @@ const client = new ApolloClient({
   uri: "https://2m3u7nxlhzbmvk4gzkve6cuxd4.appsync-api.eu-central-1.amazonaws.com/graphql",
   cache: new InMemoryCache(),
   headers: {
-    "x-api-key": "", // klucz jest na slaku nie chemy wrzucać go na commita
+    "x-api-key": "#########################", // klucz jest na slaku nie chemy wrzucać go na commita
   },
   // link: link,
 });
