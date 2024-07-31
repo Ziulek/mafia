@@ -6,6 +6,7 @@ import Button from "@/components/base/Button/Button";
 import { JOIN_GAME } from "@/GraphQL/Mutations/JoinGame";
 import { useMutation } from "@apollo/client";
 import { CREATE_GAME } from "@/GraphQL/Mutations/CreateGame";
+import { router } from "expo-router";
 
 export const StartScreen = () => {
   const [currentNickname, setCurrentNickname] = useState("");
@@ -13,27 +14,44 @@ export const StartScreen = () => {
   const [currentState, setCurrentState] = useState("");
   const [gameCode, setGameCode] = useState("");
   const [hostId, setHostId] = useState("");
+
   // 0 = welcome screen, 1 = nickname screen, 2 = join screen, 3 = host screen, 4 = game joined, 5= game hosted
 
   const [joinGame, { error: error1 }] = useMutation(JOIN_GAME);
   const [createGame, { error: error2 }] = useMutation(CREATE_GAME);
 
-  const handleJoinGame = (gameCode: string, nickname: string) => {
-    joinGame({
-      variables: {
-        gameCode,
-        nickname,
-        playerId: playerId.toString(),
-      },
-    });
+  const handleJoinGame = async (gameCode: string, nickname: string) => {
+    try {
+      const { data } = await joinGame({
+        variables: {
+          gameCode,
+          nickname,
+          playerId: playerId.toString(),
+        },
+      });
+      console.log(data);
+
+      // Handle successful join game
+    } catch (error) {
+      console.error("Error joining game:", error);
+      // Handle error
+    }
   };
 
-  const handleHostGame = (hostId: any) => {
-    createGame({
-      variables: {
-        hostId: hostId.toString(),
-      },
-    });
+  const handleHostGame = async (hostId: any) => {
+    try {
+      const { data } = await createGame({
+        variables: {
+          hostId: hostId.toString(),
+        },
+      });
+      console.log(data);
+
+      // Handle successful host game
+    } catch (error) {
+      console.error("Error hosting game:", error);
+      // Handle error
+    }
   };
 
   return (
@@ -45,6 +63,12 @@ export const StartScreen = () => {
           </Button>
           <Button color="accent" onPress={() => setCurrentState("hostGame")}>
             Host Game
+          </Button>
+          <Button
+            color="accent"
+            onPress={() => router.push("/GameScreenRouter")}
+          >
+            chuj
           </Button>
         </View>
       )}
@@ -99,7 +123,7 @@ export const StartScreen = () => {
       {currentState === "hostGame" && (
         <View style={styles.container2}>
           <Text size="headline" isBold={true}>
-            put hostId here
+            Put Host ID Here
           </Text>
 
           <TextInput
@@ -109,7 +133,7 @@ export const StartScreen = () => {
           />
 
           <Button color="accent" onPress={() => handleHostGame(hostId)}>
-            HostGame
+            Host Game
           </Button>
           <Button color="back" onPress={() => setCurrentState("")}>
             back
@@ -144,14 +168,3 @@ const styles = StyleSheet.create({
     width: "80%",
   },
 });
-
-// {currentState === 1 && (
-//   <View>
-//     <Button color="accent" onPress={() => setCurrentState(2)}>
-//       Join Game
-//     </Button>
-//     <Button color="accent" onPress={() => setCurrentState(3)}>
-//       Host Game
-//     </Button>
-//   </View>
-// )}
