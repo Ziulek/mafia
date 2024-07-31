@@ -4,9 +4,10 @@ import { useState } from "react";
 import { View } from "tamagui";
 import Button from "@/components/base/Button/Button";
 import { JOIN_GAME } from "@/GraphQL/Mutations/JoinGame";
-import { useMutation } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import { CREATE_GAME } from "@/GraphQL/Mutations/CreateGame";
 import { router } from "expo-router";
+import { GET_CURRENT_GAME_STATE } from "@/GraphQL/Query/GetCurrentGmaeState";
 
 export const StartScreen = () => {
   const [currentNickname, setCurrentNickname] = useState("");
@@ -17,6 +18,14 @@ export const StartScreen = () => {
 
   // 0 = welcome screen, 1 = nickname screen, 2 = join screen, 3 = host screen, 4 = game joined, 5= game hosted
 
+  const { data } = useQuery(GET_CURRENT_GAME_STATE, {
+    variables: {
+      gameCode: "XT2IBASP",
+    },
+  });
+
+  console.log("Query", JSON.stringify(data, null, 2));
+
   const [joinGame, { error: error1 }] = useMutation(JOIN_GAME);
   const [createGame, { error: error2 }] = useMutation(CREATE_GAME);
 
@@ -24,12 +33,13 @@ export const StartScreen = () => {
     try {
       const { data } = await joinGame({
         variables: {
-          gameCode,
-          nickname,
-          playerId: playerId.toString(),
+          gameCode: "XT2IBASP",
+          nickname: "szlajmi223332",
+          playerId: "217765463",
+          // playerId: playerId.toString(),
         },
       });
-      console.log(data);
+      console.log("Mutation", JSON.stringify(data, null, 2));
 
       // Handle successful join game
     } catch (error) {
@@ -63,12 +73,6 @@ export const StartScreen = () => {
           </Button>
           <Button color="accent" onPress={() => setCurrentState("hostGame")}>
             Host Game
-          </Button>
-          <Button
-            color="accent"
-            onPress={() => router.push("/GameScreenRouter")}
-          >
-            chuj
           </Button>
         </View>
       )}

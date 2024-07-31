@@ -1,8 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import StoryDecorator from "@/decorators/StoryDecorator";
-import { GameScreen, GameState } from "./GameScreen";
+import { GameScreen } from "./GameScreen";
 import { Character } from "@/components/types/Characters";
 import { Role } from "@/components/types/Role";
+import { GameState } from "@/components/types/GameState";
 
 const meta: Meta<typeof GameScreen> = {
   component: GameScreen,
@@ -129,6 +130,7 @@ const gameState: GameState = {
   players,
   stage: "waitingForPlayers",
   gameRules: {
+    numberOfMafia: 2,
     extraRoles: ["detective"],
     revealRolesAfterDeath: true,
   },
@@ -145,7 +147,7 @@ export const Host: Story = {
     onKickPlayer: (player) => console.log("Kick Player", player),
     onUpdateGameRules: (gameRules) =>
       console.log("Update Game Rules", gameRules),
-    onUpdateCharacter: (character) =>
+    onCharacterUpdate: (character) =>
       console.log("Update Character", character),
   },
 };
@@ -159,7 +161,7 @@ export const Player: Story = {
     onKickPlayer: (player) => console.log("Kick Player", player),
     onUpdateGameRules: (gameRules) =>
       console.log("Update Game Rules", gameRules),
-    onUpdateCharacter: (character) =>
+    onCharacterUpdate: (character) =>
       console.log("Update Character", character),
     playerID,
   },

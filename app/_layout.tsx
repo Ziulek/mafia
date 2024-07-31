@@ -22,7 +22,7 @@ declare module "@tamagui/core" {
   interface TamaguiCustomConfig extends Conf {}
 }
 
-// Error handling (optional)
+// // Error handling (optional)
 // const errorLink = onError(({ graphqlErrors, networkError }: any) => {
 //   if (graphqlErrors) {
 //     graphqlErrors.map(({ message, location, path }: any) => {
@@ -38,7 +38,13 @@ declare module "@tamagui/core" {
 
 const client = new ApolloClient({
   uri: "https://2m3u7nxlhzbmvk4gzkve6cuxd4.appsync-api.eu-central-1.amazonaws.com/graphql",
-  cache: new InMemoryCache(),
+  cache: new InMemoryCache({
+    typePolicies: {
+      GameState: {
+        keyFields: ["gameCode"],
+      },
+    },
+  }),
   headers: {
     "x-api-key": "", // klucz jest na slaku nie chemy wrzucać go na commita
   },
