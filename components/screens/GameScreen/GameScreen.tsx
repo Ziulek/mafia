@@ -86,7 +86,7 @@ export const GameScreen: FC<GameScreenProps> = ({
   const HandleStartGame = () => {
     startGame({
       variables: {
-        gameCode: "MAMJXDS5",
+        gameCode: "YDCPWQUS",
       },
     });
     setIsHeaderVisible(false);
