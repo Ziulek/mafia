@@ -16,7 +16,7 @@ export default (): ReactElement => {
       }}
     >
       <Button color="accent" onPress={() => router.replace("joinOrHost")}>
-        Continue to JoinOrHost
+        Continue to Join or Host
       </Button>
     </View>
   );

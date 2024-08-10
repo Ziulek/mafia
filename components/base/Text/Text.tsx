@@ -6,12 +6,14 @@ interface TextProps {
   isBold?: boolean;
   color?: "white" | "black";
   children: string;
+  isTextAlignCenter?: boolean;
 }
 
 const Text = ({
   size,
   isBold = false,
   color = "black",
+  isTextAlignCenter = false,
   children,
 }: TextProps) => {
   const textSize = getTextSize(size);
@@ -21,6 +23,7 @@ const Text = ({
       fontSize: textSize,
       fontWeight: isBold ? "bold" : "regular",
       color: color === "black" ? "#000" : "#fff",
+      textAlign: isTextAlignCenter ? "center" : "left",
     },
   });
 

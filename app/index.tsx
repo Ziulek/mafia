@@ -1,2 +1,2 @@
-// export { default } from "../.storybook";
-export { default } from "./onBoarding";
+export { default } from "../.storybook";
+// export { default } from "./onBoarding";

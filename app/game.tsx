@@ -1,6 +1,6 @@
 import type { ReactElement } from "react";
 import { useMutation, useQuery } from "@apollo/client";
-import { GET_CURRENT_GAME_STATE } from "@/GraphQL/Query/GetCurrentGmaeState";
+import { GET_CURRENT_GAME_STATE } from "@/GraphQL/Query/GetCurrentGameState";
 import GameScreen from "@/components/screens/GameScreen/GameScreen";
 import { useLocalSearchParams } from "expo-router";
 import { KICK_PLAYER } from "@/GraphQL/Mutations/KickPlayer";
@@ -11,21 +11,23 @@ import { START_GAME } from "@/GraphQL/Mutations/StartGame";
 import { ActivityIndicator, View, Text } from "react-native";
 
 export default (): ReactElement => {
-  const tempGameCode = "XT2IBASP";
-  const playerId = "2137";
-
-  const { data, loading, error } = useQuery(GET_CURRENT_GAME_STATE, {
-    variables: {
-      gameCode: tempGameCode,
-    },
-  });
-
   const { mode } = useLocalSearchParams<{ mode: "host" | "player" }>();
+  const { gameCode } = useLocalSearchParams<{ gameCode: string }>();
+  const { playerId } = useLocalSearchParams<{ playerId: string }>();
+
   const [startGame] = useMutation(START_GAME);
   const [killPlayer] = useMutation(KILL_PLAYER);
   const [kickPlayer] = useMutation(KICK_PLAYER);
   const [updateGameRules] = useMutation(UPDATE_GAME_RULES);
   const [onCharacterUpdate] = useMutation(ON_CHARACTER_UPDATE);
+
+  console.log("kodzik", gameCode);
+
+  const { data, loading, error } = useQuery(GET_CURRENT_GAME_STATE, {
+    variables: {
+      gameCode,
+    },
+  });
 
   if (mode === undefined) {
     throw new Error("mode is undefined");
@@ -58,32 +60,32 @@ export default (): ReactElement => {
       onStartGame={() => {
         startGame({
           variables: {
-            gameCode: tempGameCode,
+            gameCode: data?.gameCode,
           },
         });
       }}
       onKillPlayer={(playerId) => {
         console.log("player object from onKillPlayer: ", playerId);
         killPlayer({
-          variables: { gameCode: tempGameCode, playerId },
+          variables: { gameCode: data?.gameCode, playerId },
         });
       }}
       onKickPlayer={(playerId) => {
         console.log("player object from onKickPlayer: ", playerId);
         kickPlayer({
-          variables: { gameCode: tempGameCode, playerId },
+          variables: { gameCode: data?.gameCode, playerId },
         });
       }}
       onUpdateGameRules={(newRules) => {
         updateGameRules({
-          variables: { gameCode: tempGameCode, gameRules: newRules },
+          variables: { gameCode: data?.gameCode, gameRules: newRules },
         });
       }}
       onCharacterUpdate={(newCharacter) => {
         onCharacterUpdate({
           variables: {
-            gameCode: tempGameCode,
-            playerId: playerId,
+            gameCode: data?.gameCode,
+            playerId,
             newCharacter: newCharacter,
           },
         });

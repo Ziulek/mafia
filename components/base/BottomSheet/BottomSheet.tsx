@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useRef } from "react";
 import { View, StyleSheet, TouchableOpacity } from "react-native";
 import GorhomBottomSheet from "@gorhom/bottom-sheet";
 import Text from "../Text/Text";
+import { colors } from "@/theme/colors";
 
 type BottomSheetProps = {
   title: string;
@@ -40,7 +41,7 @@ export const BottomSheet = ({
         index={isVisible ? 0 : -1}
         snapPoints={snapPoints}
         enablePanDownToClose={true}
-        backgroundStyle={{ backgroundColor: "#EAECD6", borderRadius: 25 }}
+        backgroundStyle={{ backgroundColor: colors.primary, borderRadius: 25 }}
         handleIndicatorStyle={styles.indicator}
         onClose={handleClose}
       >

@@ -2,6 +2,7 @@ import React from "react";
 import { StyleSheet, View } from "react-native";
 import { Switch } from "tamagui";
 import Text from "../Text/Text";
+import { colors } from "@/theme/colors";
 
 type SwitchListItemProps = {
   title: string;
@@ -24,7 +25,7 @@ export function SwitchListItem({ title, isOn, setIsOn }: SwitchListItemProps) {
       borderColor: isOn ? "#0f0f0f" : "#232323",
     },
     thumb: {
-      backgroundColor: "#EAECD6",
+      backgroundColor: colors.primary,
     },
   });
 

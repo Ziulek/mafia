@@ -7,7 +7,7 @@ import { JOIN_GAME } from "@/GraphQL/Mutations/JoinGame";
 import { useMutation, useQuery } from "@apollo/client";
 import { CREATE_GAME } from "@/GraphQL/Mutations/CreateGame";
 import { router } from "expo-router";
-import { GET_CURRENT_GAME_STATE } from "@/GraphQL/Query/GetCurrentGmaeState";
+import { GET_CURRENT_GAME_STATE } from "@/GraphQL/Query/GetCurrentGameState";
 
 export const StartScreen = () => {
   const [currentNickname, setCurrentNickname] = useState("");

@@ -1,3 +1,5 @@
+import { colors } from "@/theme/colors";
+
 export const handleBorderColor = (
   mode: string,
   role: string,
@@ -7,28 +9,28 @@ export const handleBorderColor = (
   let newColor;
 
   if (isDead) {
-    newColor = "#000";
+    newColor = colors.dead;
   } else if (avatarSelect) {
     newColor = "white";
   } else {
     switch (mode) {
       case "default":
-        newColor = "#EAECD6";
+        newColor = colors.primary;
         break;
       case "revealed":
         if (role === "police") {
-          newColor = "#208197";
+          newColor = colors.police;
         } else if (role === "mafia") {
-          newColor = "#A14141";
+          newColor = colors.mafia;
         } else if (role === "detective") {
-          newColor = "#284e93";
+          newColor = colors.detective;
         } else {
-          newColor = "#EAECD6";
+          newColor = colors.primary;
         }
         break;
 
       default:
-        newColor = "#EAECD6";
+        newColor = colors.primary;
         break;
     }
   }

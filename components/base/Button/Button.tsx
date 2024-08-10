@@ -1,6 +1,7 @@
 import React from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
 import Text from "../Text/Text";
+import { colors } from "@/theme/colors";
 
 export type ButtonProps = {
   children: string;
@@ -29,28 +30,28 @@ export const Button = ({
   let textColor: "black" | "white";
 
   if (isDisabled) {
-    buttonColor = "#C2C2C2";
+    buttonColor = colors.isDisabled
     textColor = "white";
   } else {
     switch (color) {
       case "accent":
-        buttonColor = "#F7CD5B";
+        buttonColor = colors.accent;
         textColor = "black";
         break;
       case "primary":
-        buttonColor = "#EAECD6";
+        buttonColor = colors.primary;
         textColor = "black";
         break;
       case "kill":
-        buttonColor = "#A14141";
+        buttonColor = colors.kill;
         textColor = "white";
         break;
       case "secondary":
-        buttonColor = "#000000";
+        buttonColor = colors.secondary;
         textColor = "white";
         break;
       case "back":
-        buttonColor = "#878787";
+        buttonColor = colors.back;
         textColor = "white";
         break;
     }

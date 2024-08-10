@@ -8,6 +8,7 @@ import Animated, {
   Easing,
   ReduceMotion,
 } from "react-native-reanimated";
+import { colors } from "@/theme/colors";
 
 type HeaderProps = {
   isVisible: boolean;
@@ -50,7 +51,7 @@ const styles = StyleSheet.create({
     flex: 1,
 
     // height: "35%",
-    backgroundColor: "#EAECD6",
+    backgroundColor: colors.primary,
     alignItems: "center",
     justifyContent: "center",
     paddingBottom: 40,
