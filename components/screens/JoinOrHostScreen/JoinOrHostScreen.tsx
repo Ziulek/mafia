@@ -1,33 +1,31 @@
-import Button from "@/components/base/Button/Button";
-import { ButtonGroup } from "@/components/base/ButtonGroup/ButtonGroup";
-import Text from "@/components/base/Text/Text";
-import { TextEditListItem } from "@/components/base/TextEditListItem/TextEditListItem";
+import React from "react";
 import StartScreen from "@/components/partials/StartScreen/StartScreen";
+import Button from "@/components/base/Button/Button";
 import { colors } from "@/theme/colors";
-import React, { ReactNode, useState } from "react";
-import { Image, StyleSheet, View } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { StyleSheet } from "react-native";
 
-interface CustomBackgroundProps {
-  image: "mafia" | "police";
-  children: ReactNode;
-  text: string;
+interface JoinOrHostScreenProps {
+  onJoinPress: () => void; // Type for the onJoinPress prop
+  onHostPress: () => void; // Type for the onHostPress prop
 }
 
-const joinOrHostScreen: React.FC<CustomBackgroundProps> = ({}) => {
+const JoinOrHostScreen: React.FC<JoinOrHostScreenProps> = ({
+  onJoinPress,
+  onHostPress,
+}) => {
   return (
     <StartScreen image="mafia" text="Host your own game or join an existing">
-      <Button color="accent" isBold={true}>
+      <Button color="accent" isBold={true} onPress={onJoinPress}>
         Join Game
       </Button>
-      <Button color="accent" isBold={true}>
+      <Button color="accent" isBold={true} onPress={onHostPress}>
         Host New Game
       </Button>
     </StartScreen>
   );
 };
 
-export default joinOrHostScreen;
+export default JoinOrHostScreen;
 
 const styles = StyleSheet.create({
   container: {

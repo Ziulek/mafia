@@ -3,9 +3,18 @@ import StartScreen from "@/components/partials/StartScreen/StartScreen";
 import { TextEditListItem } from "@/components/base/TextEditListItem/TextEditListItem";
 import Button from "@/components/base/Button/Button";
 
-const OnBoardingScreen: React.FC = () => {
-  const [nickname, setNickname] = useState("");
-  const [isTyping, setIsTyping] = useState(false);
+interface OnBoardingScreenProps {
+  onPress: () => void;
+  setNickname: (nickname: string) => void;
+  nickname: string;
+}
+
+const OnBoardingScreen: React.FC<OnBoardingScreenProps> = ({
+  onPress,
+  setNickname,
+  nickname,
+}) => {
+  const [isTyping, setIsTyping] = useState<boolean>(false); // Explicit type for state
 
   const handleFocus = () => {
     setIsTyping(true);
@@ -21,11 +30,11 @@ const OnBoardingScreen: React.FC = () => {
         placeholder="enter nickname"
         text={nickname}
         setText={setNickname}
-        onFocus={handleFocus} // Pass the handleFocus prop
-        onBlur={handleBlur} // Pass the handleBlur prop
+        onFocus={handleFocus}
+        onBlur={handleBlur}
       />
       {!isTyping && (
-        <Button color="primary" isDisabled={nickname === ""}>
+        <Button color="primary" isDisabled={nickname === ""} onPress={onPress}>
           Next
         </Button>
       )}
