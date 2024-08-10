@@ -3,8 +3,8 @@ import StartScreen from "@/components/partials/StartScreen/StartScreen";
 import { TextEditListItem } from "@/components/base/TextEditListItem/TextEditListItem";
 import Button from "@/components/base/Button/Button";
 
-const OnBoardingScreen: React.FC = () => {
-  const [nickname, setNickname] = useState("");
+const JoinScreen: React.FC = () => {
+  const [gameCode, setGameCode] = useState("");
   const [isTyping, setIsTyping] = useState(false);
 
   const handleFocus = () => {
@@ -16,21 +16,21 @@ const OnBoardingScreen: React.FC = () => {
   };
 
   return (
-    <StartScreen image="police" text="Please enter your Nickname">
+    <StartScreen image="mafia" text="Please enter game code">
       <TextEditListItem
-        placeholder="enter nickname"
-        text={nickname}
-        setText={setNickname}
+        placeholder="game code"
+        text={gameCode}
+        setText={setGameCode}
         onFocus={handleFocus} // Pass the handleFocus prop
         onBlur={handleBlur} // Pass the handleBlur prop
       />
       {!isTyping && (
-        <Button color="primary" isDisabled={nickname === ""}>
-          Next
+        <Button color="accent" isBold={true} isDisabled={gameCode === ""}>
+          Join Game
         </Button>
       )}
     </StartScreen>
   );
 };
 
-export default OnBoardingScreen;
+export default JoinScreen;

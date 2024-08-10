@@ -6,12 +6,16 @@ type TextEditListItemProps = {
   placeholder: string;
   text: string;
   setText: (newText: string) => void;
+  onFocus?: () => void; // Add this prop
+  onBlur?: () => void; // Add this prop
 };
 
 export function TextEditListItem({
   placeholder,
   text,
   setText,
+  onFocus = () => {},
+  onBlur = () => {},
 }: TextEditListItemProps) {
   const handleTextChange = (newText: string) => {
     setText(newText);
@@ -25,6 +29,8 @@ export function TextEditListItem({
         placeholder={placeholder}
         value={text}
         onChangeText={handleTextChange}
+        onFocus={onFocus}
+        onBlur={onBlur}
       />
     </View>
   );
