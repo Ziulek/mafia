@@ -59,17 +59,13 @@ const styles = StyleSheet.create({
     height: 350,
     width: 270,
     flexGrow: 1,
-    // alignItems: "flex-end",
     alignSelf: "center",
-    justifyContent: "flex-end",
     resizeMode: "contain",
-    // backgroundColor: "orange",
   },
   textContainer: {
     flexGrow: 0.8,
     justifyContent: "flex-start",
     paddingHorizontal: 40,
-    // backgroundColor: "blue",
     gap: 10,
   },
   interactiveContainer: {
@@ -77,6 +73,5 @@ const styles = StyleSheet.create({
     width: "100%",
     justifyContent: "space-evenly",
     paddingHorizontal: 20,
-    // backgroundColor: "red",
   },
 });

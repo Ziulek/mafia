@@ -154,16 +154,14 @@ export const GameScreen: FC<GameScreenProps> = ({
             />
           )}
 
-          <View style={styles.overlay}>
-            <Animated.View style={[styles.AvatarGrid, animatedStyle]}>
-              <AvatarGrid
-                mode={avatarGridMode}
-                revealRolesAnimation={revealRolesAnimation}
-                onPressItem={HandleSelectPlayer}
-                items={players}
-              />
-            </Animated.View>
-          </View>
+          <Animated.View style={[styles.AvatarGrid, animatedStyle]}>
+            <AvatarGrid
+              mode={avatarGridMode}
+              revealRolesAnimation={revealRolesAnimation}
+              onPressItem={HandleSelectPlayer}
+              items={players}
+            />
+          </Animated.View>
         </View>
 
         <View style={styles.button}>
@@ -256,18 +254,17 @@ export const GameScreen: FC<GameScreenProps> = ({
 };
 
 const styles = StyleSheet.create({
-  overlay: {
-    backgroundColor: "rgba(0,0,0,0.5)",
-  },
   AvatarGrid: {
     marginTop: 50,
     paddingHorizontal: 20,
+    height: "100%",
+    backgroundColor: "rgba(0,0,0,0.5)",
   },
   button: {
     position: "absolute",
     bottom: 50,
-    left: 15,
-    right: 15,
+    left: 20,
+    right: 20,
     justifyContent: "center",
     alignItems: "center",
   },

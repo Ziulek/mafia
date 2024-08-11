@@ -10,7 +10,11 @@ const ImageBackground: React.FC<CustomBackgroundProps> = ({ children }) => {
   const insets = useSafeAreaInsets();
 
   const styles = StyleSheet.create({
-    background: { marginTop: -insets.top, marginBottom: -insets.bottom },
+    background: {
+      marginTop: -insets.top * 0.5,
+      marginBottom: -insets.bottom,
+      flex: 1,
+    },
   });
 
   return (

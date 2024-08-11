@@ -29,6 +29,8 @@ export default (): ReactElement => {
     },
   });
 
+  const correctData = data?.getCurrentGameState;
+
   if (mode === undefined) {
     throw new Error("mode is undefined");
   }
@@ -50,41 +52,42 @@ export default (): ReactElement => {
   }
 
   console.log("Query", JSON.stringify(data, null, 2));
+  console.log("correctData", JSON.stringify(correctData, null, 2));
 
   return (
     <GameScreen
-      gameState={data?.getCurrentGameState}
+      gameState={correctData}
       mode={mode}
       playerID={playerId}
       onNewGame={() => {}}
       onStartGame={() => {
         startGame({
           variables: {
-            gameCode: data?.gameCode,
+            gameCode: correctData.gameCode,
           },
         });
       }}
       onKillPlayer={(playerId) => {
         console.log("player object from onKillPlayer: ", playerId);
         killPlayer({
-          variables: { gameCode: data?.gameCode, playerId },
+          variables: { gameCode: correctData.gameCode, playerId },
         });
       }}
       onKickPlayer={(playerId) => {
         console.log("player object from onKickPlayer: ", playerId);
         kickPlayer({
-          variables: { gameCode: data?.gameCode, playerId },
+          variables: { gameCode: correctData.gameCode, playerId },
         });
       }}
       onUpdateGameRules={(newRules) => {
         updateGameRules({
-          variables: { gameCode: data?.gameCode, gameRules: newRules },
+          variables: { gameCode: correctData.gameCode, gameRules: newRules },
         });
       }}
       onCharacterUpdate={(newCharacter) => {
         onCharacterUpdate({
           variables: {
-            gameCode: data?.gameCode,
+            gameCode: correctData.gameCode,
             playerId,
             newCharacter: newCharacter,
           },
