@@ -1,1 +1,1 @@
-export { default } from "../.storybook";
+export { AuthScreen } from "../components/screens";
