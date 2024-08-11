@@ -1,7 +1,5 @@
 import { useState, type ReactElement } from "react";
-import { Text, TextInput, View } from "react-native";
 import { useLocalSearchParams, useRouter } from "expo-router";
-import Button from "@/components/base/Button/Button";
 import { useMutation } from "@apollo/client";
 import { JOIN_GAME } from "@/GraphQL/Mutations/JoinGame";
 import JoinScreen from "@/components/screens/JoinScreen/JoinScreen";

@@ -1,5 +1,5 @@
 import React, { ReactNode } from "react";
-import { Image, StyleSheet, View, SafeAreaView } from "react-native";
+import { Image, StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Text from "@/components/base/Text/Text";
 import { colors } from "@/theme/colors";
@@ -20,31 +20,29 @@ const StartScreen: React.FC<StartScreenProps> = ({ image, text, children }) => {
         { paddingTop: insets.top, paddingBottom: insets.bottom },
       ]}
     >
-      <SafeAreaView style={styles.safeArea}>
-        <View style={styles.imageContainer}>
-          {image === "mafia" && (
-            <Image
-              style={styles.image}
-              source={require("@/assets/images/StartImages/start_mafia.png")}
-            />
-          )}
-          {image === "police" && (
-            <Image
-              style={styles.image}
-              source={require("@/assets/images/StartImages/start_police.png")}
-            />
-          )}
-        </View>
-        <View style={styles.textContainer}>
-          <Text size="headline" isBold={true} isTextAlignCenter={true}>
-            Let's Play
-          </Text>
-          <Text size="subtitle" isTextAlignCenter={true}>
-            {text}
-          </Text>
-        </View>
-        <View style={styles.interactiveContainer}>{children}</View>
-      </SafeAreaView>
+      {image === "mafia" && (
+        <Image
+          style={styles.imageContainer}
+          source={require("@/assets/images/StartImages/start_mafia.png")}
+        />
+      )}
+      {image === "police" && (
+        <Image
+          style={styles.imageContainer}
+          source={require("@/assets/images/StartImages/start_police.png")}
+        />
+      )}
+
+      <View style={styles.textContainer}>
+        <Text size="startScreenHeadline" isTextAlignCenter={true}>
+          Let's Play
+        </Text>
+
+        <Text size="startScreenSubtitle" isTextAlignCenter={true} color="grey">
+          {text}
+        </Text>
+      </View>
+      <View style={styles.interactiveContainer}>{children}</View>
     </View>
   );
 };
@@ -52,38 +50,32 @@ const StartScreen: React.FC<StartScreenProps> = ({ image, text, children }) => {
 export default StartScreen;
 
 const styles = StyleSheet.create({
-  safeArea: {
-    flex: 1,
-  },
   container: {
     flex: 1,
     backgroundColor: colors.primary,
-    justifyContent: "space-evenly", // Ensure even spacing between elements
+    justifyContent: "space-evenly",
   },
   imageContainer: {
-    marginTop: 50,
-    flexShrink: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    // backgroundColor: "green",
-  },
-  image: {
     height: 350,
-    width: 250,
-    // backgroundColor: "grey",
+    width: 270,
+    flexGrow: 1,
+    // alignItems: "flex-end",
+    alignSelf: "center",
+    justifyContent: "flex-end",
+    resizeMode: "contain",
+    // backgroundColor: "orange",
   },
   textContainer: {
-    flexGrow: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    flexGrow: 0.8,
+    justifyContent: "flex-start",
+    paddingHorizontal: 40,
     // backgroundColor: "blue",
+    gap: 10,
   },
   interactiveContainer: {
-    flex: 1,
+    flexGrow: 0.5,
     width: "100%",
-    justifyContent: "flex-end",
-    gap: 15,
-    paddingBottom: 30,
+    justifyContent: "space-evenly",
     paddingHorizontal: 20,
     // backgroundColor: "red",
   },

@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import StartScreen from "@/components/partials/StartScreen/StartScreen";
 import { TextEditListItem } from "@/components/base/TextEditListItem/TextEditListItem";
 import Button from "@/components/base/Button/Button";
+import { Keyboard } from "react-native";
 
 interface OnBoardingScreenProps {
   onPress: () => void;
@@ -14,15 +15,27 @@ const OnBoardingScreen: React.FC<OnBoardingScreenProps> = ({
   setNickname,
   nickname,
 }) => {
-  const [isTyping, setIsTyping] = useState<boolean>(false); // Explicit type for state
+  const [isTyping, setIsTyping] = useState<boolean>(false);
 
-  const handleFocus = () => {
-    setIsTyping(true);
-  };
+  useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener(
+      "keyboardDidShow",
+      () => {
+        setIsTyping(true);
+      }
+    );
+    const keyboardDidHideListener = Keyboard.addListener(
+      "keyboardDidHide",
+      () => {
+        setIsTyping(false);
+      }
+    );
 
-  const handleBlur = () => {
-    setIsTyping(false);
-  };
+    return () => {
+      keyboardDidHideListener.remove();
+      keyboardDidShowListener.remove();
+    };
+  }, []);
 
   return (
     <StartScreen image="police" text="Please enter your Nickname">
@@ -30,14 +43,11 @@ const OnBoardingScreen: React.FC<OnBoardingScreenProps> = ({
         placeholder="enter nickname"
         text={nickname}
         setText={setNickname}
-        onFocus={handleFocus}
-        onBlur={handleBlur}
       />
-      {!isTyping && (
-        <Button color="primary" isDisabled={nickname === ""} onPress={onPress}>
-          Next
-        </Button>
-      )}
+
+      <Button color="accent" isDisabled={nickname === ""} onPress={onPress}>
+        Next
+      </Button>
     </StartScreen>
   );
 };

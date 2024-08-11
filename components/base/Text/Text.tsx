@@ -2,9 +2,15 @@ import React from "react";
 import { Text as TextComponent, StyleSheet } from "react-native";
 
 interface TextProps {
-  size: "listItem" | "button" | "subtitle" | "headline";
+  size:
+    | "listItem"
+    | "button"
+    | "subtitle"
+    | "headline"
+    | "startScreenHeadline"
+    | "startScreenSubtitle";
   isBold?: boolean;
-  color?: "white" | "black";
+  color?: "white" | "black" | "grey";
   children: string;
   isTextAlignCenter?: boolean;
 }
@@ -22,7 +28,7 @@ const Text = ({
       fontFamily: "AmericanTypewriter",
       fontSize: textSize,
       fontWeight: isBold ? "bold" : "regular",
-      color: color === "black" ? "#000" : "#fff",
+      color: color === "black" ? "#000" : color === "grey" ? "#696969" : "#fff",
       textAlign: isTextAlignCenter ? "center" : "left",
     },
   });
@@ -40,6 +46,10 @@ const getTextSize = (size: string) => {
       return 18;
     case "headline":
       return 24;
+    case "startScreenSubtitle":
+      return 21;
+    case "startScreenHeadline":
+      return 32;
     default:
       return 24;
   }

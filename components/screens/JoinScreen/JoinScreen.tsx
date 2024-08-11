@@ -33,16 +33,15 @@ const JoinScreen: React.FC<JoinScreenProps> = ({
         onFocus={handleFocus}
         onBlur={handleBlur}
       />
-      {!isTyping && (
-        <Button
-          color="accent"
-          isBold={true}
-          isDisabled={gameCode === ""}
-          onPress={onPress}
-        >
-          Join Game
-        </Button>
-      )}
+
+      <Button
+        color="accent"
+        isBold={true}
+        isDisabled={gameCode === ""}
+        onPress={onPress}
+      >
+        Join Game
+      </Button>
     </StartScreen>
   );
 };
