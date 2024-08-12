@@ -33,6 +33,9 @@
         "projectId": "8aefe1ac-8ec5-461a-89dc-9a05daf812e6"
       }
     },
-    "owner": "ziolkowskimichal"
+    "owner": "smakolysze",
+    "android": {
+      "package": "com.mafia"
+    }
   }
 }

@@ -5,7 +5,7 @@ export const KILL_PLAYER = gql`
     $gameCode: String!
     $playerId: String!
   ) {
-    joinGame(gameCode: $gameCode, playerId: $playerId) {
+    killPlayer(gameCode: $gameCode, playerId: $playerId) {
       gameCode
       hostId
       stage

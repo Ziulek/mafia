@@ -1,5 +1,5 @@
 import type { ReactElement } from "react";
-import { useMutation, useQuery } from "@apollo/client";
+import { useMutation, useQuery, useSubscription } from "@apollo/client";
 import { GET_CURRENT_GAME_STATE } from "@/GraphQL/Query/GetCurrentGameState";
 import GameScreen from "@/components/screens/GameScreen/GameScreen";
 import { useLocalSearchParams } from "expo-router";
@@ -9,6 +9,7 @@ import { UPDATE_GAME_RULES } from "@/GraphQL/Mutations/UpdateGameRules";
 import { KILL_PLAYER } from "@/GraphQL/Mutations/KillPlayer";
 import { START_GAME } from "@/GraphQL/Mutations/StartGame";
 import { ActivityIndicator, View, Text } from "react-native";
+import { GAME_STATE_SUBSCRIPTION } from "@/GraphQL/Subscription/GameState";
 
 export default (): ReactElement => {
   const { mode } = useLocalSearchParams<{ mode: "host" | "player" }>();
@@ -26,6 +27,18 @@ export default (): ReactElement => {
   const { data, loading, error } = useQuery(GET_CURRENT_GAME_STATE, {
     variables: {
       gameCode,
+    },
+  });
+
+  useSubscription(GAME_STATE_SUBSCRIPTION, {
+    variables: {
+      gameCode,
+    },
+    onData(options) {
+      console.log("onData", options);
+    },
+    onError(error) {
+      console.log("onError", error);
     },
   });
 

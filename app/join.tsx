@@ -20,6 +20,14 @@ export default (): ReactElement => {
         playerId: playerId,
         nickname: nickname,
       },
+      onCompleted: () => {
+        router.replace(
+          `game?mode=player&gameCode=${gameCode}&playerId=${playerId}`
+        );
+      },
+      onError: () => {
+        router.replace(`error`);
+      },
     });
     router.replace(
       `game?mode=player&gameCode=${gameCode}&playerId=${playerId}`

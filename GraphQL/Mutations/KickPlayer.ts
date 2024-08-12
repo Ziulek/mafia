@@ -2,7 +2,7 @@ import { gql } from "@apollo/client";
 
 export const KICK_PLAYER = gql`
   mutation kickPlayer($gameCode: String!, $playerId: String!) {
-    joinGame(gameCode: $gameCode, playerId: $playerId) {
+    kickPlayer(gameCode: $gameCode, playerId: $playerId) {
       gameCode
       hostId
       stage

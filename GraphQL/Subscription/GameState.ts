@@ -1,16 +1,8 @@
 import { gql } from "@apollo/client";
 
-export const ON_CHARACTER_UPDATE = gql`
-  mutation onCharacterUpdate(
-    $gameCode: String!
-    $playerId: String!
-    $newCharacter: Character
-  ) {
-    onCharacterUpdate(
-      gameCode: $gameCode
-      playerId: $playerId
-      newCharacter: $newCharacter
-    ) {
+export const GAME_STATE_SUBSCRIPTION = gql`
+  subscription GameStateSubscription($gameCode: String!) {
+    onJoinGame(gameCode: $gameCode) {
       gameCode
       hostId
       stage
@@ -28,5 +20,6 @@ export const ON_CHARACTER_UPDATE = gql`
         id
       }
     }
+    # onCharacterUpdate(gameCode: $gameCode) {
   }
 `;
