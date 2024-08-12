@@ -1,5 +1,14 @@
 {
   "build": {
+    "development": {
+      "developmentClient": true,
+      "android": {
+        "buildType": "apk"
+      },
+      "ios": {
+        "simulator": true
+      }
+    },
     "preview": {
       "android": {
         "buildType": "apk"
