@@ -23,5 +23,89 @@ export const GAME_STATE_SUBSCRIPTION = gql`
         }
       }
     }
+    onStartGame(gameCode: $gameCode) {
+      gameCode
+      gameState {
+        gameCode
+        hostId
+        stage
+        winner
+        gameRules {
+          additionalRoles
+          numberOfMafia
+          showRolesAfterDeath
+        }
+        players {
+          character
+          role
+          nickname
+          isDead
+          id
+        }
+      }
+    }
+    onKillPlayer(gameCode: $gameCode) {
+      gameCode
+      gameState {
+        gameCode
+        hostId
+        stage
+        winner
+        gameRules {
+          additionalRoles
+          numberOfMafia
+          showRolesAfterDeath
+        }
+        players {
+          character
+          role
+          nickname
+          isDead
+          id
+        }
+      }
+    }
+    onKickPlayer(gameCode: $gameCode) {
+      gameCode
+      gameState {
+        gameCode
+        hostId
+        stage
+        winner
+        gameRules {
+          additionalRoles
+          numberOfMafia
+          showRolesAfterDeath
+        }
+        players {
+          character
+          role
+          nickname
+          isDead
+          id
+        }
+      }
+    }
+    onCharacterUpdate(gameCode: $gameCode) {
+      gameCode
+      gameState {
+        gameCode
+        hostId
+        stage
+        winner
+        gameRules {
+          additionalRoles
+          numberOfMafia
+          showRolesAfterDeath
+        }
+        players {
+          character
+          role
+          nickname
+          isDead
+          id
+        }
+      }
+    }
   }
 `;

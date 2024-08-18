@@ -1,8 +1,16 @@
 import { gql } from "@apollo/client";
 
-export const KICK_PLAYER = gql`
-  mutation kickPlayer($gameCode: String!, $playerId: String!) {
-    kickPlayer(gameCode: $gameCode, playerId: $playerId) {
+export const CHARACTER_UPDATE = gql`
+  mutation characterUpdate(
+    $gameCode: String!
+    $playerId: String!
+    $newCharacter: Character
+  ) {
+    characterUpdate(
+      gameCode: $gameCode
+      playerId: $playerId
+      newCharacter: $newCharacter
+    ) {
       gameCode
       gameState {
         gameCode

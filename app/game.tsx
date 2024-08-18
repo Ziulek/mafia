@@ -4,7 +4,7 @@ import { GET_CURRENT_GAME_STATE } from "@/GraphQL/Query/GetCurrentGameState";
 import GameScreen from "@/components/screens/GameScreen/GameScreen";
 import { useLocalSearchParams } from "expo-router";
 import { KICK_PLAYER } from "@/GraphQL/Mutations/KickPlayer";
-import { ON_CHARACTER_UPDATE } from "@/GraphQL/Mutations/OnCharacterUpdate";
+import { CHARACTER_UPDATE } from "@/GraphQL/Mutations/CharacterUpdate";
 import { UPDATE_GAME_RULES } from "@/GraphQL/Mutations/UpdateGameRules";
 import { KILL_PLAYER } from "@/GraphQL/Mutations/KillPlayer";
 import { START_GAME } from "@/GraphQL/Mutations/StartGame";
@@ -20,7 +20,7 @@ export default (): ReactElement => {
   const [killPlayer] = useMutation(KILL_PLAYER);
   const [kickPlayer] = useMutation(KICK_PLAYER);
   const [updateGameRules] = useMutation(UPDATE_GAME_RULES);
-  const [onCharacterUpdate] = useMutation(ON_CHARACTER_UPDATE);
+  const [characterUpdate] = useMutation(CHARACTER_UPDATE);
 
   console.log("kodzik", gameCode);
 
@@ -104,7 +104,7 @@ export default (): ReactElement => {
         });
       }}
       onCharacterUpdate={(newCharacter) => {
-        onCharacterUpdate({
+        characterUpdate({
           variables: {
             gameCode: correctData.gameCode,
             playerId,
