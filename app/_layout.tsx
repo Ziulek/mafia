@@ -53,9 +53,9 @@ const linkParams = {
 };
 
 const link = from([
+  errorLink,
   createAuthLink(linkParams),
   createSubscriptionHandshakeLink(linkParams, httpLink),
-  errorLink,
 ]);
 
 const client = new ApolloClient({
