@@ -55,7 +55,16 @@ export const GameScreen: FC<GameScreenProps> = ({
 }) => {
   const [isHeaderVisible, setIsHeaderVisible] = useState(
     gameState.stage === "waitingForPlayers" || gameState.stage === "result"
+      ? true
+      : false
   );
+  // to jest głupie rozwiazywanie problemu z headerem (chyba) ale bez tego zostanie wyswietlony po stronie playera jak się zacznie gre
+  useEffect(() => {
+    setIsHeaderVisible(
+      gameState.stage === "waitingForPlayers" || gameState.stage === "result"
+    );
+  }, [gameState.stage]);
+
   const [isBottomSheetVisible, setIsBottomSheetVisible] = useState(false);
   const [isAvatarSelectVisible, setIsAvatarSelectVisible] = useState(false);
   const [selectedPlayer, setSelectedPlayer] = useState<Player | null>(null);
