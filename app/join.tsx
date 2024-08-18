@@ -1,5 +1,5 @@
 import { useState, type ReactElement } from "react";
-import { useLocalSearchParams, useRouter } from "expo-router";
+import { Href, useLocalSearchParams, useRouter } from "expo-router";
 import { useMutation } from "@apollo/client";
 import { JOIN_GAME } from "@/GraphQL/Mutations/JoinGame";
 import JoinScreen from "@/components/screens/JoinScreen/JoinScreen";
@@ -23,12 +23,13 @@ export default (): ReactElement => {
       onCompleted: (data) => {
         console.log("handleJoinGame:data", data);
         router.replace(
-          `game?mode=player&gameCode=${gameCode}&playerId=${playerId}`
+          `/game?mode=player&gameCode=${gameCode}&playerId=${playerId}`
         );
       },
       onError: (error) => {
         console.log("handleJoinGame:error", error);
-        router.replace(`error`);
+        const errorMessage = encodeURIComponent(error.message);
+        router.replace(`/error?message=${errorMessage}` as Href);
       },
     });
   };

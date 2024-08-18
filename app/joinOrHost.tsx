@@ -20,7 +20,7 @@ export default (): ReactElement => {
       const { data } = await createGame({ variables: { hostId: playerId } });
       if (data) {
         const gameCode = data.createGame.gameCode; // Access the gameCode or other data here
-        router.replace(`game?mode=host&gameCode=${gameCode}`);
+        router.replace(`/game?mode=host&gameCode=${gameCode}`);
       }
     } catch (error) {
       console.error("Error creating game:", error);
@@ -30,7 +30,7 @@ export default (): ReactElement => {
   return (
     <JoinOrHostScreen
       onJoinPress={() =>
-        router.push(`join?playerId=${playerId}&nickname=${nickname}`)
+        router.push(`/join?playerId=${playerId}&nickname=${nickname}`)
       }
       onHostPress={handleCreateGame}
     />

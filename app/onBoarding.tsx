@@ -11,7 +11,7 @@ export default (): ReactElement => {
     <OnBoardingScreen
       nickname={nickname}
       setNickname={setNickname}
-      onPress={() => router.replace(`joinOrHost?nickname=${nickname}`)}
+      onPress={() => router.replace(`/joinOrHost?nickname=${nickname}`)}
     />
   );
 };
