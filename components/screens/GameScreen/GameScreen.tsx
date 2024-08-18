@@ -53,7 +53,9 @@ export const GameScreen: FC<GameScreenProps> = ({
   playerID,
   onCharacterUpdate,
 }) => {
-  const [isHeaderVisible, setIsHeaderVisible] = useState(true);
+  const [isHeaderVisible, setIsHeaderVisible] = useState(
+    gameState.stage === "waitingForPlayers" || gameState.stage === "result"
+  );
   const [isBottomSheetVisible, setIsBottomSheetVisible] = useState(false);
   const [isAvatarSelectVisible, setIsAvatarSelectVisible] = useState(false);
   const [selectedPlayer, setSelectedPlayer] = useState<Player | null>(null);
@@ -148,10 +150,7 @@ export const GameScreen: FC<GameScreenProps> = ({
             />
           )}
           {winner && (
-            <HeaderResult
-              winner={winner}
-              isVisible={typeof winner === "string"}
-            />
+            <HeaderResult winner={winner} isVisible={isHeaderVisible} />
           )}
 
           <Animated.View style={[styles.AvatarGrid, animatedStyle]}>
@@ -166,7 +165,7 @@ export const GameScreen: FC<GameScreenProps> = ({
 
         <View style={styles.button}>
           {/* Player Side Change Avatar Button */}
-          {mode === "player" && (
+          {mode === "player" && gameState.stage === "waitingForPlayers" && (
             <Button color="accent" onPress={() => HandleAvatarChange()}>
               Change Avatar
             </Button>

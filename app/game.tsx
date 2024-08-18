@@ -1,15 +1,19 @@
 import type { ReactElement } from "react";
+import { useLocalSearchParams } from "expo-router";
+import { ActivityIndicator, View, Text } from "react-native";
+import GameScreen from "@/components/screens/GameScreen/GameScreen";
 import { useMutation, useQuery, useSubscription } from "@apollo/client";
 import { GET_CURRENT_GAME_STATE } from "@/GraphQL/Query/GetCurrentGameState";
-import GameScreen from "@/components/screens/GameScreen/GameScreen";
-import { useLocalSearchParams } from "expo-router";
 import { KICK_PLAYER } from "@/GraphQL/Mutations/KickPlayer";
 import { CHARACTER_UPDATE } from "@/GraphQL/Mutations/CharacterUpdate";
 import { UPDATE_GAME_RULES } from "@/GraphQL/Mutations/UpdateGameRules";
 import { KILL_PLAYER } from "@/GraphQL/Mutations/KillPlayer";
 import { START_GAME } from "@/GraphQL/Mutations/StartGame";
-import { ActivityIndicator, View, Text } from "react-native";
-import { GAME_STATE_SUBSCRIPTION } from "@/GraphQL/Subscription/GameState";
+import { ON_JOIN_GAME } from "@/GraphQL/Subscription/onJoinGame";
+import { ON_START_GAME } from "@/GraphQL/Subscription/onStartGame";
+import { ON_KILL_PLAYER } from "@/GraphQL/Subscription/onKillPlayer";
+import { ON_KICK_PLAYER } from "@/GraphQL/Subscription/onKickPlayer";
+import { ON_CHARACTER_UPDATE } from "@/GraphQL/Subscription/onCharacterUpdate";
 
 export default (): ReactElement => {
   const { mode } = useLocalSearchParams<{ mode: "host" | "player" }>();
@@ -30,23 +34,78 @@ export default (): ReactElement => {
     },
   });
 
-  const { data: subData, error: subError } = useSubscription(
-    GAME_STATE_SUBSCRIPTION,
+  const { data: joinGameData, error: joinGameError } = useSubscription(
+    ON_JOIN_GAME,
     {
       variables: {
         gameCode,
       },
       onData(options) {
-        console.log("onData", options);
+        console.log("onJoinGame Data", options);
       },
       onError(error) {
-        console.log("onError", error);
+        console.log("onJoinGame Error", error);
       },
     }
   );
 
-  console.log("subData", subData);
-  console.log("subError", subError);
+  const { data: startGameData, error: startGameError } = useSubscription(
+    ON_START_GAME,
+    {
+      variables: {
+        gameCode,
+      },
+      onData(options) {
+        console.log("onStartGame Data", options);
+      },
+      onError(error) {
+        console.log("onStartGame Error", error);
+      },
+    }
+  );
+
+  const { data: killPlayerData, error: killPlayerError } = useSubscription(
+    ON_KILL_PLAYER,
+    {
+      variables: {
+        gameCode,
+      },
+      onData(options) {
+        console.log("onKillPlayer Data", options);
+      },
+      onError(error) {
+        console.log("onKillPlayer Error", error);
+      },
+    }
+  );
+
+  const { data: kickPlayerData, error: kickPlayerError } = useSubscription(
+    ON_KICK_PLAYER,
+    {
+      variables: {
+        gameCode,
+      },
+      onData(options) {
+        console.log("onKickPlayer Data", options);
+      },
+      onError(error) {
+        console.log("onKickPlayer Error", error);
+      },
+    }
+  );
+
+  const { data: characterUpdateData, error: characterUpdateError } =
+    useSubscription(ON_CHARACTER_UPDATE, {
+      variables: {
+        gameCode,
+      },
+      onData(options) {
+        console.log("onCharacterUpdate Data", options);
+      },
+      onError(error) {
+        console.log("onCharacterUpdate Error", error);
+      },
+    });
 
   const correctData = data?.getCurrentGameState;
 
