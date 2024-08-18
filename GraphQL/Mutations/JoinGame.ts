@@ -8,20 +8,23 @@ export const JOIN_GAME = gql`
   ) {
     joinGame(gameCode: $gameCode, nickname: $nickname, playerId: $playerId) {
       gameCode
-      hostId
-      stage
-      winner
-      gameRules {
-        additionalRoles
-        numberOfMafia
-        showRolesAfterDeath
-      }
-      players {
-        character
-        role
-        nickname
-        isDead
-        id
+      gameState {
+        gameCode
+        hostId
+        stage
+        winner
+        gameRules {
+          additionalRoles
+          numberOfMafia
+          showRolesAfterDeath
+        }
+        players {
+          character
+          role
+          nickname
+          isDead
+          id
+        }
       }
     }
   }

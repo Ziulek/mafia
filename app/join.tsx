@@ -20,18 +20,17 @@ export default (): ReactElement => {
         playerId: playerId,
         nickname: nickname,
       },
-      onCompleted: () => {
+      onCompleted: (data) => {
+        console.log("handleJoinGame:data", data);
         router.replace(
           `game?mode=player&gameCode=${gameCode}&playerId=${playerId}`
         );
       },
-      onError: () => {
+      onError: (error) => {
+        console.log("handleJoinGame:error", error);
         router.replace(`error`);
       },
     });
-    router.replace(
-      `game?mode=player&gameCode=${gameCode}&playerId=${playerId}`
-    );
   };
 
   return (

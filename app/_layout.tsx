@@ -1,4 +1,6 @@
+import "react-native-get-random-values";
 import { Stack } from "expo-router";
+
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 import { TamaguiProvider, createTamagui } from "@tamagui/core"; // or 'tamagui'
@@ -24,6 +26,7 @@ const tamaguiConfig = createTamagui(config);
 const url =
   "https://2m3u7nxlhzbmvk4gzkve6cuxd4.appsync-api.eu-central-1.amazonaws.com/graphql";
 
+const API_KEY = "da2-bsiqyvwd5bgmppv632neuwch2a";
 
 const httpLink = new HttpLink({
   uri: url,
@@ -52,7 +55,6 @@ const linkParams = {
 const link = from([
   createAuthLink(linkParams),
   createSubscriptionHandshakeLink(linkParams, httpLink),
-
   errorLink,
 ]);
 
@@ -68,7 +70,6 @@ const client = new ApolloClient({
   headers: {
     "x-api-key": API_KEY,
   },
-  // link: link,
 });
 
 // make TypeScript type everything based on your config

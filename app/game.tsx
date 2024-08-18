@@ -30,17 +30,23 @@ export default (): ReactElement => {
     },
   });
 
-  useSubscription(GAME_STATE_SUBSCRIPTION, {
-    variables: {
-      gameCode,
-    },
-    onData(options) {
-      console.log("onData", options);
-    },
-    onError(error) {
-      console.log("onError", error);
-    },
-  });
+  const { data: subData, error: subError } = useSubscription(
+    GAME_STATE_SUBSCRIPTION,
+    {
+      variables: {
+        gameCode,
+      },
+      onData(options) {
+        console.log("onData", options);
+      },
+      onError(error) {
+        console.log("onError", error);
+      },
+    }
+  );
+
+  console.log("subData", subData);
+  console.log("subError", subError);
 
   const correctData = data?.getCurrentGameState;
 
