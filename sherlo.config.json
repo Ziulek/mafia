@@ -1,0 +1,20 @@
+
+{
+    "token": "sqaAgqHzY6pR3bKp5lzORAPvKTlzyhHFucyN_GCY27",
+    "ios": "builds/preview/ios.tar.gz",
+    "android": "builds/preview/android.apk",
+    "devices": [
+      {
+        "id": "pixel.7.pro",
+        "osVersion": "13",
+        "osLocale": "es_ES",
+        "osTheme": "light"
+      },
+      {
+        "id": "iphone.15.pro",
+        "osVersion": "17",
+        "osLocale": "en_US",
+        "osTheme": "dark"
+      }
+    ]
+  }

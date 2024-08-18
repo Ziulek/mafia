@@ -5,6 +5,7 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 import { TamaguiProvider, createTamagui } from "@tamagui/core"; // or 'tamagui'
 import { config } from "@tamagui/config/v3";
+import Storybook from "../.storybook";
 import {
   ApolloClient,
   InMemoryCache,
@@ -14,6 +15,7 @@ import {
 } from "@apollo/client";
 import { onError } from "@apollo/client/link/error";
 import { AUTH_TYPE, AuthOptions, createAuthLink } from "aws-appsync-auth-link";
+import { registerStorybook } from "@sherlo/react-native-storybook";
 import { createSubscriptionHandshakeLink } from "aws-appsync-subscription-link";
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -90,3 +92,11 @@ export default function RootLayout() {
     </ApolloProvider>
   );
 }
+
+registerStorybook(() => (
+  <TamaguiProvider config={tamaguiConfig}>
+    <GestureHandlerRootView>
+      <Storybook />
+    </GestureHandlerRootView>
+  </TamaguiProvider>
+));
