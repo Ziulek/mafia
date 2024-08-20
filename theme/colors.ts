@@ -5,9 +5,13 @@ export const colors = {
   secondary: "#000000",
   back: "#878787",
   isDisabled: "#C2C2C2",
+
   police: "#208197",
   mafia: "#A14141",
   detective: "#284e93",
-  dead: "#000000"
-  
+  dead: "#000000",
+
+  validInput: "#A8D5BA",
+  invalidInput: "#F5A8A8",
+  invalidInputBorder: "#ff0909",
 };

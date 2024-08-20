@@ -84,7 +84,20 @@ export default function RootLayout() {
     <ApolloProvider client={client}>
       <TamaguiProvider config={tamaguiConfig}>
         <GestureHandlerRootView>
-          <Stack screenOptions={{ headerShown: false }} />
+          <Stack screenOptions={{ headerShown: true }}>
+            <Stack.Screen
+              name="game"
+              options={{
+                gestureEnabled: false,
+              }}
+            />
+            <Stack.Screen
+              name="index"
+              options={{
+                animation: "none",
+              }}
+            />
+          </Stack>
         </GestureHandlerRootView>
       </TamaguiProvider>
     </ApolloProvider>

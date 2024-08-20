@@ -7,6 +7,8 @@ import { Keyboard } from "react-native";
 interface OnBoardingScreenProps {
   onPress: () => void;
   setNickname: (nickname: string) => void;
+  isNicknameValid: boolean;
+  nicknameMessage: string;
   nickname: string;
 }
 
@@ -14,6 +16,8 @@ const OnBoardingScreen: React.FC<OnBoardingScreenProps> = ({
   onPress,
   setNickname,
   nickname,
+  isNicknameValid,
+  nicknameMessage,
 }) => {
   const [isTyping, setIsTyping] = useState<boolean>(false);
 
@@ -38,14 +42,21 @@ const OnBoardingScreen: React.FC<OnBoardingScreenProps> = ({
   }, []);
 
   return (
-    <StartScreen image="police" text="Please enter your Nickname">
+    <StartScreen
+      image="police"
+      text={nicknameMessage ? nicknameMessage : "Please enter your Nickname"}
+    >
       <TextEditListItem
         placeholder="enter nickname"
         text={nickname}
         setText={setNickname}
+        isInputValid={isNicknameValid}
       />
-
-      <Button color="accent" isDisabled={nickname === ""} onPress={onPress}>
+      <Button
+        color="accent"
+        isDisabled={!isNicknameValid || nickname.length < 1}
+        onPress={onPress}
+      >
         Next
       </Button>
     </StartScreen>

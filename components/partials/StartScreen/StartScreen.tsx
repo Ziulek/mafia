@@ -67,6 +67,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     paddingHorizontal: 40,
     gap: 10,
+    maxHeight: 120,
   },
   interactiveContainer: {
     flexGrow: 0.5,

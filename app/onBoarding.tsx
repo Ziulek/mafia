@@ -1,30 +1,47 @@
-import { useState, type ReactElement } from "react";
-import { View } from "react-native";
-import { Href, useRouter } from "expo-router";
-import Button from "@/components/base/Button/Button";
+import { useState, type ReactElement, useEffect } from "react";
+import { useRouter } from "expo-router";
 import OnBoardingScreen from "@/components/screens/onBoardingScreen/onBoardingScreen";
+import correctNickname from "@/helpers/correctNickname";
+import storeNickname from "@/helpers/storeNickname";
+import getNickname from "@/helpers/getNickname";
 
 export default (): ReactElement => {
   const router = useRouter();
   const [nickname, setNickname] = useState<string>("");
+  const [isNicknameValid, setIsNicknameValid] = useState<boolean>(true);
+  const [nicknameMessage, setNicknameMessage] = useState<string>("");
+
+  // const checkNickname = async () => {
+  //   const nickname = await getNickname();
+  //   if (nickname) {
+  //     router.push(`/joinOrHost`);
+  //   } else {
+  //     router.replace(`/onBoarding`);
+  //   }
+  // };
+  // checkNickname();
+
+  useEffect(() => {
+    const { isValid, message } = correctNickname(nickname);
+    console.log("isValid", isValid, "message", message);
+    setIsNicknameValid(isValid);
+    setNicknameMessage(message);
+  }, [nickname]);
+
+  const handleNicknameInput = () => {
+    storeNickname(nickname);
+    router.push(`/joinOrHost`);
+  };
+
   return (
     <OnBoardingScreen
       nickname={nickname}
       setNickname={setNickname}
-      onPress={() => router.replace(`/joinOrHost?nickname=${nickname}`)}
+      isNicknameValid={isNicknameValid}
+      nicknameMessage={nicknameMessage}
+      onPress={() => handleNicknameInput()}
     />
   );
 };
 
-// <View
-//   style={{
-//     flex: 1,
-//     flexDirection: "column",
-//     alignItems: "center",
-//     justifyContent: "center",
-//   }}
-// >
-//   <Button color="accent" onPress={() => router.replace("joinOrHost")}>
-//     Continue to Join or Host
-//   </Button>
-// </View>
+//456789ABCDEFG

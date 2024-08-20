@@ -1,37 +1,43 @@
 import { useState, type ReactElement } from "react";
-import { Href, useLocalSearchParams, useRouter } from "expo-router";
+import { useLocalSearchParams, useRouter } from "expo-router";
 import { useMutation } from "@apollo/client";
 import { JOIN_GAME } from "@/GraphQL/Mutations/JoinGame";
 import JoinScreen from "@/components/screens/JoinScreen/JoinScreen";
+import getNickname from "@/helpers/getNickname";
 
 export default (): ReactElement => {
   const router = useRouter();
   const { playerId } = useLocalSearchParams<{ playerId: string }>();
-  const { nickname } = useLocalSearchParams<{ nickname: string }>();
+
   const [gameCode, setGameCode] = useState("");
-  // const [nickname, setNickname] = useState("");
 
   const [joinGame] = useMutation(JOIN_GAME);
 
-  const handleJoinGame = () => {
-    joinGame({
-      variables: {
-        gameCode: gameCode,
-        playerId: playerId,
-        nickname: nickname,
-      },
-      onCompleted: (data) => {
-        console.log("handleJoinGame:data", data);
-        router.replace(
-          `/game?mode=player&gameCode=${gameCode}&playerId=${playerId}`
-        );
-      },
-      onError: (error) => {
-        console.log("handleJoinGame:error", error);
-        const errorMessage = encodeURIComponent(error.message);
-        router.replace(`/error?message=${errorMessage}` as Href);
-      },
-    });
+  const handleJoinGame = async () => {
+    const nickname = await getNickname();
+    if (nickname) {
+      joinGame({
+        variables: {
+          gameCode: gameCode,
+          playerId: playerId,
+          nickname: nickname,
+        },
+        onCompleted: (data) => {
+          console.log("handleJoinGame:data", data);
+          router.replace(
+            `/game?mode=player&gameCode=${gameCode}&playerId=${playerId}`
+          );
+        },
+        onError: (error) => {
+          console.log("handleJoinGame:error", error);
+          const errorMessage = encodeURIComponent(error.message);
+          router.replace(`/error?errorMessage=${errorMessage}`);
+        },
+      });
+    } else {
+      console.log("No nickname available, cannot join game.");
+      // Optionally handle this case (e.g., show an error message)
+    }
   };
 
   return (
@@ -42,24 +48,3 @@ export default (): ReactElement => {
     />
   );
 };
-
-{
-  /* <View
-      style={{
-        flex: 1,
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-    >
-      <Text>set Nickname</Text>
-      <TextInput onChangeText={(i) => setNickname(i)} value={nickname} />
-
-      <Text>Enter Game Code</Text>
-      <TextInput onChangeText={(i) => setGameCode(i)} value={gameCode} />
-
-      <Button color="accent" onPress={handleJoinGame}>
-        Continue to Game(Player)
-      </Button>
-    </View> */
-}

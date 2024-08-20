@@ -1,9 +1,11 @@
+import { colors } from "@/theme/colors";
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import { Input } from "tamagui";
 
 type TextEditListItemProps = {
   placeholder: string;
+  isInputValid?: boolean;
   text: string;
   setText: (newText: string) => void;
   onFocus?: () => void; // Add this prop
@@ -12,6 +14,7 @@ type TextEditListItemProps = {
 
 export function TextEditListItem({
   placeholder,
+  isInputValid = true,
   text,
   setText,
   onFocus = () => {},
@@ -31,6 +34,12 @@ export function TextEditListItem({
         onChangeText={handleTextChange}
         onFocus={onFocus}
         onBlur={onBlur}
+        backgroundColor={isInputValid ? "white" : colors.invalidInput}
+        borderWidth={2}
+        borderColor={isInputValid ? "grey" : colors.invalidInputBorder}
+        focusStyle={{
+          borderColor: isInputValid ? "grey" : colors.invalidInputBorder,
+        }}
       />
     </View>
   );
@@ -42,9 +51,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     width: "100%",
-    borderRadius: 10,
-    borderWidth: 1,
-    borderColor: "gray",
   },
   input: {
     flex: 1,

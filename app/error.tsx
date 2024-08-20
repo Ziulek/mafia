@@ -1,9 +1,25 @@
-import { useState, type ReactElement } from "react";
+import { type ReactElement } from "react";
 import { View } from "react-native";
-import { useRouter } from "expo-router";
+import { useLocalSearchParams, useRouter } from "expo-router";
 import Button from "@/components/base/Button/Button";
-import OnBoardingScreen from "@/components/screens/onBoardingScreen/onBoardingScreen";
+import Text from "@/components/base/Text/Text";
 
 export default (): ReactElement => {
-  return <View>error</View>;
+  const router = useRouter();
+  const { errorMessage } = useLocalSearchParams<{ errorMessage: string }>();
+
+  return (
+    <View>
+      <Text size="headline">{`The error occurred with this message: ${errorMessage}`}</Text>
+
+      <Button
+        onPress={() => {
+          router.replace("/joinOrHost");
+        }}
+        color="primary"
+      >
+        Back
+      </Button>
+    </View>
+  );
 };
