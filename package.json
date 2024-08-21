@@ -14,8 +14,6 @@
     "storybook-generate": "sb-rn-get-stories",
     "android:build:dev": "eas build --platform android --local --profile=development --output=builds/development/android.apk",
     "ios:build:dev": "eas build --platform ios --local --profile=development --output=builds/development/ios.tar.gz",
-    "android:build:preview": "eas build --platform android --local --profile=preview --output=builds/preview/android.apk",
-    "ios:build:preview": "eas build --platform ios --local --profile=preview --output=builds/preview/ios.tar.gz",
     "android:build:test": "eas build -p android -e testing --local --output builds/testing/android.apk",
     "ios:build:test": "eas build -p ios -e testing --local --output builds/testing/ios.tar.gz",
     "postinstall": "patch-package",
