@@ -16,6 +16,9 @@ import { onError } from "@apollo/client/link/error";
 import { AUTH_TYPE, AuthOptions, createAuthLink } from "aws-appsync-auth-link";
 import { createSubscriptionHandshakeLink } from "aws-appsync-subscription-link";
 
+import { registerStorybook } from "@sherlo/react-native-storybook";
+import Storybook from "../.storybook";
+
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 require("es6-promise").polyfill();
 require("isomorphic-fetch");
@@ -79,27 +82,39 @@ declare module "@tamagui/core" {
   interface TamaguiCustomConfig extends Conf {}
 }
 
-export default function RootLayout() {
+function CommonProviders({ children }: any) {
   return (
     <ApolloProvider client={client}>
       <TamaguiProvider config={tamaguiConfig}>
-        <GestureHandlerRootView>
-          <Stack screenOptions={{ headerShown: true }}>
-            <Stack.Screen
-              name="game"
-              options={{
-                gestureEnabled: false,
-              }}
-            />
-            <Stack.Screen
-              name="index"
-              options={{
-                animation: "none",
-              }}
-            />
-          </Stack>
-        </GestureHandlerRootView>
+        <GestureHandlerRootView>{children}</GestureHandlerRootView>
       </TamaguiProvider>
     </ApolloProvider>
   );
 }
+
+export default function RootLayout() {
+  return (
+    <CommonProviders>
+      <Stack screenOptions={{ headerShown: true }}>
+        <Stack.Screen
+          name="game"
+          options={{
+            gestureEnabled: false,
+          }}
+        />
+        <Stack.Screen
+          name="index"
+          options={{
+            animation: "none",
+          }}
+        />
+      </Stack>
+    </CommonProviders>
+  );
+}
+
+registerStorybook(() => (
+  <CommonProviders>
+    <Storybook />
+  </CommonProviders>
+));

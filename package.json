@@ -16,7 +16,10 @@
     "ios:build": "eas build --platform ios --local --profile=development --output=builds/development/ios.tar.gz",
     "android:build:preview": "eas build --platform android --local --profile=preview --output=builds/preview/android.apk",
     "ios:build:preview": "eas build --platform ios --local --profile=preview --output=builds/preview/ios.tar.gz",
-    "postinstall": "patch-package"
+    "postinstall": "patch-package",
+    "build:android": "eas build -p android -e testing --local --output builds/testing/android.apk",
+    "build:ios": "eas build -p ios -e testing --local --output builds/testing/ios.tar.gz",
+    "sherlo": "sherlo"
   },
   "jest": {
     "preset": "jest-expo"
@@ -66,6 +69,7 @@
     "@react-native-async-storage/async-storage": "^1.23.1",
     "@react-native-community/datetimepicker": "^8.0.1",
     "@react-native-community/slider": "^4.5.2",
+    "@sherlo/react-native-storybook": "^1.0.31",
     "@storybook/addon-ondevice-actions": "^7.6.19",
     "@storybook/addon-ondevice-controls": "^7.6.19",
     "@storybook/react-native": "^7.6.19",

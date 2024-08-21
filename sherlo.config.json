@@ -1,0 +1,12 @@
+{
+  "token": "Q_p9iVx_D96hkCxtOwVfHunTh9CX4-hWzOjYR72p1",
+  "ios": "builds/testing/ios.tar.gz",
+  "devices": [
+    {
+      "id": "iphone.15.pro",
+      "osVersion": "17",
+      "osTheme": "light",
+      "osLocale": "en_US"
+    }
+  ]
+}
