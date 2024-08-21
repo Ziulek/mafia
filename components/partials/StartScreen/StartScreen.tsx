@@ -5,12 +5,18 @@ import Text from "@/components/base/Text/Text";
 import { colors } from "@/theme/colors";
 
 interface StartScreenProps {
-  image: "mafia" | "police";
+  image: "mafia" | "police" | "error";
   children: ReactNode;
   text: string;
+  isError?: boolean;
 }
 
-const StartScreen: React.FC<StartScreenProps> = ({ image, text, children }) => {
+const StartScreen: React.FC<StartScreenProps> = ({
+  image,
+  text,
+  isError = false,
+  children,
+}) => {
   const insets = useSafeAreaInsets();
 
   return (
@@ -20,6 +26,13 @@ const StartScreen: React.FC<StartScreenProps> = ({ image, text, children }) => {
         { paddingTop: insets.top, paddingBottom: insets.bottom },
       ]}
     >
+      {image === "error" && (
+        //Można dodać obrazek jakiegoś smutnego mafiozy na errora
+        <Image
+          style={styles.imageContainer}
+          source={require("@/assets/images/StartImages/start_mafia.png")}
+        />
+      )}
       {image === "mafia" && (
         <Image
           style={styles.imageContainer}
@@ -34,9 +47,16 @@ const StartScreen: React.FC<StartScreenProps> = ({ image, text, children }) => {
       )}
 
       <View style={styles.textContainer}>
-        <Text size="startScreenHeadline" isTextAlignCenter={true}>
-          Let's Play
-        </Text>
+        {isError && (
+          <Text size="startScreenHeadline" isTextAlignCenter={true}>
+            Error occured
+          </Text>
+        )}
+        {!isError && (
+          <Text size="startScreenHeadline" isTextAlignCenter={true}>
+            Let's Play
+          </Text>
+        )}
 
         <Text size="startScreenSubtitle" isTextAlignCenter={true} color="grey">
           {text}

@@ -95,7 +95,7 @@ function CommonProviders({ children }: any) {
 export default function RootLayout() {
   return (
     <CommonProviders>
-      <Stack screenOptions={{ headerShown: true }}>
+      <Stack screenOptions={{ headerShown: false }}>
         <Stack.Screen
           name="game"
           options={{
