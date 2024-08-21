@@ -19,6 +19,7 @@ import { createSubscriptionHandshakeLink } from "aws-appsync-subscription-link";
 import { registerStorybook } from "@sherlo/react-native-storybook";
 import Storybook from "../.storybook";
 import { ReactNode } from "react";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 require("es6-promise").polyfill();
@@ -87,7 +88,9 @@ function CommonProviders({ children }: { children: ReactNode }) {
   return (
     <ApolloProvider client={client}>
       <TamaguiProvider config={tamaguiConfig}>
-        <GestureHandlerRootView>{children}</GestureHandlerRootView>
+        <SafeAreaProvider>
+          <GestureHandlerRootView>{children}</GestureHandlerRootView>
+        </SafeAreaProvider>
       </TamaguiProvider>
     </ApolloProvider>
   );
