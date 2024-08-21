@@ -29,7 +29,6 @@ const players = [
   {
     id: "1",
     character: "M1" as Character,
-
     isDead: false,
     nickname: "Player1",
   },
@@ -82,48 +81,6 @@ const players = [
     isDead: false,
     nickname: "Player8",
   },
-  {
-    id: "9",
-    character: "F4" as Character,
-    role: "mafia" as Role,
-    isDead: false,
-    nickname: "Player8",
-  },
-  {
-    id: "10",
-    character: "F4" as Character,
-    role: "mafia" as Role,
-    isDead: false,
-    nickname: "Player8",
-  },
-  {
-    id: "11",
-    character: "F4" as Character,
-    role: "mafia" as Role,
-    isDead: false,
-    nickname: "Player8",
-  },
-  {
-    id: "12",
-    character: "F4" as Character,
-    role: "mafia" as Role,
-    isDead: false,
-    nickname: "Player8",
-  },
-  {
-    id: "13",
-    character: "F4" as Character,
-    role: "mafia" as Role,
-    isDead: false,
-    nickname: "Player8",
-  },
-  {
-    id: "14",
-    character: "F4" as Character,
-    role: "mafia" as Role,
-    isDead: false,
-    nickname: "Player8",
-  },
 ];
 
 const gameState: GameState = {
@@ -138,31 +95,107 @@ const gameState: GameState = {
   winner: undefined,
 };
 
-export const Host: Story = {
+export const HostLobby: Story = {
   args: {
-    gameState,
     mode: "host",
-    onNewGame: () => console.log("New Game"),
-    onKillPlayer: (player) => console.log("Kill Player", player),
-    onKickPlayer: (player) => console.log("Kick Player", player),
-    onUpdateGameRules: (gameRules) =>
-      console.log("Update Game Rules", gameRules),
-    onCharacterUpdate: (character) =>
-      console.log("Update Character", character),
+    gameState: {
+      players,
+      stage: "waitingForPlayers",
+      gameRules: {
+        numberOfMafia: 2,
+        extraRoles: ["detective"],
+        revealRolesAfterDeath: true,
+      },
+      gameCode: "GHDPS07P",
+      winner: undefined,
+    },
   },
 };
 
-export const Player: Story = {
+export const HostGame: Story = {
   args: {
-    gameState,
+    mode: "host",
+    gameState: {
+      players,
+      stage: "game",
+      gameRules: {
+        numberOfMafia: 2,
+        extraRoles: ["detective"],
+        revealRolesAfterDeath: true,
+      },
+      gameCode: "GHDPS07P",
+      winner: undefined,
+    },
+  },
+};
+
+export const HostResult: Story = {
+  args: {
+    mode: "host",
+    gameState: {
+      players,
+      stage: "result",
+      gameRules: {
+        numberOfMafia: 2,
+        extraRoles: ["detective"],
+        revealRolesAfterDeath: true,
+      },
+      gameCode: "GHDPS07P",
+      winner: "police",
+    },
+  },
+};
+
+export const PlayerLobby: Story = {
+  args: {
     mode: "player",
-    onNewGame: () => console.log("New Game"),
-    onKillPlayer: (player) => console.log("Kill Player", player),
-    onKickPlayer: (player) => console.log("Kick Player", player),
-    onUpdateGameRules: (gameRules) =>
-      console.log("Update Game Rules", gameRules),
-    onCharacterUpdate: (character) =>
-      console.log("Update Character", character),
     playerID,
+    gameState: {
+      players,
+      stage: "waitingForPlayers",
+      gameRules: {
+        numberOfMafia: 2,
+        extraRoles: ["detective"],
+        revealRolesAfterDeath: true,
+      },
+      gameCode: "GHDPS07P",
+      winner: undefined,
+    },
+  },
+};
+
+export const PlayerGame: Story = {
+  args: {
+    mode: "player",
+    playerID,
+    gameState: {
+      players,
+      stage: "game",
+      gameRules: {
+        numberOfMafia: 2,
+        extraRoles: ["detective"],
+        revealRolesAfterDeath: true,
+      },
+      gameCode: "GHDPS07P",
+      winner: undefined,
+    },
+  },
+};
+
+export const PlayerResult: Story = {
+  args: {
+    mode: "player",
+    playerID,
+    gameState: {
+      players,
+      stage: "result",
+      gameRules: {
+        numberOfMafia: 2,
+        extraRoles: ["detective"],
+        revealRolesAfterDeath: true,
+      },
+      gameCode: "GHDPS07P",
+      winner: "mafia",
+    },
   },
 };

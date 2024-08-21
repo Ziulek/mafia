@@ -12,7 +12,21 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {
+export const SwitchOn: Story = {
+  render: () => {
+    const [isSwitchOn, setIsSwitchOn] = useState(true);
+
+    return (
+      <SwitchListItem
+        title="Reveal roles after death "
+        isOn={isSwitchOn}
+        setIsOn={setIsSwitchOn}
+      />
+    );
+  },
+};
+
+export const switchOff: Story = {
   render: () => {
     const [isSwitchOn, setIsSwitchOn] = useState(false);
 

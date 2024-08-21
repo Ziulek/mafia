@@ -5,6 +5,7 @@ import { StyleSheet, View } from "react-native";
 
 import Text from "../../base/Text/Text";
 import SelectListItem from "@/components/base/SelectListItem/SelectListItem";
+import AvailableRoles from "@/gameConfig/AvailableRoles";
 
 type HeaderLobbyHostProps = {
   players: number;
@@ -18,13 +19,6 @@ export const HeaderLobbyHost = ({
   isVisible,
 }: HeaderLobbyHostProps) => {
   const [isSwitchOn, setIsSwitchOn] = useState(false);
-
-  const items = [
-    { label: "Detective", value: "detective" },
-    { label: "Medic", value: "medic" },
-    { label: "Serial Killer", value: "serial killer" },
-    { label: "Medium", value: "medium" },
-  ];
 
   return (
     <Header isVisible={isVisible}>
@@ -45,7 +39,14 @@ export const HeaderLobbyHost = ({
         </View>
 
         <View style={styles.itemsStyle}>
-          <SelectListItem items={items} isMultiSelected={true} />
+          <View style={styles.inlineText}>
+            <Text size="headline">Number of Mafia: </Text>
+            <Text size="headline" isBold={true}>
+              {players.toString()}
+            </Text>
+          </View>
+          <SelectListItem items={AvailableRoles} isMultiSelected={true} />
+
           <SwitchListItem
             title="Reveal roles after death "
             isOn={isSwitchOn}

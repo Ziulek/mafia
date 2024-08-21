@@ -144,21 +144,21 @@ export const GameScreen: FC<GameScreenProps> = ({
       />
       <ImageBackground>
         <View>
-          {mode === "host" && (
+          {mode === "host" && gameState.stage === "waitingForPlayers" && (
             <HeaderLobbyHost
               players={players?.length}
               gameCode={gameState?.gameCode}
               isVisible={isHeaderVisible}
             />
           )}
-          {mode === "player" && (
+          {mode === "player" && gameState.stage === "waitingForPlayers" && (
             <HeaderLobbyPlayer
               players={players?.length}
               gameCode={gameState?.gameCode}
               isVisible={isHeaderVisible}
             />
           )}
-          {winner && (
+          {winner && gameState.stage === "result" && (
             <HeaderResult winner={winner} isVisible={isHeaderVisible} />
           )}
 

@@ -1,7 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import StoryDecorator from "@/decorators/StoryDecorator";
-
-import BoxDecorator from "@/decorators/BoxDecorator";
 import AnimatedCharacterAvatar from "./AnimatedCharacterAvatar";
 
 const meta: Meta<typeof AnimatedCharacterAvatar> = {
@@ -16,10 +14,6 @@ const meta: Meta<typeof AnimatedCharacterAvatar> = {
       options: ["mafia", "police", "detective"],
       control: { type: "radio" },
     },
-    mode: {
-      options: ["default", "revealed", "pressable"],
-      control: { type: "radio" },
-    },
   },
 };
 
@@ -27,12 +21,21 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {
+export const avatarAlive: Story = {
   args: {
     character: "M1",
     role: "mafia",
     nickname: "Lorem Ipsum Dupol",
     isDead: false,
-    mode: "pressable",
+    isPressable: true,
+  },
+};
+
+export const avatarDead: Story = {
+  args: {
+    character: "M1",
+    role: "mafia",
+    nickname: "Lorem Ipsum Dupol",
+    isDead: true,
   },
 };

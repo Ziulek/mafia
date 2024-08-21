@@ -18,6 +18,7 @@ import { createSubscriptionHandshakeLink } from "aws-appsync-subscription-link";
 
 import { registerStorybook } from "@sherlo/react-native-storybook";
 import Storybook from "../.storybook";
+import { ReactNode } from "react";
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 require("es6-promise").polyfill();
@@ -82,7 +83,7 @@ declare module "@tamagui/core" {
   interface TamaguiCustomConfig extends Conf {}
 }
 
-function CommonProviders({ children }: any) {
+function CommonProviders({ children }: { children: ReactNode }) {
   return (
     <ApolloProvider client={client}>
       <TamaguiProvider config={tamaguiConfig}>

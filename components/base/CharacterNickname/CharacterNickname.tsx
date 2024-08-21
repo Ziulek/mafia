@@ -21,11 +21,11 @@ export const CharacterNickname = ({
           fillOpacity="100"
           fill={color}
           fontSize="23"
-          // letterSpacing="3"
+          letterSpacing="2.5"
           textAnchor="middle"
           fontFamily="AmericanTypewriter"
         >
-          <TextPath href="#arc" startOffset="50%">
+          <TextPath href="#arc" startOffset="51%">
             {nickname.toUpperCase()}
           </TextPath>
         </Text>

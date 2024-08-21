@@ -9,7 +9,7 @@ interface ErrorScreenProps {
 
 const ErrorScreen: React.FC<ErrorScreenProps> = ({ onPress, errorMessage }) => {
   return (
-    <StartScreen image="error" isError={true} text={errorMessage}>
+    <StartScreen image="error" text={errorMessage}>
       <Button color="back" onPress={onPress}>
         Back
       </Button>

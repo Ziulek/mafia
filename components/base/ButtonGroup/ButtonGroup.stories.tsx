@@ -15,7 +15,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   render: () => (
-    <View style={{ width: 400, height: 200, backgroundColor: "blue" }}>
+    <View style={{ width: 400, height: 200 }}>
       <ButtonGroup>
         <Button color="kill" onPress={() => {}}>
           {"Kill Player"}

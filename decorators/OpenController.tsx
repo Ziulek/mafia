@@ -14,7 +14,7 @@ const OpenController = ({
   return (
     <>
       {renderContent(isVisible)}
-      <View style={{ marginTop: "100%" }}>
+      <View style={{ marginTop: "90%" }}>
         <Button title="Open" onPress={handleOpen} />
         <Button title="Close" onPress={handleClose} />
       </View>

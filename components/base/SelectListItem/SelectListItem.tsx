@@ -9,15 +9,19 @@ interface SelectItem {
 interface SelectListItemProps {
   items: SelectItem[];
   isMultiSelected?: boolean;
+  defaultSelectForStoriesUseCase?: string | string[];
 }
 
 const SelectListItem: FC<SelectListItemProps> = ({
   items,
   isMultiSelected = false,
+  defaultSelectForStoriesUseCase,
 }) => {
   const [open, setOpen] = useState(false);
   const [singleValue, setSingleValue] = useState<string | null>(null);
-  const [multiValue, setMultiValue] = useState<string[]>([]);
+  const [multiValue, setMultiValue] = useState<string[]>(
+    isMultiSelected ? (defaultSelectForStoriesUseCase as string[]) || [] : []
+  );
   const [dropDownItems, setDropDownItems] = useState(items);
 
   const dropDownProps = isMultiSelected
@@ -43,6 +47,7 @@ const SelectListItem: FC<SelectListItemProps> = ({
       mode="BADGE"
       showBadgeDot={false}
       {...dropDownProps}
+
       // badgeStyle={{ backgroundColor: "red" }}
       // https://hossein-zare.github.io/react-native-dropdown-picker-website/docs/advanced/modes
 

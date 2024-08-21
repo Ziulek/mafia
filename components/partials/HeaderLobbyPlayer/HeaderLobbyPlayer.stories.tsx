@@ -23,6 +23,5 @@ export const Default: Story = {
   args: {
     gameCode: "hU1d74",
     players: 5,
-    isVisible: true,
   },
 };

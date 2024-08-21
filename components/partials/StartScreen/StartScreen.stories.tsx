@@ -9,9 +9,24 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {
+export const Police: Story = {
   args: {
     image: "police",
     text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco lab",
+  },
+};
+
+export const Mafia: Story = {
+  args: {
+    image: "mafia",
+    text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco lab",
+  },
+};
+
+export const Error: Story = {
+  args: {
+    image: "error",
+
+    text: "Something went wrong!",
   },
 };

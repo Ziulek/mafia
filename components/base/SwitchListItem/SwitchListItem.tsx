@@ -20,9 +20,9 @@ export function SwitchListItem({ title, isOn, setIsOn }: SwitchListItemProps) {
       paddingLeft: 12,
     },
     switch: {
-      backgroundColor: isOn ? "#0f0f0f" : "#232323",
+      backgroundColor: isOn ? colors.switchOn : colors.switchOff,
 
-      borderColor: isOn ? "#0f0f0f" : "#232323",
+      borderColor: colors.switchOff,
     },
     thumb: {
       backgroundColor: colors.primary,

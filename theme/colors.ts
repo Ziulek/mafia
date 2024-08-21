@@ -14,4 +14,7 @@ export const colors = {
   validInput: "#A8D5BA",
   invalidInput: "#F5A8A8",
   invalidInputBorder: "#ff0909",
+
+  switchOn: "#5aa73a",
+  switchOff: "#0f0f0f",
 };

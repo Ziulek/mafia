@@ -21,11 +21,62 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {
+export const ListItemText: Story = {
+  args: {
+    size: "listItem",
+    isBold: true,
+    color: "black",
+    isTextAlignCenter: true,
+    children: "Lorem Ipsum Dupol",
+  },
+};
+
+export const ButtonText: Story = {
+  args: {
+    size: "button",
+    isBold: true,
+    color: "black",
+    isTextAlignCenter: true,
+    children: "Lorem Ipsum Dupol",
+  },
+};
+
+export const SubtitleText: Story = {
+  args: {
+    size: "subtitle",
+    isBold: true,
+    color: "black",
+    isTextAlignCenter: true,
+    children: "Lorem Ipsum Dupol",
+  },
+};
+
+export const HeadlineText: Story = {
   args: {
     size: "headline",
     isBold: true,
     color: "black",
+    isTextAlignCenter: true,
+    children: "Lorem Ipsum Dupol",
+  },
+};
+
+export const StartScreenSubtitleText: Story = {
+  args: {
+    size: "startScreenSubtitle",
+    isBold: true,
+    color: "black",
+    isTextAlignCenter: true,
+    children: "Lorem Ipsum Dupol",
+  },
+};
+
+export const StartScreenHeadlineText: Story = {
+  args: {
+    size: "startScreenHeadline",
+    isBold: true,
+    color: "black",
+    isTextAlignCenter: true,
     children: "Lorem Ipsum Dupol",
   },
 };

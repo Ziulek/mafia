@@ -1,10 +1,42 @@
 {
   "token": "Q_p9iVx_D96hkCxtOwVfHunTh9CX4-hWzOjYR72p1",
+  "android": "builds/testing/android.apk",
   "ios": "builds/testing/ios.tar.gz",
   "devices": [
     {
       "id": "iphone.15.pro",
       "osVersion": "17",
+      "osTheme": "light",
+      "osLocale": "en_US"
+    },
+    {
+      "id": "iphone.se.3.gen",
+      "osVersion": "17",
+      "osTheme": "light",
+      "osLocale": "en_US"
+    },
+    {
+      "id": "ipad.pro.13.m4",
+      "osVersion": "17",
+      "osTheme": "light",
+      "osLocale": "en_US"
+    },
+
+    {
+      "id": "pixel.7.pro",
+      "osVersion": "13",
+      "osTheme": "light",
+      "osLocale": "en_US"
+    },
+    {
+      "id": "pixel.4",
+      "osVersion": "13",
+      "osTheme": "light",
+      "osLocale": "en_US"
+    },
+    {
+      "id": "pixel.tablet",
+      "osVersion": "13",
       "osTheme": "light",
       "osLocale": "en_US"
     }

@@ -8,13 +8,12 @@ interface StartScreenProps {
   image: "mafia" | "police" | "error";
   children: ReactNode;
   text: string;
-  isError?: boolean;
 }
 
 const StartScreen: React.FC<StartScreenProps> = ({
   image,
   text,
-  isError = false,
+
   children,
 }) => {
   const insets = useSafeAreaInsets();
@@ -30,7 +29,7 @@ const StartScreen: React.FC<StartScreenProps> = ({
         //Można dodać obrazek jakiegoś smutnego mafiozy na errora
         <Image
           style={styles.imageContainer}
-          source={require("@/assets/images/StartImages/start_mafia.png")}
+          source={require("@/assets/images/StartImages/start_error.png")}
         />
       )}
       {image === "mafia" && (
@@ -47,12 +46,12 @@ const StartScreen: React.FC<StartScreenProps> = ({
       )}
 
       <View style={styles.textContainer}>
-        {isError && (
+        {image === "error" && (
           <Text size="startScreenHeadline" isTextAlignCenter={true}>
             Error occured
           </Text>
         )}
-        {!isError && (
+        {!(image === "error") && (
           <Text size="startScreenHeadline" isTextAlignCenter={true}>
             Let's Play
           </Text>

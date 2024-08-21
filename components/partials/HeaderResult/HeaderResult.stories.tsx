@@ -19,9 +19,13 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {
+export const Mafia: Story = {
   args: {
     winner: "mafia",
-    isVisible: true,
+  },
+};
+export const Police: Story = {
+  args: {
+    winner: "police",
   },
 };

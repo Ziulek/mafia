@@ -13,11 +13,23 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-  args: {
-    placeholder: "Your nickname",
-  },
   render: () => {
     const [text, setText] = useState("");
+
+    return (
+      <TextEditListItem
+        placeholder="Your nickname"
+        text={text}
+        setText={setText}
+      />
+    );
+  },
+};
+export const FilledInput: Story = {
+  render: () => {
+    const [text, setText] = useState(
+      "Lorem Ipsum Dupol Lorem Ipsum Dupol Lorem Ipsum Dupol"
+    );
 
     return (
       <TextEditListItem

@@ -29,7 +29,6 @@ export default (): ReactElement => {
           );
         },
         onError: (error) => {
-          console.log("handleJoinGame:error", error);
           const errorMessage = encodeURIComponent(error.message);
           router.replace(`/error?errorMessage=${errorMessage}`);
         },

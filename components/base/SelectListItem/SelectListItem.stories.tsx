@@ -1,18 +1,12 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import StoryDecorator from "@/decorators/StoryDecorator";
 import SelectListItem from "./SelectListItem";
+import AvailableRoles from "@/gameConfig/AvailableRoles";
 
 const meta: Meta<typeof SelectListItem> = {
   component: SelectListItem,
   decorators: [StoryDecorator],
 };
-
-const items = [
-  { label: "Detective", value: "detective" },
-  { label: "Medic", value: "medic" },
-  { label: "Serial Killer", value: "serial killer" },
-  { label: "Medium", value: "medium" },
-];
 
 const items2 = [
   { label: "Male", value: "male" },
@@ -25,8 +19,21 @@ type Story = StoryObj<typeof meta>;
 
 export const MultiSelectable: Story = {
   args: {
-    items: items,
+    items: AvailableRoles,
     isMultiSelected: true,
+  },
+};
+
+export const MultiSelectableFull: Story = {
+  args: {
+    items: AvailableRoles,
+    isMultiSelected: true,
+    defaultSelectForStoriesUseCase: [
+      "detective",
+      "medic",
+      "serial killer",
+      "medium",
+    ],
   },
 };
 
