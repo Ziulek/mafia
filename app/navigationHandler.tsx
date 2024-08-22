@@ -22,3 +22,6 @@ const NavigationHandler: React.FC = () => {
 };
 
 export default NavigationHandler;
+
+//splash screen
+// w app.json statusbar

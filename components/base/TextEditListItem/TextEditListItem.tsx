@@ -34,6 +34,7 @@ export function TextEditListItem({
         onChangeText={handleTextChange}
         onFocus={onFocus}
         onBlur={onBlur}
+        ellipse={true}
         backgroundColor={isInputValid ? "white" : colors.invalidInput}
         borderWidth={2}
         borderColor={isInputValid ? "grey" : colors.invalidInputBorder}

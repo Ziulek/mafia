@@ -1,10 +1,9 @@
-import React, { useRef } from "react";
+import React from "react";
 import { Dimensions, View } from "react-native";
 import Carousel, { ICarouselInstance } from "react-native-reanimated-carousel";
 import AnimatedCharacterAvatar from "../AnimatedCharacterAvatar/AnimatedCharacterAvatar";
 import { Character } from "@/components/types/Characters";
 import { BottomSheet } from "../../base/BottomSheet/BottomSheet";
-import { useSharedValue } from "react-native-reanimated";
 
 const { width } = Dimensions.get("window");
 
@@ -56,26 +55,33 @@ const ChangeAvatarBottomSheet: React.FC<ChangeAvatarBottomSheetProps> = ({
         ref={r}
         defaultIndex={AllAvailableCharacters.indexOf(currentCharacter)}
         loop={true}
-        // autoPlay={true}
-        width={PAGE_WIDTH / 1.8}
+        // autoPlay={true}}
+        width={200}
         height={PAGE_HEIGHT}
-        style={{ width: PAGE_WIDTH }}
+        style={{
+          width: PAGE_WIDTH,
+          // backgroundColor: "blue",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
         data={AllAvailableCharacters}
         mode="parallax"
         modeConfig={{
-          parallaxScrollingScale: 1,
-          parallaxScrollingOffset: 50,
+          parallaxScrollingScale: 1.2,
+          parallaxScrollingOffset: 20,
+          parallaxAdjacentItemScale: 0.9,
         }}
         renderItem={({ item }) => {
           return (
             <View
               style={{
-                // flex: 1,
+                flex: 1,
                 // width: PAGE_WIDTH / 3,
                 justifyContent: "center",
                 alignItems: "center",
-                backgroundColor: "red",
+                // backgroundColor: "red",
                 // marginHorizontal: 40,
+                maxWidth: 200,
               }}
             >
               <AnimatedCharacterAvatar

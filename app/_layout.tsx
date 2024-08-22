@@ -20,6 +20,7 @@ import { registerStorybook } from "@sherlo/react-native-storybook";
 import Storybook from "../.storybook";
 import { ReactNode } from "react";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import { StatusBar } from "react-native";
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 require("es6-promise").polyfill();
@@ -89,7 +90,10 @@ function CommonProviders({ children }: { children: ReactNode }) {
     <ApolloProvider client={client}>
       <TamaguiProvider config={tamaguiConfig}>
         <SafeAreaProvider>
-          <GestureHandlerRootView>{children}</GestureHandlerRootView>
+          <GestureHandlerRootView>
+            <StatusBar translucent={true} />
+            {children}
+          </GestureHandlerRootView>
         </SafeAreaProvider>
       </TamaguiProvider>
     </ApolloProvider>
