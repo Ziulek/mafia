@@ -22,46 +22,42 @@ export const HeaderLobbyHost = ({
 
   return (
     <Header isVisible={isVisible}>
-      <View style={styles.box}>
-        <View style={styles.container}>
-          <View style={styles.inlineText}>
-            <Text size="headline">Game Code: </Text>
-            <Text size="headline" isBold={true}>
-              {gameCode}
-            </Text>
-          </View>
-          <View style={styles.inlineText}>
-            <Text size="headline">Players: </Text>
-            <Text size="headline" isBold={true}>
-              {players.toString()}
-            </Text>
-          </View>
+      <View style={styles.container}>
+        <View style={styles.inlineText}>
+          <Text size="headline">Game Code: </Text>
+          <Text size="headline" isBold={true}>
+            {gameCode}
+          </Text>
+        </View>
+        <View style={styles.inlineText}>
+          <Text size="headline">Players: </Text>
+          <Text size="headline" isBold={true}>
+            {players.toString()}
+          </Text>
+        </View>
+      </View>
+
+      <View style={styles.itemsStyle}>
+        <View style={styles.inlineText}>
+          <Text size="headline">Number of Mafia: </Text>
+          <Text size="headline" isBold={true}>
+            {players.toString()}
+          </Text>
         </View>
 
-        <View style={styles.itemsStyle}>
-          <View style={styles.inlineText}>
-            <Text size="headline">Number of Mafia: </Text>
-            <Text size="headline" isBold={true}>
-              {players.toString()}
-            </Text>
-          </View>
-          <SelectListItem items={AvailableRoles} isMultiSelected={true} />
+        <SelectListItem items={AvailableRoles} isMultiSelected={true} />
 
-          <SwitchListItem
-            title="Reveal roles after death "
-            isOn={isSwitchOn}
-            setIsOn={setIsSwitchOn}
-          />
-        </View>
+        <SwitchListItem
+          title="Reveal roles after death "
+          isOn={isSwitchOn}
+          setIsOn={setIsSwitchOn}
+        />
       </View>
     </Header>
   );
 };
 
 const styles = StyleSheet.create({
-  box: {
-    paddingHorizontal: 30,
-  },
   container: {
     marginVertical: 30,
     alignItems: "center",
@@ -70,5 +66,5 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
   },
-  itemsStyle: { alignItems: "center", gap: 15 },
+  itemsStyle: { alignItems: "center", gap: 15, maxWidth: "85%" },
 });

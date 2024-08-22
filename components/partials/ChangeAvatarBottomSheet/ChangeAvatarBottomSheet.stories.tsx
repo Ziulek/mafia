@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { ChangeAvatarBottomSheet } from "./ChangeAvatarBottomSheet";
+import ChangeAvatarBottomSheet from "./ChangeAvatarBottomSheet";
 import OpenController from "@/decorators/OpenController";
 
 const meta: Meta<typeof ChangeAvatarBottomSheet> = {
@@ -21,6 +21,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    nickname: "Siems",
+    nickname: "Player",
+    currentCharacter: "F3",
   },
 };

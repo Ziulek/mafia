@@ -1,8 +1,13 @@
 {
   "build": {
     "testing": {
-      "android": { "buildType": "apk" },
-      "ios": { "simulator": true }
+      "android": {
+        "buildType": "apk"
+      },
+      "ios": {
+        "simulator": true
+      },
+      "channel": "testing"
     },
     "development": {
       "developmentClient": true,
@@ -11,7 +16,8 @@
       },
       "ios": {
         "simulator": true
-      }
+      },
+      "channel": "development"
     },
     "preview": {
       "android": {
@@ -19,7 +25,17 @@
       },
       "ios": {
         "simulator": true
-      }
+      },
+      "channel": "preview"
+    },
+    "production": {
+      "android": {
+        "buildType": "app-bundle"
+      },
+      "ios": {
+        "simulator": false
+      },
+      "channel": "production"
     }
   }
 }

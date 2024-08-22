@@ -36,6 +36,12 @@
     "owner": "smakolysze",
     "android": {
       "package": "com.mafia"
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/8aefe1ac-8ec5-461a-89dc-9a05daf812e6"
     }
   }
 }

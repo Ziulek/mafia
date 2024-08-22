@@ -46,6 +46,9 @@ const SelectListItem: FC<SelectListItemProps> = ({
       setItems={setDropDownItems}
       mode="BADGE"
       showBadgeDot={false}
+      textStyle={{
+        fontFamily: "AmericanTypewriter",
+      }}
       {...dropDownProps}
 
       // badgeStyle={{ backgroundColor: "red" }}

@@ -1,5 +1,5 @@
 import { PlayerActionsBottomSheet } from "@/components/partials/PlayerActionsBottomSheet/PlayerActionsBottomSheet";
-import { ChangeAvatarBottomSheet } from "@/components/partials/ChangeAvatarBottomSheet/ChangeAvatarBottomSheet";
+import ChangeAvatarBottomSheet  from "@/components/partials/ChangeAvatarBottomSheet/ChangeAvatarBottomSheet";
 import { HeaderLobbyPlayer } from "@/components/partials/HeaderLobbyPlayer/HeaderLobbyPlayer";
 import { HeaderLobbyHost } from "@/components/partials/HeaderLobbyHost/HeaderLobbyHost";
 import AvatarGrid from "@/components/partials/AvatarsGrid/AvatarsGrid";
@@ -240,6 +240,7 @@ export const GameScreen: FC<GameScreenProps> = ({
 
         {mode === "player" && playerID && isAvatarSelectVisible && (
           <ChangeAvatarBottomSheet
+            currentCharacter={currentPlayer?.character}
             nickname={currentPlayer?.nickname}
             isVisible={isAvatarSelectVisible}
             setIsVisible={setIsAvatarSelectVisible}
