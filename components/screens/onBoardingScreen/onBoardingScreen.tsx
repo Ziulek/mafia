@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import StartScreen from "@/components/partials/StartScreen/StartScreen";
 import { TextEditListItem } from "@/components/base/TextEditListItem/TextEditListItem";
 import Button from "@/components/base/Button/Button";
-import { Keyboard } from "react-native";
+import { Keyboard, KeyboardAvoidingView, Platform } from "react-native";
 
 interface OnBoardingScreenProps {
   onPress: () => void;
@@ -19,19 +19,19 @@ const OnBoardingScreen: React.FC<OnBoardingScreenProps> = ({
   isNicknameValid,
   nicknameMessage,
 }) => {
-  const [isTyping, setIsTyping] = useState<boolean>(false);
+  const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
 
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(
       "keyboardDidShow",
       () => {
-        setIsTyping(true);
+        setIsKeyboardVisible(true);
       }
     );
     const keyboardDidHideListener = Keyboard.addListener(
       "keyboardDidHide",
       () => {
-        setIsTyping(false);
+        setIsKeyboardVisible(false);
       }
     );
 
@@ -41,26 +41,58 @@ const OnBoardingScreen: React.FC<OnBoardingScreenProps> = ({
     };
   }, []);
 
+  // Keyboard.dismiss  chowa klawe można to użyć że jak klikne na background to sie chowa
+
   return (
-    <StartScreen
-      image="police"
-      text={nicknameMessage ? nicknameMessage : "Please enter your Nickname"}
+    <KeyboardAvoidingView
+      style={{ flex: 1 }}
+      behavior={Platform.OS === "ios" ? "padding" : undefined}
+      keyboardVerticalOffset={100}
     >
-      <TextEditListItem
-        placeholder="enter nickname"
-        text={nickname}
-        setText={setNickname}
-        isInputValid={isNicknameValid}
-      />
-      <Button
-        color="accent"
-        isDisabled={!isNicknameValid || nickname.length < 1}
-        onPress={onPress}
+      <StartScreen
+        image="police"
+        text={nicknameMessage ? nicknameMessage : "Please enter your Nickname"}
       >
-        Next
-      </Button>
-    </StartScreen>
+        <TextEditListItem
+          placeholder="enter nickname"
+          text={nickname}
+          setText={setNickname}
+          isInputValid={isNicknameValid}
+        />
+        {!isKeyboardVisible && (
+          <Button
+            color="accent"
+            isDisabled={!isNicknameValid || nickname.length < 1}
+            onPress={onPress}
+          >
+            Next
+          </Button>
+        )}
+      </StartScreen>
+    </KeyboardAvoidingView>
   );
 };
 
 export default OnBoardingScreen;
+
+// const [isTyping, setIsTyping] = useState<boolean>(false);
+
+// useEffect(() => {
+//   const keyboardDidShowListener = Keyboard.addListener(
+//     "keyboardDidShow",
+//     () => {
+//       setIsTyping(true);
+//     }
+//   );
+//   const keyboardDidHideListener = Keyboard.addListener(
+//     "keyboardDidHide",
+//     () => {
+//       setIsTyping(false);
+//     }
+//   );
+
+//   return () => {
+//     keyboardDidHideListener.remove();
+//     keyboardDidShowListener.remove();
+//   };
+// }, []);

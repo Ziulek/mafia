@@ -40,7 +40,8 @@
     },
     "owner": "smakolysze",
     "android": {
-      "package": "com.mafia"
+      "package": "com.mafia",
+      "softwareKeyboardLayoutMode": "pan"
     },
     "runtimeVersion": {
       "policy": "appVersion"

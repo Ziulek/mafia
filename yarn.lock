@@ -10564,6 +10564,11 @@ react-native-helmet-async@2.0.4:
     react-fast-compare "^3.2.2"
     shallowequal "^1.1.0"
 
+react-native-keyboard-controller@^1.13.2:
+  version "1.13.2"
+  resolved "https://registry.yarnpkg.com/react-native-keyboard-controller/-/react-native-keyboard-controller-1.13.2.tgz#f2b080140e906393978ba0cfd1700e11deb12b67"
+  integrity sha512-FZkxByqboqa2bq2fXtEnD7f78VmKbu5cHjEfubHfV2ZtkGolZ01XTqKkEQ172GvFSjC5iuF1L3h7C4g8R6Xq9Q==
+
 react-native-modal-datetime-picker@^14.0.0:
   version "14.0.1"
   resolved "https://registry.npmjs.org/react-native-modal-datetime-picker/-/react-native-modal-datetime-picker-14.0.1.tgz"
