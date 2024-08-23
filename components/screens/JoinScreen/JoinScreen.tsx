@@ -3,6 +3,7 @@ import StartScreen from "@/components/partials/StartScreen/StartScreen";
 import { TextEditListItem } from "@/components/base/TextEditListItem/TextEditListItem";
 import Button from "@/components/base/Button/Button";
 import { GAME_CODE_LENGTH } from "@/helpers/correctGameCode";
+import Toast from "react-native-toast-message";
 
 interface JoinScreenProps {
   onPress: () => void; // Type for the onPress prop
@@ -25,6 +26,13 @@ const JoinScreen: React.FC<JoinScreenProps> = ({
     setIsTyping(true);
   };
 
+  const handleGameDoNotExist = () => {
+    Toast.show({
+      type: "customToast",
+      text1: "Game does not exist",
+    });
+  };
+
   const handleBlur = () => {
     setIsTyping(false);
   };
@@ -43,6 +51,9 @@ const JoinScreen: React.FC<JoinScreenProps> = ({
         isInputValid={isGameCodeValid}
       />
 
+      <Button color="accent" isBold={true} onPress={handleGameDoNotExist}>
+        toast
+      </Button>
       <Button
         color="accent"
         isBold={true}
