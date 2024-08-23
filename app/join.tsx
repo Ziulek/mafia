@@ -1,9 +1,10 @@
-import { useState, type ReactElement } from "react";
+import { useEffect, useState, type ReactElement } from "react";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useMutation } from "@apollo/client";
 import { JOIN_GAME } from "@/GraphQL/Mutations/JoinGame";
 import JoinScreen from "@/components/screens/JoinScreen/JoinScreen";
 import getNickname from "@/helpers/getNickname";
+import correctGameCode from "@/helpers/correctGameCode";
 
 export default (): ReactElement => {
   const router = useRouter();
@@ -11,14 +12,24 @@ export default (): ReactElement => {
 
   const [gameCode, setGameCode] = useState("");
 
+  const [isGameCodeValid, setIsGameCodeValid] = useState<boolean>(true);
+  const [gameCodeMessage, setGameCodeMessage] = useState<string>("");
+
   const [joinGame] = useMutation(JOIN_GAME);
+
+  useEffect(() => {
+    const { isValid, message } = correctGameCode(gameCode);
+    console.log("isValid", isValid, "message", message);
+    setIsGameCodeValid(isValid);
+    setGameCodeMessage(message);
+  }, [gameCode]);
 
   const handleJoinGame = async () => {
     const nickname = await getNickname();
     if (nickname) {
       joinGame({
         variables: {
-          gameCode: gameCode,
+          gameCode: gameCode.toUpperCase(),
           playerId: playerId,
           nickname: nickname,
         },
@@ -44,6 +55,8 @@ export default (): ReactElement => {
       onPress={handleJoinGame}
       setGameCode={setGameCode}
       gameCode={gameCode}
+      gameCodeMessage={gameCodeMessage}
+      isGameCodeValid={isGameCodeValid}
     />
   );
 };
