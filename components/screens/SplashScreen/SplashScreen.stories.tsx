@@ -9,8 +9,10 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const DefaultError: Story = {
+export const soloSpinner: Story = {
   args: {
-    errorMessage: "Something went wrong!",
+    simpleLoader: true,
   },
 };
+
+export const SplashScreenStory: Story = {};

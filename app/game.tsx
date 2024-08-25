@@ -14,6 +14,7 @@ import { ON_START_GAME } from "@/GraphQL/Subscription/onStartGame";
 import { ON_KILL_PLAYER } from "@/GraphQL/Subscription/onKillPlayer";
 import { ON_KICK_PLAYER } from "@/GraphQL/Subscription/onKickPlayer";
 import { ON_CHARACTER_UPDATE } from "@/GraphQL/Subscription/onCharacterUpdate";
+import SplashScreen from "@/components/screens/SplashScreen/SplashScreen";
 
 export default (): ReactElement => {
   const { mode } = useLocalSearchParams<{ mode: "host" | "player" }>();
@@ -114,11 +115,7 @@ export default (): ReactElement => {
   }
 
   if (loading) {
-    return (
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <ActivityIndicator size="large" color="#0000ff" />
-      </View>
-    );
+    return <SplashScreen simpleLoader={true} />;
   }
 
   if (error) {

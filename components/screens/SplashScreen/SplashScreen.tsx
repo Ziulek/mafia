@@ -4,27 +4,39 @@ import Svg, { Path } from "react-native-svg";
 import Text from "@/components/base/Text/Text";
 import { colors } from "@/theme/colors";
 
-const SplashScreen = ({}) => {
-  return (
-    <View style={styles.container}>
-      <View style={styles.upperTextContainer}>
-        <Text size="startScreenSubtitle">Welcome to </Text>
-        <Text size="startScreenHeadline" isBold={true}>
-          Mafia
-        </Text>
-      </View>
+interface SplashScreenProps {
+  simpleLoader?: boolean;
+}
 
-      <View style={styles.bottomContainer}>
+const SplashScreen: React.FC<SplashScreenProps> = ({ simpleLoader }) => {
+  if (simpleLoader) {
+    return (
+      <View style={styles.simpleLoader}>
         <AnimatedLoader />
-        <View style={styles.textContainer}>
-          <Text size="headline" isBold={true}>
+      </View>
+    );
+  } else {
+    return (
+      <View style={styles.container}>
+        <View style={styles.upperTextContainer}>
+          <Text size="startScreenSubtitle">Welcome to </Text>
+          <Text size="startScreenHeadline" isBold={true}>
             Mafia
           </Text>
-          <Text size="headline"> is making a meeting </Text>
+        </View>
+
+        <View style={styles.bottomContainer}>
+          <AnimatedLoader />
+          <View style={styles.textContainer}>
+            <Text size="headline" isBold={true}>
+              The Mafia
+            </Text>
+            <Text size="headline"> is having a meeting. </Text>
+          </View>
         </View>
       </View>
-    </View>
-  );
+    );
+  }
 };
 
 const styles = StyleSheet.create({
@@ -44,6 +56,12 @@ const styles = StyleSheet.create({
   },
   bottomContainer: {
     alignItems: "center",
+  },
+  simpleLoader: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: colors.primary,
   },
 });
 
