@@ -1,4 +1,5 @@
-import { FC, useState } from "react";
+import { AdditionalRole } from "@/components/types/AdditionalRole";
+import { Dispatch, FC, SetStateAction, useState } from "react";
 import DropDownPicker from "react-native-dropdown-picker";
 
 interface SelectItem {
@@ -9,19 +10,18 @@ interface SelectItem {
 interface SelectListItemProps {
   items: SelectItem[];
   isMultiSelected?: boolean;
-  defaultSelectForStoriesUseCase?: string | string[];
+  value: AdditionalRole[];
+  setValue: Dispatch<SetStateAction<AdditionalRole[]>>;
 }
 
 const SelectListItem: FC<SelectListItemProps> = ({
   items,
   isMultiSelected = false,
-  defaultSelectForStoriesUseCase,
+  value,
+  setValue,
 }) => {
   const [open, setOpen] = useState(false);
   const [singleValue, setSingleValue] = useState<string | null>(null);
-  const [multiValue, setMultiValue] = useState<string[]>(
-    isMultiSelected ? (defaultSelectForStoriesUseCase as string[]) || [] : []
-  );
   const [dropDownItems, setDropDownItems] = useState(items);
 
   const dropDownProps = isMultiSelected
@@ -29,8 +29,8 @@ const SelectListItem: FC<SelectListItemProps> = ({
         multiple: true as true,
         min: 0,
         max: items.length,
-        value: multiValue,
-        setValue: setMultiValue,
+        value: value,
+        setValue: setValue,
       }
     : {
         value: singleValue,

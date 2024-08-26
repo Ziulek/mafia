@@ -135,10 +135,13 @@ export default (): ReactElement => {
       mode={mode}
       playerID={playerId}
       onNewGame={() => {}}
-      onStartGame={() => {
+      onStartGame={(showRolesAfterDeath, numberOfMafia, additionalRoles) => {
         startGame({
           variables: {
             gameCode: correctData.gameCode,
+            showRolesAfterDeath,
+            numberOfMafia,
+            additionalRoles,
           },
         });
       }}

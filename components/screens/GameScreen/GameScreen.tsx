@@ -11,12 +11,10 @@ import { FC, useEffect, useState } from "react";
 import { ActivityIndicator, StyleSheet, View } from "react-native";
 import { StatusBar } from "react-native";
 import Animated, {
-  useSharedValue,
-  useAnimatedStyle,
-  withTiming,
   Easing,
-  ReduceMotion,
-  runOnJS,
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
 } from "react-native-reanimated";
 
 import { Mode } from "@/components/types/Mode";
@@ -25,13 +23,18 @@ import { Character } from "@/components/types/Characters";
 import { GameRules } from "@/components/types/GameRules";
 import { GameState } from "@/components/types/GameState";
 import ImageBackground from "@/components/partials/ImageBackground/ImageBackground";
+import { AdditionalRole } from "@/components/types/AdditionalRole";
 
 type GameScreenProps = {
   gameState: GameState;
   mode: "host" | "player";
 
   // host
-  onStartGame: () => void;
+  onStartGame: (
+    showRolesAfterDeath: boolean,
+    numberOfMafia: number,
+    additionalRoles: AdditionalRole[]
+  ) => void;
   onNewGame: () => void;
   onKillPlayer: (id: string) => void;
   onKickPlayer: (id: string) => void;
@@ -58,35 +61,33 @@ export const GameScreen: FC<GameScreenProps> = ({
       ? true
       : false
   );
-  // to jest głupie rozwiazywanie problemu z headerem (chyba) ale bez tego zostanie wyswietlony po stronie playera jak się zacznie gre
-  useEffect(() => {
-    setIsHeaderVisible(
-      gameState.stage === "waitingForPlayers" || gameState.stage === "result"
-    );
-  }, [gameState.stage]);
-
   const [isBottomSheetVisible, setIsBottomSheetVisible] = useState(false);
   const [isAvatarSelectVisible, setIsAvatarSelectVisible] = useState(false);
+
   const [selectedPlayer, setSelectedPlayer] = useState<Player | null>(null);
-  const [avatarGridMode, setAvatarGridMode] = useState<Mode>("default");
+  const [avatarGridMode, setAvatarGridMode] = useState<Mode>(
+    gameState.winner ? "revealed" : "pressable"
+  );
+  // GameRules States
+  const [showRolesAfterDeath, setShowRolesAfterDeath] = useState(false);
+  const [numberOfMafia, setNumberOfMafia] = useState(2);
+  const [selectedRoles, setSelectedRoles] = useState<AdditionalRole[]>([]);
 
   const winner = gameState?.winner;
   const players = gameState?.players;
 
-  const paddingTop = useSharedValue(mode === "host" ? 270 : 200); // Initial paddingTop value
-  const config = {
-    duration: 500,
-    easing: Easing.linear,
-  };
-
-  console.log("GameState lol:", gameState);
+  const paddingTop = useSharedValue(mode === "host" ? 270 : 200);
 
   const currentPlayer = players?.find((player) => player.id === playerID);
 
-  const revealRolesAnimation = useSharedValue(0);
+  const animatedStyle = useAnimatedStyle(() => {
+    return {
+      paddingTop: paddingTop.value,
+    };
+  });
 
   const HandleStartGame = () => {
-    onStartGame();
+    onStartGame(showRolesAfterDeath, numberOfMafia, selectedRoles);
     setIsHeaderVisible(false);
     setAvatarGridMode("pressable");
   };
@@ -119,15 +120,21 @@ export const GameScreen: FC<GameScreenProps> = ({
     // Update paddingTop based on header visibility
     paddingTop.value = withTiming(
       isHeaderVisible ? (mode === "host" ? 270 : 200) : winner ? 110 : 0,
-      config
+      {
+        duration: 500,
+        easing: Easing.linear,
+      }
     );
   }, [isHeaderVisible, winner]);
 
-  const animatedStyle = useAnimatedStyle(() => {
-    return {
-      paddingTop: paddingTop.value,
-    };
-  });
+  // to jest głupie rozwiazywanie problemu z headerem (chyba) ale bez tego zostanie wyswietlony po stronie playera jak się zacznie gre
+  useEffect(() => {
+    setIsHeaderVisible(
+      gameState.stage === "waitingForPlayers" || gameState.stage === "result"
+    );
+  }, [gameState.stage]);
+
+  console.log("GameState lol:", gameState);
 
   if (!gameState) {
     return (
@@ -149,6 +156,12 @@ export const GameScreen: FC<GameScreenProps> = ({
               players={players?.length}
               gameCode={gameState?.gameCode}
               isVisible={isHeaderVisible}
+              isSwitchOn={showRolesAfterDeath}
+              setIsSwitchOn={setShowRolesAfterDeath}
+              numberOfMafia={numberOfMafia}
+              setNumberOfMafia={setNumberOfMafia}
+              selectedRoles={selectedRoles}
+              setSelectedRoles={setSelectedRoles}
             />
           )}
           {mode === "player" && gameState.stage === "waitingForPlayers" && (
@@ -165,7 +178,6 @@ export const GameScreen: FC<GameScreenProps> = ({
           <Animated.View style={[styles.AvatarGrid, animatedStyle]}>
             <AvatarGrid
               mode={avatarGridMode}
-              revealRolesAnimation={revealRolesAnimation}
               onPressItem={HandleSelectPlayer}
               items={players}
             />
@@ -190,29 +202,9 @@ export const GameScreen: FC<GameScreenProps> = ({
           {gameState.stage === "game" && mode === "host" && (
             <Button
               color="primary"
-              onPressIn={() => {
-                setAvatarGridMode("revealed");
-                revealRolesAnimation.value = withTiming(1, {
-                  duration: 1000,
-                  easing: Easing.linear,
-                  reduceMotion: ReduceMotion.System,
-                });
-              }}
+              onPressIn={() => setAvatarGridMode("revealed")}
               PressOutDelay={1000}
-              onPressOut={() => {
-                revealRolesAnimation.value = withTiming(
-                  0,
-                  {
-                    duration: 1000,
-                    easing: Easing.linear,
-                    reduceMotion: ReduceMotion.System,
-                  },
-                  () => {
-                    // happens on end of the animation
-                    runOnJS(setAvatarGridMode)("pressable");
-                  }
-                );
-              }}
+              onPressOut={() => setAvatarGridMode("pressable")}
             >
               Show Roles
             </Button>

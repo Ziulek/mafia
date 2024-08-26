@@ -1,25 +1,38 @@
 import Header from "@/components/base/Header/Header";
 import { SwitchListItem } from "@/components/base/SwitchListItem/SwitchListItem";
-import { useState } from "react";
 import { StyleSheet, View } from "react-native";
-
 import Text from "../../base/Text/Text";
 import SelectListItem from "@/components/base/SelectListItem/SelectListItem";
-import AvailableRoles from "@/gameConfig/AvailableRoles";
+import { NumberListItem } from "@/components/base/NumberListItem/NumberListItem";
+import NumberOfMafiaConfig from "@/gameConfig/NumberOfMafiaConfig";
+import AvailableRolesConfig from "@/gameConfig/AvailableRolesConfig";
+
+import { Dispatch, SetStateAction } from "react";
+import { AdditionalRole } from "@/components/types/AdditionalRole";
 
 type HeaderLobbyHostProps = {
   players: number;
   gameCode: string;
   isVisible: boolean;
+  isSwitchOn: boolean;
+  setIsSwitchOn: (isOn: boolean) => void;
+  numberOfMafia: number;
+  setNumberOfMafia: (value: number) => void;
+  selectedRoles: AdditionalRole[];
+  setSelectedRoles: Dispatch<SetStateAction<AdditionalRole[]>>;
 };
 
 export const HeaderLobbyHost = ({
   players,
   gameCode,
   isVisible,
+  isSwitchOn,
+  setIsSwitchOn,
+  numberOfMafia,
+  setNumberOfMafia,
+  selectedRoles,
+  setSelectedRoles,
 }: HeaderLobbyHostProps) => {
-  const [isSwitchOn, setIsSwitchOn] = useState(false);
-
   return (
     <Header isVisible={isVisible}>
       <View style={styles.container}>
@@ -38,17 +51,23 @@ export const HeaderLobbyHost = ({
       </View>
 
       <View style={styles.itemsStyle}>
-        <View style={styles.inlineText}>
-          <Text size="headline">Number of Mafia: </Text>
-          <Text size="headline" isBold={true}>
-            {players.toString()}
-          </Text>
-        </View>
+        <SelectListItem
+          items={AvailableRolesConfig}
+          isMultiSelected={true}
+          value={selectedRoles}
+          setValue={setSelectedRoles}
+        />
 
-        <SelectListItem items={AvailableRoles} isMultiSelected={true} />
+        <NumberListItem
+          title="Number of Mafia"
+          value={numberOfMafia}
+          setValue={setNumberOfMafia}
+          min={NumberOfMafiaConfig.min}
+          max={NumberOfMafiaConfig.max}
+        />
 
         <SwitchListItem
-          title="Reveal roles after death "
+          title="Reveal roles after death"
           isOn={isSwitchOn}
           setIsOn={setIsSwitchOn}
         />

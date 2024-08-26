@@ -1,4 +1,4 @@
-import { ExtraRole } from "./ExtraRole";
+import { ExtraRole } from "./AdditionalRole";
 
 export type GameRules = {
   numberOfMafia: number;

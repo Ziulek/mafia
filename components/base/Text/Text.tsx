@@ -11,7 +11,7 @@ interface TextProps {
     | "startScreenSubtitle";
   isBold?: boolean;
   color?: "white" | "black" | "grey";
-  children: string;
+  children: string | number;
   isTextAlignCenter?: boolean;
 }
 
