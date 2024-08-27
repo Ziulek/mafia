@@ -26,10 +26,11 @@ const JoinScreen: React.FC<JoinScreenProps> = ({
     setIsTyping(true);
   };
 
-  const handleGameDoNotExist = () => {
+  const handleGameDoesNotExist = () => {
     Toast.show({
       type: "customToast",
       text1: "Game does not exist",
+      text2: "try different code",
     });
   };
 
@@ -51,7 +52,7 @@ const JoinScreen: React.FC<JoinScreenProps> = ({
         isInputValid={isGameCodeValid}
       />
 
-      <Button color="accent" isBold={true} onPress={handleGameDoNotExist}>
+      <Button color="accent" isBold={true} onPress={handleGameDoesNotExist}>
         toast
       </Button>
       <Button
