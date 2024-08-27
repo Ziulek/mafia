@@ -1,5 +1,5 @@
 import React from "react";
-import { Text as TextComponent, StyleSheet } from "react-native";
+import { Text as TextComponent, StyleSheet, Platform } from "react-native";
 
 interface TextProps {
   size:
@@ -25,10 +25,14 @@ const Text = ({
   const textSize = getTextSize(size);
   const styles = StyleSheet.create({
     text: {
-      fontFamily: isBold ? "AmericanTypewriterBold" : "AmericanTypewriter",
+      fontFamily:
+        Platform.OS === "android" && isBold
+          ? "AmericanTypewriterBold"
+          : "AmericanTypewriter",
       fontSize: textSize,
       color: color === "black" ? "#000" : color === "grey" ? "#696969" : "#fff",
       textAlign: isTextAlignCenter ? "center" : "left",
+      fontWeight: Platform.OS === "ios" && isBold ? "bold" : "normal",
     },
   });
 

@@ -64,6 +64,7 @@ const OnBoardingScreen: React.FC<OnBoardingScreenProps> = ({
             color="accent"
             isDisabled={!isNicknameValid || nickname.length < 1}
             onPress={onPress}
+            isBold={true}
           >
             Next
           </Button>
