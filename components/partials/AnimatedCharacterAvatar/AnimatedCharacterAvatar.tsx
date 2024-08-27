@@ -23,7 +23,7 @@ export type AnimatedCharacterAvatarProps = {
   role?: Role;
   nickname?: string;
   isDead?: boolean;
-  revealRolesAnimation: SharedValue<number>;
+  revealRolesAnimation?: SharedValue<number>;
   onPress?: () => void;
   isPressable?: boolean;
   avatarSelect?: boolean;
@@ -60,7 +60,7 @@ export const AnimatedCharacterAvatar = ({
 
   const frontAnimatedStyles = useAnimatedStyle(() => {
     const rotateValue = interpolate(
-      revealRolesAnimation?.value === 0
+      revealRolesAnimation?.value === 0 || revealRolesAnimation === undefined
         ? rotate.value
         : revealRolesAnimation.value,
       [0, 1],
@@ -77,7 +77,7 @@ export const AnimatedCharacterAvatar = ({
 
   const backAnimatedStyles = useAnimatedStyle(() => {
     const rotateValue = interpolate(
-      revealRolesAnimation?.value === 0
+      revealRolesAnimation?.value === 0 || revealRolesAnimation === undefined
         ? rotate.value
         : revealRolesAnimation.value,
       [0, 1],

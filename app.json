@@ -23,7 +23,10 @@
       [
         "expo-font",
         {
-          "fonts": ["./assets/fonts/AmericanTypewriter.ttf"]
+          "fonts": [
+            "./assets/fonts/AmericanTypewriter.ttf",
+            "./assets/fonts/AmericanTypewriterBold.ttf"
+          ]
         }
       ]
     ],

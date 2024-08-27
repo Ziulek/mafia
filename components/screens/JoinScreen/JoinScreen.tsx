@@ -36,7 +36,7 @@ const JoinScreen: React.FC<JoinScreenProps> = ({
     >
       <TextEditListItem
         placeholder="game code"
-        text={gameCode.toUpperCase()}
+        text={gameCode}
         setText={setGameCode}
         onFocus={handleFocus}
         onBlur={handleBlur}

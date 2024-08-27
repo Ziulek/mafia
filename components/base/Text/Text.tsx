@@ -25,9 +25,8 @@ const Text = ({
   const textSize = getTextSize(size);
   const styles = StyleSheet.create({
     text: {
-      fontFamily: "AmericanTypewriter",
+      fontFamily: isBold ? "AmericanTypewriterBold" : "AmericanTypewriter",
       fontSize: textSize,
-      fontWeight: isBold ? "bold" : "regular",
       color: color === "black" ? "#000" : color === "grey" ? "#696969" : "#fff",
       textAlign: isTextAlignCenter ? "center" : "left",
     },
