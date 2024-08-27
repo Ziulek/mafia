@@ -71,7 +71,7 @@ export const GameScreen: FC<GameScreenProps> = ({
   // GameRules States
   const [showRolesAfterDeath, setShowRolesAfterDeath] = useState(false);
   const [numberOfMafia, setNumberOfMafia] = useState(2);
-  const [selectedRoles, setSelectedRoles] = useState<AdditionalRole[]>([]);
+  const [additionalRoles, setAdditionalRoles] = useState<AdditionalRole[]>([]);
 
   const winner = gameState?.winner;
   const players = gameState?.players;
@@ -86,8 +86,12 @@ export const GameScreen: FC<GameScreenProps> = ({
     };
   });
 
-  const HandleStartGame = () => {
-    onStartGame(showRolesAfterDeath, numberOfMafia, selectedRoles);
+  const HandleStartGame = (
+    showRolesAfterDeath: boolean,
+    numberOfMafia: number,
+    additionalRoles: AdditionalRole[]
+  ) => {
+    onStartGame(showRolesAfterDeath, numberOfMafia, additionalRoles);
     setIsHeaderVisible(false);
     setAvatarGridMode("pressable");
   };
@@ -160,8 +164,8 @@ export const GameScreen: FC<GameScreenProps> = ({
               setIsSwitchOn={setShowRolesAfterDeath}
               numberOfMafia={numberOfMafia}
               setNumberOfMafia={setNumberOfMafia}
-              selectedRoles={selectedRoles}
-              setSelectedRoles={setSelectedRoles}
+              additionalRoles={additionalRoles}
+              setAdditionalRoles={setAdditionalRoles}
             />
           )}
           {mode === "player" && gameState.stage === "waitingForPlayers" && (
@@ -193,7 +197,16 @@ export const GameScreen: FC<GameScreenProps> = ({
           )}
           {/* Host Side Start Game Button */}
           {gameState.stage === "waitingForPlayers" && mode === "host" && (
-            <Button color="accent" onPress={() => HandleStartGame()}>
+            <Button
+              color="accent"
+              onPress={() =>
+                HandleStartGame(
+                  showRolesAfterDeath,
+                  numberOfMafia,
+                  additionalRoles
+                )
+              }
+            >
               Start Game
             </Button>
           )}
@@ -211,7 +224,7 @@ export const GameScreen: FC<GameScreenProps> = ({
           )}
           {/* Both Sides New Game Button */}
           {gameState.stage === "result" && (
-            <Button color="accent" onPress={() => HandleStartGame()}>
+            <Button color="accent" onPress={() => {}}>
               New Game
             </Button>
           )}

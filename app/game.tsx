@@ -126,8 +126,8 @@ export default (): ReactElement => {
     );
   }
 
-  console.log("Query", JSON.stringify(data, null, 2));
-  console.log("correctData", JSON.stringify(correctData, null, 2));
+  // console.log("Query", JSON.stringify(data, null, 2));
+  // console.log("correctData", JSON.stringify(correctData, null, 2));
 
   return (
     <GameScreen
@@ -136,6 +136,12 @@ export default (): ReactElement => {
       playerID={playerId}
       onNewGame={() => {}}
       onStartGame={(showRolesAfterDeath, numberOfMafia, additionalRoles) => {
+        console.log(
+          "onStartGame",
+          showRolesAfterDeath,
+          numberOfMafia,
+          additionalRoles
+        );
         startGame({
           variables: {
             gameCode: correctData.gameCode,

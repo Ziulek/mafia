@@ -5,7 +5,7 @@ export const START_GAME = gql`
     $gameCode: String!
     $showRolesAfterDeath: Boolean!
     $numberOfMafia: Int!
-    $additionalRoles: [String!]!
+    $additionalRoles: [AdditionalRole!]!
   ) {
     startGame(
       gameCode: $gameCode

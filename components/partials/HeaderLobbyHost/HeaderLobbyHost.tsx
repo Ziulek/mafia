@@ -18,8 +18,8 @@ type HeaderLobbyHostProps = {
   setIsSwitchOn: (isOn: boolean) => void;
   numberOfMafia: number;
   setNumberOfMafia: (value: number) => void;
-  selectedRoles: AdditionalRole[];
-  setSelectedRoles: Dispatch<SetStateAction<AdditionalRole[]>>;
+  additionalRoles: AdditionalRole[];
+  setAdditionalRoles: Dispatch<SetStateAction<AdditionalRole[]>>;
 };
 
 export const HeaderLobbyHost = ({
@@ -30,8 +30,8 @@ export const HeaderLobbyHost = ({
   setIsSwitchOn,
   numberOfMafia,
   setNumberOfMafia,
-  selectedRoles,
-  setSelectedRoles,
+  additionalRoles,
+  setAdditionalRoles,
 }: HeaderLobbyHostProps) => {
   return (
     <Header isVisible={isVisible}>
@@ -54,8 +54,8 @@ export const HeaderLobbyHost = ({
         <SelectListItem
           items={AvailableRolesConfig}
           isMultiSelected={true}
-          value={selectedRoles}
-          setValue={setSelectedRoles}
+          value={additionalRoles}
+          setValue={setAdditionalRoles}
         />
 
         <NumberListItem
