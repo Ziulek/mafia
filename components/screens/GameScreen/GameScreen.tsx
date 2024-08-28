@@ -24,6 +24,7 @@ import { GameRules } from "@/components/types/GameRules";
 import { GameState } from "@/components/types/GameState";
 import ImageBackground from "@/components/partials/ImageBackground/ImageBackground";
 import { AdditionalRole } from "@/components/types/AdditionalRole";
+import Toast from "react-native-toast-message";
 
 type GameScreenProps = {
   gameState: GameState;
@@ -196,21 +197,52 @@ export const GameScreen: FC<GameScreenProps> = ({
             </Button>
           )}
           {/* Host Side Start Game Button */}
-          {gameState.stage === "waitingForPlayers" && mode === "host" && (
-            <Button
-              color="accent"
-              isDisabled={players?.length < numberOfMafia * 2 + 1}
-              onPress={() =>
-                HandleStartGame(
-                  showRolesAfterDeath,
-                  numberOfMafia,
-                  additionalRoles
-                )
-              }
-            >
-              Start Game
-            </Button>
-          )}
+          {gameState.stage === "waitingForPlayers" &&
+            mode === "host" &&
+            players?.length >= numberOfMafia * 2 + 1 && (
+              <Button
+                color="accent"
+                onPress={() =>
+                  HandleStartGame(
+                    showRolesAfterDeath,
+                    numberOfMafia,
+                    additionalRoles
+                  )
+                }
+              >
+                Start Game
+              </Button>
+            )}
+          {gameState.stage === "waitingForPlayers" &&
+            mode === "host" &&
+            !(players?.length >= numberOfMafia * 2 + 1) && (
+              <Button
+                color="back"
+                onPress={() => {
+                  if (players?.length === 0) {
+                    Toast.show({
+                      type: "customToast",
+                      text1: "No players",
+                      text2: "Invite your friends",
+                    });
+                  } else if (players?.length < 3) {
+                    Toast.show({
+                      type: "customToast",
+                      text1: "Not enough players",
+                      text2: "Add at least 3 players",
+                    });
+                  } else if (players?.length > 0) {
+                    Toast.show({
+                      type: "customToast",
+                      text1: "Too many mafia",
+                      text2: "Decrease number of mafia",
+                    });
+                  }
+                }}
+              >
+                Start Game
+              </Button>
+            )}
 
           {/* Host Side Show Roles Button */}
           {gameState.stage === "game" && mode === "host" && (
