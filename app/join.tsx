@@ -41,7 +41,6 @@ export default (): ReactElement => {
         },
         onError: (error) => {
           const errorMessage = error?.graphQLErrors?.[0]?.message || "";
-
           if (
             errorMessage.includes(
               "Unable to join game. The game already started"

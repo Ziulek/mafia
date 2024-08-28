@@ -6,6 +6,7 @@ import { Input } from "tamagui";
 type TextEditListItemProps = {
   placeholder: string;
   isInputValid?: boolean;
+  textToUpperCase?: boolean;
   text: string;
   setText: (newText: string) => void;
   onFocus?: () => void; // Add this prop
@@ -16,6 +17,7 @@ export function TextEditListItem({
   placeholder,
   isInputValid = true,
   text,
+  textToUpperCase = false,
   setText,
   onFocus = () => {},
   onBlur = () => {},
@@ -30,7 +32,7 @@ export function TextEditListItem({
         style={styles.input}
         size="$5"
         placeholder={placeholder}
-        value={text}
+        value={textToUpperCase ? text.toUpperCase() : text}
         onChangeText={handleTextChange}
         onFocus={onFocus}
         onBlur={onBlur}

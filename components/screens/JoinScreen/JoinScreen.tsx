@@ -41,6 +41,7 @@ const JoinScreen: React.FC<JoinScreenProps> = ({
         onFocus={handleFocus}
         onBlur={handleBlur}
         isInputValid={isGameCodeValid}
+        textToUpperCase={true}
       />
 
       <Button

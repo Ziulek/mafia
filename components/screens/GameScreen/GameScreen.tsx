@@ -199,6 +199,7 @@ export const GameScreen: FC<GameScreenProps> = ({
           {gameState.stage === "waitingForPlayers" && mode === "host" && (
             <Button
               color="accent"
+              isDisabled={players?.length < numberOfMafia * 2 + 1}
               onPress={() =>
                 HandleStartGame(
                   showRolesAfterDeath,
