@@ -7,19 +7,6 @@ import getNickname from "@/helpers/getNickname";
 import correctGameCode from "@/helpers/correctGameCode";
 import Toast from "react-native-toast-message";
 
-interface CustomError {
-  data: null | any;
-  errorInfo: null | any;
-  errorType: string; // or possibly `string | undefined` if it could be undefined
-  locations?: Array<{
-    column: number;
-    line: number;
-    sourceName: string | null;
-  }>;
-  message: string;
-  path?: string[];
-}
-
 export default (): ReactElement => {
   const router = useRouter();
   const { playerId } = useLocalSearchParams<{ playerId: string }>();
@@ -52,13 +39,19 @@ export default (): ReactElement => {
             `/game?mode=player&gameCode=${gameCode}&playerId=${playerId}`
           );
         },
-
         onError: (error) => {
-          const errorCause = error.cause as CustomError;
-          const errorType = errorCause.errorType;
-          if (errorType === "ValidationException") {
-            // Trigger toast if it's a ValidationException
+          const errorMessage = error?.graphQLErrors?.[0]?.message || "";
+
+          if (
+            errorMessage.includes(
+              "Unable to join game. The game already started"
+            )
+          ) {
+            showGameStageErrorToast();
+          } else if (errorMessage.includes("Game does not exist")) {
             showGameNotFoundToast();
+          } else {
+            console.error("An unexpected error occurred:", error);
           }
         },
       });
@@ -66,6 +59,7 @@ export default (): ReactElement => {
       console.log("No nickname available, cannot join game.");
     }
   };
+
   const showGameNotFoundToast = () => {
     Toast.show({
       type: "customToast",
@@ -73,6 +67,15 @@ export default (): ReactElement => {
       text2: "Try a different code",
     });
   };
+
+  const showGameStageErrorToast = () => {
+    Toast.show({
+      type: "customToast",
+      text1: "Game cannot be joined",
+      text2: "The game already started",
+    });
+  };
+
   return (
     <JoinScreen
       onPress={handleJoinGame}
