@@ -12,9 +12,9 @@ const SplashScreenComponent: React.FC = () => {
 
       setTimeout(() => {
         if (nickname) {
-          router.push(`/joinOrHost`);
+          router.replace(`/joinOrHost`);
         } else {
-          router.push(`/onBoarding`);
+          router.replace(`/onBoarding`);
         }
       }, 3000);
     };

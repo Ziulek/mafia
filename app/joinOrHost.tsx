@@ -31,7 +31,7 @@ export default (): ReactElement => {
 
   return (
     <JoinOrHostScreen
-      onJoinPress={() => router.push(`/join?playerId=${playerId}`)}
+      onJoinPress={() => router.replace(`/join?playerId=${playerId}`)}
       onHostPress={handleCreateGame}
     />
   );

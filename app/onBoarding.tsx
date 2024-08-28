@@ -11,16 +11,6 @@ export default (): ReactElement => {
   const [isNicknameValid, setIsNicknameValid] = useState<boolean>(true);
   const [nicknameMessage, setNicknameMessage] = useState<string>("");
 
-  // const checkNickname = async () => {
-  //   const nickname = await getNickname();
-  //   if (nickname) {
-  //     router.push(`/joinOrHost`);
-  //   } else {
-  //     router.replace(`/onBoarding`);
-  //   }
-  // };
-  // checkNickname();
-
   useEffect(() => {
     const { isValid, message } = correctNickname(nickname);
     console.log("isValid", isValid, "message", message);
@@ -30,7 +20,7 @@ export default (): ReactElement => {
 
   const handleNicknameInput = () => {
     storeNickname(nickname);
-    router.push(`/joinOrHost`);
+    router.replace(`/joinOrHost`);
   };
 
   return (

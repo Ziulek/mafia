@@ -1,7 +1,6 @@
 import React from "react";
 import StartScreen from "@/components/partials/StartScreen/StartScreen";
 import Button from "@/components/base/Button/Button";
-import removeNickname from "@/helpers/removeNickname";
 
 interface JoinOrHostScreenProps {
   onJoinPress: () => void; // Type for the onJoinPress prop
@@ -16,10 +15,8 @@ const JoinOrHostScreen: React.FC<JoinOrHostScreenProps> = ({
     <StartScreen
       image="mafia"
       text="Host your own game or join a room with friends"
+      sideButton="account"
     >
-      <Button color="accent" isBold={true} onPress={removeNickname}>
-        Remove Nickname
-      </Button>
       <Button color="accent" isBold={true} onPress={onJoinPress}>
         Join Game
       </Button>

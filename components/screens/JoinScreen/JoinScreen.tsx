@@ -3,6 +3,7 @@ import StartScreen from "@/components/partials/StartScreen/StartScreen";
 import { TextEditListItem } from "@/components/base/TextEditListItem/TextEditListItem";
 import Button from "@/components/base/Button/Button";
 import { GAME_CODE_LENGTH } from "@/helpers/correctGameCode";
+import { router } from "expo-router";
 
 interface JoinScreenProps {
   onPress: () => void; // Type for the onPress prop
@@ -33,6 +34,7 @@ const JoinScreen: React.FC<JoinScreenProps> = ({
     <StartScreen
       image="mafia"
       text={gameCodeMessage ? gameCodeMessage : "Please enter game code"}
+      sideButton="arrowLeft"
     >
       <TextEditListItem
         placeholder="game code"
