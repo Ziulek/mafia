@@ -42,7 +42,7 @@ const ChangeAvatarBottomSheet: React.FC<ChangeAvatarBottomSheetProps> = ({
   const handleSnapToItem = (index: number) => {
     const selectedCharacter = AllAvailableCharacters[index];
     console.log("Snapped to:", selectedCharacter);
-    // onCharacterSelected(selectedCharacter);
+    onCharacterSelected(selectedCharacter);
   };
 
   return (

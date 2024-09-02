@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import StoryDecorator from "@/decorators/StoryDecorator";
 import SelectListItem from "./SelectListItem";
-import AvailableRoles from "@/gameConfig/AvailableRolesConfig";
+import AvailableRoles from "@/gameConfig/AvailableRoles.config";
 
 const meta: Meta<typeof SelectListItem> = {
   component: SelectListItem,

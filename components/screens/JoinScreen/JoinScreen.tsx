@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import StartScreen from "@/components/partials/StartScreen/StartScreen";
 import { TextEditListItem } from "@/components/base/TextEditListItem/TextEditListItem";
 import Button from "@/components/base/Button/Button";
-import { GAME_CODE_LENGTH } from "@/helpers/correctGameCode";
+import { GAME_CODE_LENGTH } from "@/gameConfig/inputLengths.config";
 import { router } from "expo-router";
 
 interface JoinScreenProps {

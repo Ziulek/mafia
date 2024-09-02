@@ -22,7 +22,7 @@ import { ReactNode } from "react";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { StatusBar } from "react-native";
 import Toast from "react-native-toast-message";
-import toastConfig from "@/gameConfig/ToastConfig";
+import toastConfig from "@/gameConfig/Toast.config";
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 require("es6-promise").polyfill();
@@ -107,12 +107,6 @@ export default function RootLayout() {
   return (
     <CommonProviders>
       <Stack screenOptions={{ headerShown: false }}>
-        <Stack.Screen
-          name="game"
-          options={{
-            gestureEnabled: false,
-          }}
-        />
         <Stack.Screen
           name="index"
           options={{

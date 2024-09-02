@@ -1,5 +1,10 @@
 import React, { ReactNode } from "react";
-import { ImageBackground as RNImageBackground, StyleSheet } from "react-native";
+import {
+  ImageBackground as RNImageBackground,
+  StyleSheet,
+  View,
+  Platform,
+} from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 interface CustomBackgroundProps {
@@ -11,8 +16,15 @@ const ImageBackground: React.FC<CustomBackgroundProps> = ({ children }) => {
 
   const styles = StyleSheet.create({
     background: {
-      marginTop: -insets.top * 0.5,
+      marginTop: -insets.top,
       marginBottom: -insets.bottom,
+      flex: 1,
+    },
+    overlay: {
+      ...StyleSheet.absoluteFillObject,
+      backgroundColor: "rgba(0, 0, 0, 0.5)",
+    },
+    content: {
       flex: 1,
     },
   });
@@ -23,7 +35,8 @@ const ImageBackground: React.FC<CustomBackgroundProps> = ({ children }) => {
       style={styles.background}
       resizeMode="cover"
     >
-      {children}
+      <View style={styles.overlay} />
+      <View style={styles.content}>{children}</View>
     </RNImageBackground>
   );
 };

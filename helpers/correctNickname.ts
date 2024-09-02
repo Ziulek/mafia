@@ -1,7 +1,12 @@
+import {
+  NICKNAME_MAX_LENGTH,
+  NICKNAME_MIN_LENGTH,
+} from "@/gameConfig/inputLengths.config";
+
 const correctNickname = (nickname: string) => {
   // Define the minimum and maximum length for the nickname
-  const minLength = 3;
-  const maxLength = 12;
+  const minLength = NICKNAME_MIN_LENGTH;
+  const maxLength = NICKNAME_MAX_LENGTH;
 
   if (nickname.length < 1) {
     return {

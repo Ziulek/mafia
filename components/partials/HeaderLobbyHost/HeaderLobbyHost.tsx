@@ -4,8 +4,9 @@ import { StyleSheet, View } from "react-native";
 import Text from "../../base/Text/Text";
 import SelectListItem from "@/components/base/SelectListItem/SelectListItem";
 import { NumberListItem } from "@/components/base/NumberListItem/NumberListItem";
-import NumberOfMafiaConfig from "@/gameConfig/NumberOfMafiaConfig";
-import AvailableRolesConfig from "@/gameConfig/AvailableRolesConfig";
+
+import AvailableRolesConfig from "@/gameConfig/AvailableRoles.config";
+import NumberOfMafiaConfig from "@/gameConfig/NumberOfMafia.config";
 
 import { Dispatch, SetStateAction } from "react";
 import { AdditionalRole } from "@/components/types/AdditionalRole";

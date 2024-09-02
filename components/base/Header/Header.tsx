@@ -36,7 +36,7 @@ export const Header = ({ children, isVisible }: HeaderProps) => {
 
   return (
     <Animated.View
-      style={[styles.box, { paddingTop: insets.top }, animatedStyle]}
+      style={[styles.box, { paddingTop: insets.top * 1.75 }, animatedStyle]}
     >
       <View style={styles.container}>{children}</View>
     </Animated.View>

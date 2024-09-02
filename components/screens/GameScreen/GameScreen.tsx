@@ -8,7 +8,7 @@ import { HeaderResult } from "@/components/partials/HeaderResult/HeaderResult";
 import Button from "@/components/base/Button/Button";
 
 import { FC, useEffect, useState } from "react";
-import { ActivityIndicator, StyleSheet, View } from "react-native";
+import { ActivityIndicator, Platform, StyleSheet, View } from "react-native";
 import { StatusBar } from "react-native";
 import Animated, {
   Easing,
@@ -57,6 +57,9 @@ export const GameScreen: FC<GameScreenProps> = ({
   playerID,
   onCharacterUpdate,
 }) => {
+  const winner = gameState?.winner;
+  const players = gameState?.players;
+
   const [isHeaderVisible, setIsHeaderVisible] = useState(
     gameState.stage === "waitingForPlayers" || gameState.stage === "result"
       ? true
@@ -67,15 +70,12 @@ export const GameScreen: FC<GameScreenProps> = ({
 
   const [selectedPlayer, setSelectedPlayer] = useState<Player | null>(null);
   const [avatarGridMode, setAvatarGridMode] = useState<Mode>(
-    gameState.winner ? "revealed" : "pressable"
+    mode === "host" ? "pressable" : "default"
   );
   // GameRules States
   const [showRolesAfterDeath, setShowRolesAfterDeath] = useState(false);
   const [numberOfMafia, setNumberOfMafia] = useState(2);
   const [additionalRoles, setAdditionalRoles] = useState<AdditionalRole[]>([]);
-
-  const winner = gameState?.winner;
-  const players = gameState?.players;
 
   const paddingTop = useSharedValue(mode === "host" ? 270 : 200);
 
@@ -139,7 +139,19 @@ export const GameScreen: FC<GameScreenProps> = ({
     );
   }, [gameState.stage]);
 
+  useEffect(() => {
+    setAvatarGridMode(
+      gameState.stage === "result"
+        ? "revealed"
+        : mode === "host"
+        ? "pressable"
+        : "default"
+    );
+  }, [gameState.stage]);
+
   console.log("GameState lol:", gameState);
+
+  console.log("avatar grid mode", avatarGridMode);
 
   if (!gameState) {
     return (
@@ -305,11 +317,10 @@ const styles = StyleSheet.create({
     marginTop: 50,
     paddingHorizontal: 20,
     height: "100%",
-    backgroundColor: "rgba(0,0,0,0.5)",
   },
   button: {
     position: "absolute",
-    bottom: 50,
+    bottom: Platform.OS === "ios" ? 50 : 10,
     left: 20,
     right: 20,
     justifyContent: "center",

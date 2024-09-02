@@ -1,4 +1,4 @@
-export const GAME_CODE_LENGTH = 8;
+import { GAME_CODE_LENGTH } from "@/gameConfig/inputLengths.config";
 
 const correctGameCode = (gameCode: string) => {
   // Define the minimum and maximum length for the gameCode
