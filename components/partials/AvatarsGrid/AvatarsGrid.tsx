@@ -1,6 +1,11 @@
 import React, { useEffect } from "react";
 import { FlatList, StyleSheet, View } from "react-native";
-import { useSharedValue, withTiming, Easing } from "react-native-reanimated";
+import {
+  useSharedValue,
+  withTiming,
+  Easing,
+  ReduceMotion,
+} from "react-native-reanimated";
 import AnimatedCharacterAvatar from "../AnimatedCharacterAvatar/AnimatedCharacterAvatar";
 import { Mode } from "@/components/types/Mode";
 import { Player } from "@/components/types/Player";
@@ -15,17 +20,17 @@ const AvatarGrid = ({ mode, onPressItem, items }: AvatarGridProps) => {
   // Handle reveal roles animation
   const revealRolesAnimation = useSharedValue(0);
 
+  const configFlip = {
+    duration: 1000,
+    easing: Easing.linear,
+    reduceMotion: ReduceMotion.Never,
+  };
+
   useEffect(() => {
     if (mode === "revealed") {
-      revealRolesAnimation.value = withTiming(1, {
-        duration: 1000,
-        easing: Easing.linear,
-      });
+      revealRolesAnimation.value = withTiming(1, configFlip);
     } else {
-      revealRolesAnimation.value = withTiming(0, {
-        duration: 1000,
-        easing: Easing.linear,
-      });
+      revealRolesAnimation.value = withTiming(0, configFlip);
     }
   }, [mode]);
 

@@ -21,6 +21,10 @@ export default (): ReactElement => {
   const { gameCode } = useLocalSearchParams<{ gameCode: string }>();
   const { playerId } = useLocalSearchParams<{ playerId: string }>();
 
+  // const mode = "host";
+  // const gameCode = "CLSC27";
+  // const playerId = "2137";
+
   const [startGame] = useMutation(START_GAME);
   const [killPlayer] = useMutation(KILL_PLAYER);
   const [kickPlayer] = useMutation(KICK_PLAYER);

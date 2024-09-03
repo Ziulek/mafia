@@ -21,6 +21,7 @@ type HeaderLobbyHostProps = {
   setNumberOfMafia: (value: number) => void;
   additionalRoles: AdditionalRole[];
   setAdditionalRoles: Dispatch<SetStateAction<AdditionalRole[]>>;
+  onHeaderHeightChange: (height: number) => void;
 };
 
 export const HeaderLobbyHost = ({
@@ -33,9 +34,10 @@ export const HeaderLobbyHost = ({
   setNumberOfMafia,
   additionalRoles,
   setAdditionalRoles,
+  onHeaderHeightChange,
 }: HeaderLobbyHostProps) => {
   return (
-    <Header isVisible={isVisible}>
+    <Header isVisible={isVisible} onHeaderHeightChange={onHeaderHeightChange}>
       <View style={styles.container}>
         <View style={styles.inlineText}>
           <Text size="headline">Game Code: </Text>

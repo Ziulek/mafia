@@ -6,15 +6,17 @@ type HeaderLobbyPlayerProps = {
   players: number;
   gameCode: string;
   isVisible: boolean;
+  onHeaderHeightChange: (height: number) => void;
 };
 
 export const HeaderLobbyPlayer = ({
   players,
   gameCode,
   isVisible,
+  onHeaderHeightChange,
 }: HeaderLobbyPlayerProps) => {
   return (
-    <Header isVisible={isVisible}>
+    <Header isVisible={isVisible} onHeaderHeightChange={onHeaderHeightChange}>
       <View style={styles.container}>
         <View style={styles.inlineText}>
           <Text size="headline">Game Code: </Text>

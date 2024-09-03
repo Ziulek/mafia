@@ -46,7 +46,7 @@ export const AnimatedCharacterAvatar = ({
   const configFlip = {
     duration: 1000,
     easing: Easing.linear,
-    reduceMotion: ReduceMotion.System,
+    reduceMotion: ReduceMotion.Never,
   };
 
   const statefulStyles = StyleSheet.create({

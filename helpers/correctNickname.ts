@@ -31,13 +31,13 @@ const correctNickname = (nickname: string) => {
   }
 
   // Define a regular expression to match only letters and numbers
-  const validPattern = /^[a-zA-Z0-9]+$/;
+  const validPattern = /^[a-zA-Z0-9 ]+$/;
 
   // Test if the nickname matches the pattern
   if (!validPattern.test(nickname)) {
     return {
       isValid: false,
-      message: "Nickname can only contain letters and numbers.",
+      message: "Nickname can only contain letters, numbers and spaces.",
     };
   }
 

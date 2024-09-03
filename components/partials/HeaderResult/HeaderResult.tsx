@@ -3,13 +3,18 @@ import { StyleSheet, View } from "react-native";
 import Text from "../../base/Text/Text";
 
 type HeaderResultProps = {
-  winner: "mafia" | "police";
+  winner: "mafia" | "police" | "Error";
   isVisible: boolean;
+  onHeaderHeightChange: (height: number) => void;
 };
 
-export const HeaderResult = ({ winner, isVisible }: HeaderResultProps) => {
+export const HeaderResult = ({
+  winner = "Error",
+  isVisible,
+  onHeaderHeightChange,
+}: HeaderResultProps) => {
   return (
-    <Header isVisible={isVisible}>
+    <Header isVisible={isVisible} onHeaderHeightChange={onHeaderHeightChange}>
       <View style={styles.container}>
         <View style={styles.inlineText}>
           <Text size="headline" isBold={true}>{`${winner

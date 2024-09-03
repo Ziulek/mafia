@@ -35,9 +35,3 @@ const styles = StyleSheet.create({
 });
 
 export default toastConfig;
-
-// height: 60,
-// width: "80%",
-// backgroundColor: colors.primary,
-// justifyContent: "center",
-// alignItems: "center",

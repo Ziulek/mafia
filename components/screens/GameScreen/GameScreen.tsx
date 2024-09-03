@@ -1,30 +1,31 @@
-import { PlayerActionsBottomSheet } from "@/components/partials/PlayerActionsBottomSheet/PlayerActionsBottomSheet";
-import ChangeAvatarBottomSheet from "@/components/partials/ChangeAvatarBottomSheet/ChangeAvatarBottomSheet";
-import { HeaderLobbyPlayer } from "@/components/partials/HeaderLobbyPlayer/HeaderLobbyPlayer";
-import { HeaderLobbyHost } from "@/components/partials/HeaderLobbyHost/HeaderLobbyHost";
-import AvatarGrid from "@/components/partials/AvatarsGrid/AvatarsGrid";
-import { HeaderResult } from "@/components/partials/HeaderResult/HeaderResult";
-
-import Button from "@/components/base/Button/Button";
-
 import { FC, useEffect, useState } from "react";
-import { ActivityIndicator, Platform, StyleSheet, View } from "react-native";
-import { StatusBar } from "react-native";
+import { Platform, StyleSheet, View, StatusBar } from "react-native";
 import Animated, {
   Easing,
+  ReduceMotion,
   useAnimatedStyle,
-  useSharedValue,
   withTiming,
 } from "react-native-reanimated";
+import Toast from "react-native-toast-message";
 
+// components
+import ImageBackground from "@/components/partials/ImageBackground/ImageBackground";
+import { HeaderLobbyPlayer } from "@/components/partials/HeaderLobbyPlayer/HeaderLobbyPlayer";
+import { HeaderLobbyHost } from "@/components/partials/HeaderLobbyHost/HeaderLobbyHost";
+import { HeaderResult } from "@/components/partials/HeaderResult/HeaderResult";
+import AvatarGrid from "@/components/partials/AvatarsGrid/AvatarsGrid";
+import Button from "@/components/base/Button/Button";
+import ChangeAvatarBottomSheet from "@/components/partials/ChangeAvatarBottomSheet/ChangeAvatarBottomSheet";
+import { PlayerActionsBottomSheet } from "@/components/partials/PlayerActionsBottomSheet/PlayerActionsBottomSheet";
+
+// types
 import { Mode } from "@/components/types/Mode";
 import { Player } from "@/components/types/Player";
 import { Character } from "@/components/types/Characters";
 import { GameRules } from "@/components/types/GameRules";
 import { GameState } from "@/components/types/GameState";
-import ImageBackground from "@/components/partials/ImageBackground/ImageBackground";
 import { AdditionalRole } from "@/components/types/AdditionalRole";
-import Toast from "react-native-toast-message";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 type GameScreenProps = {
   gameState: GameState;
@@ -60,38 +61,75 @@ export const GameScreen: FC<GameScreenProps> = ({
   const winner = gameState?.winner;
   const players = gameState?.players;
 
-  const [isHeaderVisible, setIsHeaderVisible] = useState(
-    gameState.stage === "waitingForPlayers" || gameState.stage === "result"
-      ? true
-      : false
-  );
+  // Header States
+  const [isHeaderVisible, setIsHeaderVisible] = useState(true);
+  const [headerHeight, setHeaderHeight] = useState(0); // Track header height
+
+  // BottomSheet States
   const [isBottomSheetVisible, setIsBottomSheetVisible] = useState(false);
   const [isAvatarSelectVisible, setIsAvatarSelectVisible] = useState(false);
 
+  // AvatarGrid States
   const [selectedPlayer, setSelectedPlayer] = useState<Player | null>(null);
-  const [avatarGridMode, setAvatarGridMode] = useState<Mode>(
-    mode === "host" ? "pressable" : "default"
-  );
+  const [avatarGridMode, setAvatarGridMode] = useState<Mode>("default");
+
+  const currentPlayer = players?.find((player) => player.id === playerID);
+  const insets = useSafeAreaInsets();
+
+  const animatedStyle = useAnimatedStyle(() => {
+    if (gameState.stage === "game") {
+      return {
+        marginTop: insets.top * 1.75,
+      };
+    } else {
+      return {
+        marginTop: withTiming(headerHeight, {
+          duration: 500,
+          easing: Easing.out(Easing.cubic),
+          reduceMotion: ReduceMotion.Never,
+        }),
+      };
+    }
+  });
+
   // GameRules States
   const [showRolesAfterDeath, setShowRolesAfterDeath] = useState(false);
   const [numberOfMafia, setNumberOfMafia] = useState(2);
   const [additionalRoles, setAdditionalRoles] = useState<AdditionalRole[]>([]);
-
-  const paddingTop = useSharedValue(mode === "host" ? 270 : 200);
-
-  const currentPlayer = players?.find((player) => player.id === playerID);
-
-  const animatedStyle = useAnimatedStyle(() => {
-    return {
-      paddingTop: paddingTop.value,
-    };
-  });
 
   const HandleStartGame = (
     showRolesAfterDeath: boolean,
     numberOfMafia: number,
     additionalRoles: AdditionalRole[]
   ) => {
+    if (players?.length === 0) {
+      Toast.show({
+        type: "customToast",
+        text1: "No players",
+        text2: "Invite your friends",
+      });
+      return;
+    }
+
+    if (players?.length < 3) {
+      Toast.show({
+        type: "customToast",
+        text1: "Not enough players",
+        text2: "Add at least 3 players",
+      });
+      return;
+    }
+
+    if (players?.length < numberOfMafia * 2 + 1) {
+      Toast.show({
+        type: "customToast",
+        text1: "Too many mafia",
+        text2: "Decrease number of mafia",
+      });
+      return;
+    }
+
+    // Start the game if all conditions are met
     onStartGame(showRolesAfterDeath, numberOfMafia, additionalRoles);
     setIsHeaderVisible(false);
     setAvatarGridMode("pressable");
@@ -108,8 +146,16 @@ export const GameScreen: FC<GameScreenProps> = ({
   };
 
   const HandleOnKill = (id: string) => {
-    onKillPlayer(id);
-    setIsBottomSheetVisible(false);
+    if (gameState.stage === "game") {
+      onKillPlayer(id);
+      setIsBottomSheetVisible(false);
+    } else {
+      Toast.show({
+        type: "customToast",
+        text1: "Can't kill player",
+        text2: "You can only kill in the game stage.",
+      });
+    }
   };
 
   const HandleOnKick = (id: string) => {
@@ -121,25 +167,16 @@ export const GameScreen: FC<GameScreenProps> = ({
     onCharacterUpdate(character);
   };
 
-  useEffect(() => {
-    // Update paddingTop based on header visibility
-    paddingTop.value = withTiming(
-      isHeaderVisible ? (mode === "host" ? 270 : 200) : winner ? 110 : 0,
-      {
-        duration: 500,
-        easing: Easing.linear,
-      }
-    );
-  }, [isHeaderVisible, winner]);
+  const handleHeaderHeightChange = (newHeight: number) => {
+    setHeaderHeight(newHeight);
+  };
 
   // to jest głupie rozwiazywanie problemu z headerem (chyba) ale bez tego zostanie wyswietlony po stronie playera jak się zacznie gre
   useEffect(() => {
     setIsHeaderVisible(
       gameState.stage === "waitingForPlayers" || gameState.stage === "result"
+      // false
     );
-  }, [gameState.stage]);
-
-  useEffect(() => {
     setAvatarGridMode(
       gameState.stage === "result"
         ? "revealed"
@@ -153,13 +190,8 @@ export const GameScreen: FC<GameScreenProps> = ({
 
   console.log("avatar grid mode", avatarGridMode);
 
-  if (!gameState) {
-    return (
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <ActivityIndicator size="large" color="#ff4d00" />
-      </View>
-    );
-  }
+  console.log("Header Height", headerHeight);
+
   return (
     <>
       <StatusBar
@@ -167,39 +199,43 @@ export const GameScreen: FC<GameScreenProps> = ({
         barStyle={isHeaderVisible ? "dark-content" : "light-content"}
       />
       <ImageBackground>
-        <View>
-          {mode === "host" && gameState.stage === "waitingForPlayers" && (
-            <HeaderLobbyHost
-              players={players?.length}
-              gameCode={gameState?.gameCode}
-              isVisible={isHeaderVisible}
-              isSwitchOn={showRolesAfterDeath}
-              setIsSwitchOn={setShowRolesAfterDeath}
-              numberOfMafia={numberOfMafia}
-              setNumberOfMafia={setNumberOfMafia}
-              additionalRoles={additionalRoles}
-              setAdditionalRoles={setAdditionalRoles}
-            />
-          )}
-          {mode === "player" && gameState.stage === "waitingForPlayers" && (
-            <HeaderLobbyPlayer
-              players={players?.length}
-              gameCode={gameState?.gameCode}
-              isVisible={isHeaderVisible}
-            />
-          )}
-          {winner && gameState.stage === "result" && (
-            <HeaderResult winner={winner} isVisible={isHeaderVisible} />
-          )}
-
-          <Animated.View style={[styles.AvatarGrid, animatedStyle]}>
-            <AvatarGrid
-              mode={avatarGridMode}
-              onPressItem={HandleSelectPlayer}
-              items={players}
-            />
-          </Animated.View>
-        </View>
+        {mode === "host" && gameState.stage === "waitingForPlayers" && (
+          <HeaderLobbyHost
+            players={players?.length}
+            gameCode={gameState?.gameCode}
+            isVisible={isHeaderVisible}
+            // isVisible={false}
+            isSwitchOn={showRolesAfterDeath}
+            setIsSwitchOn={setShowRolesAfterDeath}
+            numberOfMafia={numberOfMafia}
+            setNumberOfMafia={setNumberOfMafia}
+            additionalRoles={additionalRoles}
+            setAdditionalRoles={setAdditionalRoles}
+            onHeaderHeightChange={handleHeaderHeightChange} // Pass the handler to the header
+          />
+        )}
+        {mode === "player" && gameState.stage === "waitingForPlayers" && (
+          <HeaderLobbyPlayer
+            players={players?.length}
+            gameCode={gameState?.gameCode}
+            isVisible={isHeaderVisible}
+            onHeaderHeightChange={handleHeaderHeightChange} // Pass the handler to the header
+          />
+        )}
+        {winner && gameState.stage === "result" && (
+          <HeaderResult
+            winner={winner}
+            isVisible={isHeaderVisible}
+            onHeaderHeightChange={handleHeaderHeightChange}
+          />
+        )}
+        <Animated.View style={[styles.AvatarGrid, animatedStyle]}>
+          <AvatarGrid
+            mode={avatarGridMode}
+            onPressItem={HandleSelectPlayer}
+            items={players}
+          />
+        </Animated.View>
 
         <View style={styles.button}>
           {/* Player Side Change Avatar Button */}
@@ -209,52 +245,23 @@ export const GameScreen: FC<GameScreenProps> = ({
             </Button>
           )}
           {/* Host Side Start Game Button */}
-          {gameState.stage === "waitingForPlayers" &&
-            mode === "host" &&
-            players?.length >= numberOfMafia * 2 + 1 && (
-              <Button
-                color="accent"
-                onPress={() =>
-                  HandleStartGame(
-                    showRolesAfterDeath,
-                    numberOfMafia,
-                    additionalRoles
-                  )
-                }
-              >
-                Start Game
-              </Button>
-            )}
-          {gameState.stage === "waitingForPlayers" &&
-            mode === "host" &&
-            !(players?.length >= numberOfMafia * 2 + 1) && (
-              <Button
-                color="back"
-                onPress={() => {
-                  if (players?.length === 0) {
-                    Toast.show({
-                      type: "customToast",
-                      text1: "No players",
-                      text2: "Invite your friends",
-                    });
-                  } else if (players?.length < 3) {
-                    Toast.show({
-                      type: "customToast",
-                      text1: "Not enough players",
-                      text2: "Add at least 3 players",
-                    });
-                  } else if (players?.length > 0) {
-                    Toast.show({
-                      type: "customToast",
-                      text1: "Too many mafia",
-                      text2: "Decrease number of mafia",
-                    });
-                  }
-                }}
-              >
-                Start Game
-              </Button>
-            )}
+
+          {gameState.stage === "waitingForPlayers" && mode === "host" && (
+            <Button
+              color={
+                players?.length >= numberOfMafia * 2 + 1 ? "accent" : "back"
+              }
+              onPress={() =>
+                HandleStartGame(
+                  showRolesAfterDeath,
+                  numberOfMafia,
+                  additionalRoles
+                )
+              }
+            >
+              Start Game
+            </Button>
+          )}
 
           {/* Host Side Show Roles Button */}
           {gameState.stage === "game" && mode === "host" && (
@@ -274,20 +281,18 @@ export const GameScreen: FC<GameScreenProps> = ({
             </Button>
           )}
         </View>
+
         {/* Temp Set Winner Button */}
         {/* <View style={styles.buttonTemp}>
           <Button
             color="kill"
             onPress={() => {
-              gameState.stage = "result";
-              setWinner("mafia");
-              setAvatarGridMode("revealed");
+              setIsHeaderVisible(!isHeaderVisible);
             }}
           >
-            Set Winner
+            test
           </Button>
         </View> */}
-
         {mode === "player" && playerID && isAvatarSelectVisible && (
           <ChangeAvatarBottomSheet
             currentCharacter={currentPlayer?.character}
@@ -314,9 +319,9 @@ export const GameScreen: FC<GameScreenProps> = ({
 
 const styles = StyleSheet.create({
   AvatarGrid: {
-    marginTop: 50,
+    flex: 1,
     paddingHorizontal: 20,
-    height: "100%",
+    // backgroundColor: "red",
   },
   button: {
     position: "absolute",
@@ -329,8 +334,8 @@ const styles = StyleSheet.create({
   buttonTemp: {
     position: "absolute",
     bottom: 110,
-    left: 15,
-    right: 15,
+    left: 20,
+    right: 20,
     justifyContent: "center",
     alignItems: "center",
   },

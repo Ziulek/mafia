@@ -12,20 +12,27 @@ import { colors } from "@/theme/colors";
 
 type HeaderProps = {
   isVisible: boolean;
+  onHeaderHeightChange?: (height: number) => void; // Add this prop
   children: ReactNode;
 };
 
-export const Header = ({ children, isVisible }: HeaderProps) => {
+export const Header = ({
+  children,
+  isVisible,
+  onHeaderHeightChange,
+}: HeaderProps) => {
   const insets = useSafeAreaInsets();
-  const translateY = useSharedValue(-100); // Start off-screen
+  const translateY = useSharedValue(0); // Start off-screen
   const config = {
     duration: 500,
-    easing: Easing.linear,
-    reduceMotion: ReduceMotion.System,
+    easing: Easing.out(Easing.cubic),
+    reduceMotion: ReduceMotion.Never,
   };
 
   useEffect(() => {
-    translateY.value = withTiming(isVisible ? 0 : -500, config); // Adjust to fit your layout
+    const headerHeight = isVisible ? 0 : -insets.top * 1.75 - 200; // Adjust height based on visibility
+    if (onHeaderHeightChange) onHeaderHeightChange(headerHeight); // Notify parent component
+    translateY.value = withTiming(isVisible ? 0 : -400, config); // Adjust translateY to headerHeight
   }, [isVisible]);
 
   const animatedStyle = useAnimatedStyle(() => {
@@ -47,19 +54,12 @@ export default Header;
 
 const styles = StyleSheet.create({
   box: {
-    position: "absolute",
-    flex: 1,
-
-    // height: "35%",
     backgroundColor: colors.primary,
     alignItems: "center",
     justifyContent: "center",
-    paddingBottom: 40,
-    // marginTop: 20,
+    paddingBottom: 30,
     zIndex: 100,
     width: "100%",
-    // borderBottomWidth: 5,
-    // borderBottomColor: "grey",
   },
   container: {
     justifyContent: "center",
