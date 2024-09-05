@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Dimensions, FlatList, StyleSheet, View } from "react-native";
+import { Dimensions, StyleSheet, View } from "react-native";
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
@@ -49,26 +49,25 @@ const AvatarGrid = ({
     reduceMotion: ReduceMotion.Never,
   };
 
-  let calculatedHeight: number;
-
-  if (gameStage === "result") {
-    calculatedHeight = height * 0.1;
-  } else if (gameStage === "game") {
-    calculatedHeight = height * 0.07;
-  } else {
-    if (mode === "host") {
-      calculatedHeight = height * 0.23;
-    } else {
-      calculatedHeight = height * 0.17;
-    }
-  }
-
   useEffect(() => {
+    let calculatedHeight: number;
+
+    if (gameStage === "result") {
+      calculatedHeight = height * 0.1;
+    } else if (gameStage === "game") {
+      calculatedHeight = height * 0.07;
+    } else {
+      if (mode === "host") {
+        calculatedHeight = height * 0.23;
+      } else {
+        calculatedHeight = height * 0.17;
+      }
+    }
+
     paddingTop.value = withTiming(calculatedHeight, configPadding);
     headerHeight.value = withTiming(calculatedHeight, configPadding);
   }, [gameStage, mode]);
 
-  // Animated styles
   const animatedContentContainerStyle = useAnimatedStyle(() => {
     return {
       paddingTop: paddingTop.value,
@@ -111,7 +110,8 @@ const AvatarGrid = ({
       numColumns={2}
       showsVerticalScrollIndicator={false}
       columnWrapperStyle={styles.column}
-      style={[styles.contentContainer, animatedContentContainerStyle]}
+      style={animatedContentContainerStyle}
+      contentContainerStyle={styles.contentContainer}
       ListHeaderComponent={<Animated.View style={animatedHeaderStyle} />}
       ListFooterComponent={<View style={styles.footer} />}
     />
@@ -120,7 +120,7 @@ const AvatarGrid = ({
 
 const styles = StyleSheet.create({
   contentContainer: {
-    paddingBottom: height * 0.06,
+    paddingBottom: height * 0.175,
     paddingHorizontal: 20,
   },
   avatarContainer: {
@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   footer: {
-    height: height * 0.06,
+    height: height * 0.175,
   },
 });
 
