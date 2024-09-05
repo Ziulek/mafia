@@ -1,11 +1,5 @@
 import { FC, useEffect, useState } from "react";
 import { Platform, StyleSheet, View, StatusBar } from "react-native";
-import Animated, {
-  Easing,
-  ReduceMotion,
-  useAnimatedStyle,
-  withTiming,
-} from "react-native-reanimated";
 import Toast from "react-native-toast-message";
 
 // components
@@ -23,10 +17,11 @@ import { Character } from "@/components/types/Characters";
 import { GameRules } from "@/components/types/GameRules";
 import { GameState } from "@/components/types/GameState";
 import { AdditionalRole } from "@/components/types/AdditionalRole";
+import { AvatarGridMode } from "@/components/types/AvatarGridMode";
 
 type GameScreenProps = {
   gameState: GameState;
-  mode: "host" | "player";
+  mode: Mode;
 
   // host
   onStartGame: (
@@ -61,7 +56,8 @@ export const GameScreen: FC<GameScreenProps> = ({
 
   // AvatarGrid States
   const [selectedPlayer, setSelectedPlayer] = useState<Player | null>(null);
-  const [avatarGridMode, setAvatarGridMode] = useState<Mode>("default");
+  const [avatarGridMode, setAvatarGridMode] =
+    useState<AvatarGridMode>("default");
 
   // GameRules States
   const [showRolesAfterDeath, setShowRolesAfterDeath] = useState(false);
@@ -144,7 +140,7 @@ export const GameScreen: FC<GameScreenProps> = ({
 
   // to jest głupie rozwiazywanie problemu z headerem (chyba) ale bez tego zostanie wyswietlony po stronie playera jak się zacznie gre
   useEffect(() => {
-    let newMode: Mode;
+    let newMode: AvatarGridMode;
 
     if (gameState.stage === "result") {
       newMode = "revealed";
@@ -185,6 +181,8 @@ export const GameScreen: FC<GameScreenProps> = ({
         />
 
         <AvatarGrid
+          gameStage={gameState.stage}
+          mode={mode}
           avatarGridMode={avatarGridMode}
           onPressItem={HandleSelectPlayer}
           items={players}

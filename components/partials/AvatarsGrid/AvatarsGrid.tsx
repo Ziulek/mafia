@@ -1,7 +1,8 @@
 import React, { useEffect } from "react";
-import { FlatList, StyleSheet, View } from "react-native";
-import {
+import { Dimensions, FlatList, StyleSheet, View } from "react-native";
+import Animated, {
   useSharedValue,
+  useAnimatedStyle,
   withTiming,
   Easing,
   ReduceMotion,
@@ -9,25 +10,76 @@ import {
 import AnimatedCharacterAvatar from "../AnimatedCharacterAvatar/AnimatedCharacterAvatar";
 import { Mode } from "@/components/types/Mode";
 import { Player } from "@/components/types/Player";
+import { AvatarGridMode } from "@/components/types/AvatarGridMode";
+import { Stage } from "@/components/types/Stage";
 
 type AvatarGridProps = {
-  avatarGridMode: Mode;
+  gameStage: Stage;
+  mode: Mode;
+  avatarGridMode: AvatarGridMode;
   onPressItem: (item: Player) => void;
   items: Player[];
 };
 
+const height = Dimensions.get("window").height;
+
 const AvatarGrid = ({
+  gameStage,
+  mode,
   avatarGridMode,
   onPressItem,
   items,
 }: AvatarGridProps) => {
   const revealRolesAnimation = useSharedValue(0);
+  const paddingTop = useSharedValue(
+    mode === "host" ? height * 0.23 : height * 0.17
+  );
+  const headerHeight = useSharedValue(
+    mode === "host" ? height * 0.23 : height * 0.17
+  );
 
   const configFlip = {
     duration: 1000,
     easing: Easing.linear,
     reduceMotion: ReduceMotion.Never,
   };
+  const configPadding = {
+    duration: 500,
+    easing: Easing.linear,
+    reduceMotion: ReduceMotion.Never,
+  };
+
+  let calculatedHeight: number;
+
+  if (gameStage === "result") {
+    calculatedHeight = height * 0.1;
+  } else if (gameStage === "game") {
+    calculatedHeight = height * 0.07;
+  } else {
+    if (mode === "host") {
+      calculatedHeight = height * 0.23;
+    } else {
+      calculatedHeight = height * 0.17;
+    }
+  }
+
+  useEffect(() => {
+    paddingTop.value = withTiming(calculatedHeight, configPadding);
+    headerHeight.value = withTiming(calculatedHeight, configPadding);
+  }, [gameStage, mode]);
+
+  // Animated styles
+  const animatedContentContainerStyle = useAnimatedStyle(() => {
+    return {
+      paddingTop: paddingTop.value,
+    };
+  });
+
+  const animatedHeaderStyle = useAnimatedStyle(() => {
+    return {
+      height: headerHeight.value,
+    };
+  });
 
   useEffect(() => {
     if (avatarGridMode === "revealed") {
@@ -52,23 +104,23 @@ const AvatarGrid = ({
   );
 
   return (
-    <FlatList
+    <Animated.FlatList
       data={items}
       renderItem={renderItem}
       keyExtractor={(item, index) => index.toString()}
       numColumns={2}
       showsVerticalScrollIndicator={false}
       columnWrapperStyle={styles.column}
-      contentContainerStyle={styles.contentContainer}
-      ListHeaderComponent={<View style={styles.headerFooter} />}
-      ListFooterComponent={<View style={styles.headerFooter} />}
+      style={[styles.contentContainer, animatedContentContainerStyle]}
+      ListHeaderComponent={<Animated.View style={animatedHeaderStyle} />}
+      ListFooterComponent={<View style={styles.footer} />}
     />
   );
 };
 
 const styles = StyleSheet.create({
   contentContainer: {
-    paddingVertical: 200, // Adds space to allow first/last items to scroll to center
+    paddingBottom: height * 0.06,
     paddingHorizontal: 20,
   },
   avatarContainer: {
@@ -78,8 +130,8 @@ const styles = StyleSheet.create({
     width: "100%",
     justifyContent: "space-between",
   },
-  headerFooter: {
-    height: 200, // Adjust this value to control the scroll range
+  footer: {
+    height: height * 0.06,
   },
 });
 

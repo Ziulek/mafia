@@ -53,19 +53,23 @@ export const Header = ({
   const translateY = useSharedValue(0);
   const config = {
     duration: 1000,
-    easing: Easing.linear,
+    easing: Easing.inOut(Easing.cubic),
     reduceMotion: ReduceMotion.Never,
   };
 
   const [displayedGameStage, setDisplayedGameStage] = useState(gameStage);
 
   const animateVisibility = (visible: boolean) => {
-    translateY.value = withTiming(visible ? 0 : -400, config, (finished) => {
-      if (finished) {
-        console.log("animation header finished");
-        runOnJS(setDisplayedGameStage)(gameStage);
+    translateY.value = withTiming(
+      visible ? 0 : gameStage === "result" ? -100 : -400,
+      config,
+      (finished) => {
+        if (finished) {
+          console.log("animation header finished");
+          runOnJS(setDisplayedGameStage)(gameStage);
+        }
       }
-    });
+    );
   };
 
   useEffect(() => {

@@ -1,1 +1,1 @@
-export type Mode = "default" | "revealed" | "pressable";
+export type Mode = "host" | "player";
