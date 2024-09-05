@@ -73,6 +73,34 @@ const players: Player[] = [
     nickname: "Player8",
     isDead: false,
   },
+  {
+    id: "9201",
+    character: "M4",
+    role: "police",
+    nickname: "Player9",
+    isDead: false,
+  },
+  {
+    id: "1043",
+    character: "M4",
+    role: "police",
+    nickname: "Player10",
+    isDead: false,
+  },
+  {
+    id: "1187",
+    character: "F4",
+    role: "police",
+    nickname: "Player11",
+    isDead: false,
+  },
+  {
+    id: "1345",
+    character: "F4",
+    role: "police",
+    nickname: "Player12",
+    isDead: false,
+  },
 ];
 
 type Story = StoryObj<typeof meta>;

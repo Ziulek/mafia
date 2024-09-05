@@ -17,7 +17,7 @@ export const BottomSheet = ({
   isVisible,
   children,
 }: BottomSheetProps) => {
-  const snapPoints = useMemo(() => ["45%"], []);
+  const snapPoints = useMemo(() => ["40%"], []);
 
   const bottomSheetRef = useRef<GorhomBottomSheet>(null);
 
@@ -82,6 +82,6 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   textContainer: {
-    marginVertical: 30,
+    marginVertical: 20,
   },
 });

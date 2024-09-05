@@ -31,7 +31,7 @@ export default (): ReactElement => {
   const [updateGameRules] = useMutation(UPDATE_GAME_RULES);
   const [characterUpdate] = useMutation(CHARACTER_UPDATE);
 
-  console.log("kodzik", gameCode);
+  // console.log("kodzik", gameCode);
 
   const { data, loading, error } = useQuery(GET_CURRENT_GAME_STATE, {
     variables: {
@@ -140,12 +140,6 @@ export default (): ReactElement => {
       playerID={playerId}
       onNewGame={() => {}}
       onStartGame={(showRolesAfterDeath, numberOfMafia, additionalRoles) => {
-        console.log(
-          "onStartGame",
-          showRolesAfterDeath,
-          numberOfMafia,
-          additionalRoles
-        );
         startGame({
           variables: {
             gameCode: correctData.gameCode,

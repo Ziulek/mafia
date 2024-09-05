@@ -1,10 +1,11 @@
 import { BottomSheet } from "../../base/BottomSheet/BottomSheet";
 import { ButtonGroup } from "../../base/ButtonGroup/ButtonGroup";
 import { Button } from "../../base/Button/Button";
-import { useState } from "react";
+
 
 type PlayerActionsBottomSheetProps = {
   nickname: string;
+  isDead: boolean;
   onKick: () => void;
   onKill: () => void;
   isVisible: boolean;
@@ -13,6 +14,7 @@ type PlayerActionsBottomSheetProps = {
 
 export const PlayerActionsBottomSheet = ({
   nickname,
+  isDead,
   onKick,
   onKill,
   isVisible,
@@ -26,7 +28,7 @@ export const PlayerActionsBottomSheet = ({
       isVisible={isVisible}
     >
       <ButtonGroup>
-        <Button color="kill" onPress={onKill}>
+        <Button color="kill" onPress={onKill} isDisabled={isDead}>
           Kill Player
         </Button>
         <Button color="secondary" onPress={onKick}>

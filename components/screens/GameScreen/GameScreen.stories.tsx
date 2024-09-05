@@ -4,6 +4,7 @@ import { GameScreen } from "./GameScreen";
 import { Character } from "@/components/types/Characters";
 import { Role } from "@/components/types/Role";
 import { GameState } from "@/components/types/GameState";
+import { Player } from "@/components/types/Player";
 
 const meta: Meta<typeof GameScreen> = {
   component: GameScreen,
@@ -25,61 +26,90 @@ type Story = StoryObj<typeof meta>;
 
 const playerID = "1";
 
-const players = [
+const players: Player[] = [
   {
-    id: "1",
-    character: "M1" as Character,
-    isDead: false,
+    id: "1324",
+    character: "M1",
+    role: "police",
     nickname: "Player1",
+    isDead: false,
   },
   {
-    id: "2",
-    character: "M2" as Character,
-    role: "mafia" as Role,
-    isDead: false,
+    id: "2567",
+    character: "M2",
+    role: "mafia",
     nickname: "Player2",
+    isDead: false,
   },
   {
-    id: "3",
-    character: "M3" as Character,
-    role: "detective" as Role,
-    isDead: false,
+    id: "3978",
+    character: "M3",
+    role: "mafia",
     nickname: "Player3",
+    isDead: false,
   },
   {
-    id: "4",
-    character: "M4" as Character,
-    role: "police" as Role,
-    isDead: false,
+    id: "4678",
+    character: "M4",
+    role: "mafia",
     nickname: "Player4",
+    isDead: true,
   },
   {
-    id: "5",
-    character: "F1" as Character,
-    role: "detective" as Role,
-    isDead: false,
+    id: "5097",
+    character: "F1",
+    role: "mafia",
     nickname: "Player5",
+    isDead: false,
   },
   {
-    id: "6",
-    character: "F2" as Character,
-    role: "police" as Role,
-    isDead: false,
+    id: "6456",
+    character: "F2",
+    role: "mafia",
     nickname: "Player6",
+    isDead: false,
   },
   {
-    id: "7",
-    character: "F3" as Character,
-    role: "detective" as Role,
-    isDead: false,
+    id: "7867",
+    character: "F3",
+    role: "mafia",
     nickname: "Player7",
+    isDead: false,
   },
   {
-    id: "8",
-    character: "F4" as Character,
-    role: "mafia" as Role,
-    isDead: false,
+    id: "8945",
+    character: "F4",
+    role: "mafia",
     nickname: "Player8",
+    isDead: false,
+  },
+  {
+    id: "9201",
+    character: "M4",
+    role: "police",
+    nickname: "Player9",
+    isDead: false,
+  },
+  {
+    id: "1043",
+    character: "M4",
+    role: "police",
+    nickname: "Player10",
+    isDead: false,
+  },
+  {
+    id: "1187",
+    character: "F4",
+    role: "police",
+    nickname: "Player11",
+    isDead: false,
+  },
+  {
+    id: "1345",
+    character: "F4",
+    role: "police",
+    nickname: "Player12",
+    isDead: false,
   },
 ];
 

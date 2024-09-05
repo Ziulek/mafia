@@ -10,9 +10,7 @@ import Toast from "react-native-toast-message";
 
 // components
 import ImageBackground from "@/components/partials/ImageBackground/ImageBackground";
-import { HeaderLobbyPlayer } from "@/components/partials/HeaderLobbyPlayer/HeaderLobbyPlayer";
-import { HeaderLobbyHost } from "@/components/partials/HeaderLobbyHost/HeaderLobbyHost";
-import { HeaderResult } from "@/components/partials/HeaderResult/HeaderResult";
+import Header from "@/components/partials/Header/Header";
 import AvatarGrid from "@/components/partials/AvatarsGrid/AvatarsGrid";
 import Button from "@/components/base/Button/Button";
 import ChangeAvatarBottomSheet from "@/components/partials/ChangeAvatarBottomSheet/ChangeAvatarBottomSheet";
@@ -25,7 +23,6 @@ import { Character } from "@/components/types/Characters";
 import { GameRules } from "@/components/types/GameRules";
 import { GameState } from "@/components/types/GameState";
 import { AdditionalRole } from "@/components/types/AdditionalRole";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 type GameScreenProps = {
   gameState: GameState;
@@ -58,13 +55,6 @@ export const GameScreen: FC<GameScreenProps> = ({
   playerID,
   onCharacterUpdate,
 }) => {
-  const winner = gameState?.winner;
-  const players = gameState?.players;
-
-  // Header States
-  const [isHeaderVisible, setIsHeaderVisible] = useState(true);
-  const [headerHeight, setHeaderHeight] = useState(0); // Track header height
-
   // BottomSheet States
   const [isBottomSheetVisible, setIsBottomSheetVisible] = useState(false);
   const [isAvatarSelectVisible, setIsAvatarSelectVisible] = useState(false);
@@ -73,29 +63,14 @@ export const GameScreen: FC<GameScreenProps> = ({
   const [selectedPlayer, setSelectedPlayer] = useState<Player | null>(null);
   const [avatarGridMode, setAvatarGridMode] = useState<Mode>("default");
 
-  const currentPlayer = players?.find((player) => player.id === playerID);
-  const insets = useSafeAreaInsets();
-
-  const animatedStyle = useAnimatedStyle(() => {
-    if (gameState.stage === "game") {
-      return {
-        marginTop: insets.top * 1.75,
-      };
-    } else {
-      return {
-        marginTop: withTiming(headerHeight, {
-          duration: 500,
-          easing: Easing.out(Easing.cubic),
-          reduceMotion: ReduceMotion.Never,
-        }),
-      };
-    }
-  });
-
   // GameRules States
   const [showRolesAfterDeath, setShowRolesAfterDeath] = useState(false);
   const [numberOfMafia, setNumberOfMafia] = useState(2);
   const [additionalRoles, setAdditionalRoles] = useState<AdditionalRole[]>([]);
+
+  const winner = gameState?.winner;
+  const players = gameState?.players;
+  const currentPlayer = players?.find((player) => player.id === playerID);
 
   const HandleStartGame = (
     showRolesAfterDeath: boolean,
@@ -131,8 +106,6 @@ export const GameScreen: FC<GameScreenProps> = ({
 
     // Start the game if all conditions are met
     onStartGame(showRolesAfterDeath, numberOfMafia, additionalRoles);
-    setIsHeaderVisible(false);
-    setAvatarGridMode("pressable");
   };
 
   const HandleAvatarChange = () => {
@@ -140,9 +113,11 @@ export const GameScreen: FC<GameScreenProps> = ({
   };
 
   const HandleSelectPlayer = (item: Player) => {
-    console.log(item);
-    setSelectedPlayer(item);
-    setIsBottomSheetVisible(true);
+    if (mode === "host") {
+      console.log(item);
+      setSelectedPlayer(item);
+      setIsBottomSheetVisible(true);
+    }
   };
 
   const HandleOnKill = (id: string) => {
@@ -167,75 +142,53 @@ export const GameScreen: FC<GameScreenProps> = ({
     onCharacterUpdate(character);
   };
 
-  const handleHeaderHeightChange = (newHeight: number) => {
-    setHeaderHeight(newHeight);
-  };
-
   // to jest głupie rozwiazywanie problemu z headerem (chyba) ale bez tego zostanie wyswietlony po stronie playera jak się zacznie gre
   useEffect(() => {
-    setIsHeaderVisible(
-      gameState.stage === "waitingForPlayers" || gameState.stage === "result"
-      // false
-    );
-    setAvatarGridMode(
-      gameState.stage === "result"
-        ? "revealed"
-        : mode === "host"
-        ? "pressable"
-        : "default"
-    );
-  }, [gameState.stage]);
+    let newMode: Mode;
 
-  console.log("GameState lol:", gameState);
+    if (gameState.stage === "result") {
+      newMode = "revealed";
+    } else if (gameState.stage === "waitingForPlayers") {
+      newMode = "default";
+    } else if (gameState.stage === "game") {
+      newMode = mode === "host" ? "pressable" : "default";
+    } else {
+      newMode = "default"; // Fallback, in case of any unexpected stages
+    }
 
-  console.log("avatar grid mode", avatarGridMode);
+    setAvatarGridMode(newMode);
+  }, [gameState.stage, mode]);
 
-  console.log("Header Height", headerHeight);
+  // console.log("GameState lol:", gameState);
+
+  // console.log("avatar grid mode", avatarGridMode);
 
   return (
     <>
       <StatusBar
         animated={true}
-        barStyle={isHeaderVisible ? "dark-content" : "light-content"}
+        barStyle={gameState.stage === "game" ? "light-content" : "dark-content"}
       />
       <ImageBackground>
-        {mode === "host" && gameState.stage === "waitingForPlayers" && (
-          <HeaderLobbyHost
-            players={players?.length}
-            gameCode={gameState?.gameCode}
-            isVisible={isHeaderVisible}
-            // isVisible={false}
-            isSwitchOn={showRolesAfterDeath}
-            setIsSwitchOn={setShowRolesAfterDeath}
-            numberOfMafia={numberOfMafia}
-            setNumberOfMafia={setNumberOfMafia}
-            additionalRoles={additionalRoles}
-            setAdditionalRoles={setAdditionalRoles}
-            onHeaderHeightChange={handleHeaderHeightChange} // Pass the handler to the header
-          />
-        )}
-        {mode === "player" && gameState.stage === "waitingForPlayers" && (
-          <HeaderLobbyPlayer
-            players={players?.length}
-            gameCode={gameState?.gameCode}
-            isVisible={isHeaderVisible}
-            onHeaderHeightChange={handleHeaderHeightChange} // Pass the handler to the header
-          />
-        )}
-        {winner && gameState.stage === "result" && (
-          <HeaderResult
-            winner={winner}
-            isVisible={isHeaderVisible}
-            onHeaderHeightChange={handleHeaderHeightChange}
-          />
-        )}
-        <Animated.View style={[styles.AvatarGrid, animatedStyle]}>
-          <AvatarGrid
-            mode={avatarGridMode}
-            onPressItem={HandleSelectPlayer}
-            items={players}
-          />
-        </Animated.View>
+        <Header
+          mode={mode}
+          gameStage={gameState.stage}
+          players={players?.length}
+          gameCode={gameState?.gameCode}
+          winner={winner}
+          isSwitchOn={showRolesAfterDeath}
+          setIsSwitchOn={setShowRolesAfterDeath}
+          numberOfMafia={numberOfMafia}
+          setNumberOfMafia={setNumberOfMafia}
+          additionalRoles={additionalRoles}
+          setAdditionalRoles={setAdditionalRoles}
+        />
+
+        <AvatarGrid
+          avatarGridMode={avatarGridMode}
+          onPressItem={HandleSelectPlayer}
+          items={players}
+        />
 
         <View style={styles.button}>
           {/* Player Side Change Avatar Button */}
@@ -282,17 +235,6 @@ export const GameScreen: FC<GameScreenProps> = ({
           )}
         </View>
 
-        {/* Temp Set Winner Button */}
-        {/* <View style={styles.buttonTemp}>
-          <Button
-            color="kill"
-            onPress={() => {
-              setIsHeaderVisible(!isHeaderVisible);
-            }}
-          >
-            test
-          </Button>
-        </View> */}
         {mode === "player" && playerID && isAvatarSelectVisible && (
           <ChangeAvatarBottomSheet
             currentCharacter={currentPlayer?.character}
@@ -306,6 +248,7 @@ export const GameScreen: FC<GameScreenProps> = ({
         {selectedPlayer && mode === "host" && (
           <PlayerActionsBottomSheet
             nickname={selectedPlayer.nickname}
+            isDead={selectedPlayer.isDead}
             onKill={() => HandleOnKill(selectedPlayer.id)}
             onKick={() => HandleOnKick(selectedPlayer.id)}
             isVisible={isBottomSheetVisible}
@@ -318,22 +261,9 @@ export const GameScreen: FC<GameScreenProps> = ({
 };
 
 const styles = StyleSheet.create({
-  AvatarGrid: {
-    flex: 1,
-    paddingHorizontal: 20,
-    // backgroundColor: "red",
-  },
   button: {
     position: "absolute",
     bottom: Platform.OS === "ios" ? 50 : 10,
-    left: 20,
-    right: 20,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  buttonTemp: {
-    position: "absolute",
-    bottom: 110,
     left: 20,
     right: 20,
     justifyContent: "center",

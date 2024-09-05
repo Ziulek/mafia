@@ -11,13 +11,16 @@ import { Mode } from "@/components/types/Mode";
 import { Player } from "@/components/types/Player";
 
 type AvatarGridProps = {
-  mode: Mode;
+  avatarGridMode: Mode;
   onPressItem: (item: Player) => void;
   items: Player[];
 };
 
-const AvatarGrid = ({ mode, onPressItem, items }: AvatarGridProps) => {
-  // Handle reveal roles animation
+const AvatarGrid = ({
+  avatarGridMode,
+  onPressItem,
+  items,
+}: AvatarGridProps) => {
   const revealRolesAnimation = useSharedValue(0);
 
   const configFlip = {
@@ -27,12 +30,12 @@ const AvatarGrid = ({ mode, onPressItem, items }: AvatarGridProps) => {
   };
 
   useEffect(() => {
-    if (mode === "revealed") {
+    if (avatarGridMode === "revealed") {
       revealRolesAnimation.value = withTiming(1, configFlip);
     } else {
       revealRolesAnimation.value = withTiming(0, configFlip);
     }
-  }, [mode]);
+  }, [avatarGridMode]);
 
   const renderItem = ({ item }: { item: Player }) => (
     <View style={styles.avatarContainer}>
@@ -43,7 +46,7 @@ const AvatarGrid = ({ mode, onPressItem, items }: AvatarGridProps) => {
         nickname={item.nickname}
         isDead={item.isDead}
         onPress={() => onPressItem(item)}
-        isPressable={mode === "pressable"}
+        isPressable={avatarGridMode === "pressable"}
       />
     </View>
   );
@@ -54,19 +57,29 @@ const AvatarGrid = ({ mode, onPressItem, items }: AvatarGridProps) => {
       renderItem={renderItem}
       keyExtractor={(item, index) => index.toString()}
       numColumns={2}
-      columnWrapperStyle={styles.column}
       showsVerticalScrollIndicator={false}
+      columnWrapperStyle={styles.column}
+      contentContainerStyle={styles.contentContainer}
+      ListHeaderComponent={<View style={styles.headerFooter} />}
+      ListFooterComponent={<View style={styles.headerFooter} />}
     />
   );
 };
 
 const styles = StyleSheet.create({
+  contentContainer: {
+    paddingVertical: 200, // Adds space to allow first/last items to scroll to center
+    paddingHorizontal: 20,
+  },
   avatarContainer: {
     marginVertical: 10,
   },
   column: {
     width: "100%",
     justifyContent: "space-between",
+  },
+  headerFooter: {
+    height: 200, // Adjust this value to control the scroll range
   },
 });
 

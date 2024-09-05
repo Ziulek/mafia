@@ -60,7 +60,6 @@ const ChangeAvatarBottomSheet: React.FC<ChangeAvatarBottomSheetProps> = ({
         height={PAGE_HEIGHT}
         style={{
           width: PAGE_WIDTH,
-          // backgroundColor: "blue",
           alignItems: "center",
           justifyContent: "center",
         }}

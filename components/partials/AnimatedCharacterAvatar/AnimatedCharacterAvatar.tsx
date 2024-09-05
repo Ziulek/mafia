@@ -99,19 +99,21 @@ export const AnimatedCharacterAvatar = ({
       onPress={onPress}
       delayLongPress={300}
       onLongPress={() => {
-        if (rotate.value === 0) {
+        if (rotate.value === 0 && isPressable) {
           rotate.value = withTiming(1, configFlip);
         }
       }}
       onPressIn={() => {
-        if (rotate.value > 0) {
+        if (rotate.value > 0 && isPressable) {
           rotate.value = withTiming(1, configFlip);
         }
       }}
       onPressOut={() => {
-        rotate.value = withTiming(0, configFlip);
+        if (isPressable) {
+          rotate.value = withTiming(0, configFlip);
+        }
       }}
-      disabled={!isPressable}
+      // disabled={!isPressable}
     >
       <View>
         <Animated.View
