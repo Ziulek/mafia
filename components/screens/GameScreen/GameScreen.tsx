@@ -184,6 +184,7 @@ export const GameScreen: FC<GameScreenProps> = ({
           gameStage={gameState.stage}
           mode={mode}
           avatarGridMode={avatarGridMode}
+          showRolesAfterDeath={showRolesAfterDeath}
           onPressItem={HandleSelectPlayer}
           items={players}
         />

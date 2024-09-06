@@ -1,43 +1,58 @@
+import { Role } from "@/components/types/Role";
 import { colors } from "@/theme/colors";
 
 export const handleBorderColor = (
-  mode: string,
-  role: string,
+  mode: "default" | "revealed",
+  role: Role,
   isDead: boolean,
+  showRolesAfterDeath?: boolean,
   avatarSelect?: boolean
 ) => {
   let newColor;
 
-  if (isDead) {
-    newColor = colors.dead;
-  } else if (avatarSelect) {
+  if (avatarSelect) {
     newColor = "white";
-  } else {
-    switch (mode) {
-      case "default":
+  } else if (mode === "default") {
+    if (!isDead) {
+      // 1. Mode: "default" & isDead: false -> colors.primary
+      newColor = colors.primary;
+    } else if (showRolesAfterDeath) {
+      // 2. Mode: "default" & isDead: true & showRolesAfterDeath: true -> colors based on roles
+      if (role === "police") {
+        newColor = colors.police;
+      } else if (role === "mafia") {
+        newColor = colors.mafia;
+      } else if (role === "detective") {
+        newColor = colors.detective;
+      } else {
         newColor = colors.primary;
-        break;
-      case "revealed":
-        if (role === "police") {
-          newColor = colors.police;
-        } else if (role === "mafia") {
-          newColor = colors.mafia;
-        } else if (role === "detective") {
-          newColor = colors.detective;
-        } else {
-          newColor = colors.primary;
-        }
-        break;
-
-      default:
-        newColor = colors.primary;
-        break;
+      }
+    } else {
+      // 2. Mode: "default" & isDead: true & showRolesAfterDeath: false -> colors.dead
+      newColor = colors.dead;
     }
+  } else if (mode === "revealed") {
+    // 3. Mode: "revealed" -> colors based on roles
+    if (role === "police") {
+      newColor = colors.police;
+    } else if (role === "mafia") {
+      newColor = colors.mafia;
+    } else if (role === "detective") {
+      newColor = colors.detective;
+    } else {
+      newColor = colors.primary;
+    }
+  } else {
+    newColor = colors.primary;
   }
+
   return newColor;
 };
 
-export const handleNicknameColor = (mode: string, isDead: boolean) => {
+export const handleNicknameColor = (
+  mode: "default" | "revealed",
+  isDead: boolean
+) => {
   let newColor: "white" | "black";
 
   if (isDead) {

@@ -6,7 +6,7 @@ import { StyleSheet, Image } from "react-native";
 type CharacterAvatarProps = {
   character: Character;
   role: Role;
-  isDead: boolean;
+  isDead?: boolean;
 };
 
 const imagePathMap: { [key: string]: any } = {
@@ -63,7 +63,7 @@ const imagePathMap: { [key: string]: any } = {
 export const CharacterAvatar = ({
   character,
   role,
-  isDead,
+  isDead = false,
 }: CharacterAvatarProps) => {
   const handleRole = (isDead: boolean, role: string) => {
     if (isDead) {

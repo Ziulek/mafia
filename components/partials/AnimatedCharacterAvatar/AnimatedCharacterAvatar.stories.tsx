@@ -28,6 +28,7 @@ export const avatarAlive: Story = {
     nickname: "Lorem Ipsum Dupol",
     isDead: false,
     isPressable: true,
+    showRolesAfterDeath: false,
   },
 };
 

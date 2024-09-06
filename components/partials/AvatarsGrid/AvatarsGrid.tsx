@@ -17,6 +17,7 @@ type AvatarGridProps = {
   gameStage: Stage;
   mode: Mode;
   avatarGridMode: AvatarGridMode;
+  showRolesAfterDeath: boolean;
   onPressItem: (item: Player) => void;
   items: Player[];
 };
@@ -27,6 +28,7 @@ const AvatarGrid = ({
   gameStage,
   mode,
   avatarGridMode,
+  showRolesAfterDeath,
   onPressItem,
   items,
 }: AvatarGridProps) => {
@@ -45,7 +47,7 @@ const AvatarGrid = ({
   };
   const configPadding = {
     duration: 500,
-    easing: Easing.linear,
+    easing: Easing.inOut(Easing.cubic),
     reduceMotion: ReduceMotion.Never,
   };
 
@@ -55,7 +57,7 @@ const AvatarGrid = ({
     if (gameStage === "result") {
       calculatedHeight = height * 0.1;
     } else if (gameStage === "game") {
-      calculatedHeight = height * 0.07;
+      calculatedHeight = height * 0.04;
     } else {
       if (mode === "host") {
         calculatedHeight = height * 0.23;
@@ -98,6 +100,7 @@ const AvatarGrid = ({
         isDead={item.isDead}
         onPress={() => onPressItem(item)}
         isPressable={avatarGridMode === "pressable"}
+        showRolesAfterDeath={showRolesAfterDeath}
       />
     </View>
   );
@@ -120,7 +123,7 @@ const AvatarGrid = ({
 
 const styles = StyleSheet.create({
   contentContainer: {
-    paddingBottom: height * 0.175,
+    paddingBottom: height * 0.12,
     paddingHorizontal: 20,
   },
   avatarContainer: {
@@ -131,7 +134,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   footer: {
-    height: height * 0.175,
+    height: height * 0.12,
   },
 });
 

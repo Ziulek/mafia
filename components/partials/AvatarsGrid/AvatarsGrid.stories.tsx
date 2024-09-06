@@ -107,14 +107,18 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    mode: "pressable",
+    gameStage: "game",
+    mode: "player",
+    avatarGridMode: "pressable",
     items: players,
   },
 };
 
 export const Revealed: Story = {
   args: {
-    mode: "revealed",
+    gameStage: "game",
+    mode: "host",
+    avatarGridMode: "revealed",
     items: players,
   },
 };
