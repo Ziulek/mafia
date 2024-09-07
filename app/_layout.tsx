@@ -93,7 +93,7 @@ function CommonProviders({ children }: { children: ReactNode }) {
       <TamaguiProvider config={tamaguiConfig}>
         <SafeAreaProvider>
           <GestureHandlerRootView>
-            <StatusBar translucent={true} />
+            <StatusBar translucent={true} barStyle={"dark-content"} />
             {children}
             <Toast config={toastConfig} />
           </GestureHandlerRootView>

@@ -39,7 +39,7 @@ const players: Player[] = [
     character: "M2",
     role: "mafia",
     nickname: "Player2",
-    isDead: false,
+    isDead: true,
   },
   {
     id: "3978",

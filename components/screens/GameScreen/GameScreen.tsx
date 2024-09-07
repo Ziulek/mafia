@@ -228,7 +228,7 @@ export const GameScreen: FC<GameScreenProps> = ({
           )}
           {/* Both Sides New Game Button */}
           {gameState.stage === "result" && (
-            <Button color="accent" onPress={() => {}}>
+            <Button color="accent" onPress={onNewGame}>
               New Game
             </Button>
           )}

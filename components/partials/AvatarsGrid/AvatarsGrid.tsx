@@ -46,8 +46,8 @@ const AvatarGrid = ({
     reduceMotion: ReduceMotion.Never,
   };
   const configPadding = {
-    duration: 500,
-    easing: Easing.inOut(Easing.cubic),
+    duration: 1000,
+    easing: Easing.linear,
     reduceMotion: ReduceMotion.Never,
   };
 
@@ -57,7 +57,7 @@ const AvatarGrid = ({
     if (gameStage === "result") {
       calculatedHeight = height * 0.1;
     } else if (gameStage === "game") {
-      calculatedHeight = height * 0.04;
+      calculatedHeight = height * 0.07;
     } else {
       if (mode === "host") {
         calculatedHeight = height * 0.23;
@@ -101,6 +101,7 @@ const AvatarGrid = ({
         onPress={() => onPressItem(item)}
         isPressable={avatarGridMode === "pressable"}
         showRolesAfterDeath={showRolesAfterDeath}
+        gameStage={gameStage}
       />
     </View>
   );

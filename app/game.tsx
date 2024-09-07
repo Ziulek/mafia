@@ -1,5 +1,5 @@
 import type { ReactElement } from "react";
-import { useLocalSearchParams } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 import { ActivityIndicator, View, Text } from "react-native";
 import GameScreen from "@/components/screens/GameScreen/GameScreen";
 import { useMutation, useQuery, useSubscription } from "@apollo/client";
@@ -138,7 +138,9 @@ export default (): ReactElement => {
       gameState={correctData}
       mode={mode}
       playerID={playerId}
-      onNewGame={() => {}}
+      onNewGame={() => {
+        router.replace(`/joinOrHost`);
+      }}
       onStartGame={(showRolesAfterDeath, numberOfMafia, additionalRoles) => {
         startGame({
           variables: {

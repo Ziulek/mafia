@@ -18,6 +18,7 @@ import { CharacterAvatar } from "@/components/base/CharacterAvatar/CharacterAvat
 import CharacterNickname from "@/components/base/CharacterNickname/CharacterNickname";
 import { Character } from "@/components/types/Characters";
 import { Role } from "@/components/types/Role";
+import { Stage } from "@/components/types/Stage";
 
 export type AnimatedCharacterAvatarProps = {
   character: Character;
@@ -28,6 +29,7 @@ export type AnimatedCharacterAvatarProps = {
   onPress?: () => void;
   isPressable?: boolean;
   showRolesAfterDeath?: boolean;
+  gameStage: Stage;
   avatarSelect?: boolean;
 };
 
@@ -42,6 +44,7 @@ export const AnimatedCharacterAvatar = ({
   onPress,
   isPressable,
   showRolesAfterDeath = false,
+  gameStage = "game",
   avatarSelect,
 }: AnimatedCharacterAvatarProps) => {
   const configFlip = {
@@ -50,7 +53,7 @@ export const AnimatedCharacterAvatar = ({
     reduceMotion: ReduceMotion.Never,
   };
   const rotate = useSharedValue(0);
-  const deadRotate = useSharedValue(1);
+  const deadRotate = useSharedValue(0);
   deadRotate.value = withTiming(isDead ? 1 : 0, configFlip);
 
   const statefulStyles = StyleSheet.create({
@@ -78,7 +81,11 @@ export const AnimatedCharacterAvatar = ({
   const frontAnimatedStyles = useAnimatedStyle(() => {
     let rotateValue;
 
-    if (revealRolesAnimation === undefined && rotate.value === 0) {
+    if (
+      (revealRolesAnimation?.value === 0 ||
+        revealRolesAnimation === undefined) &&
+      rotate.value === 0
+    ) {
       rotateValue = interpolate(deadRotate.value, [1, 0], [180, 360]);
     } else {
       rotateValue = interpolate(
@@ -116,6 +123,7 @@ export const AnimatedCharacterAvatar = ({
   }, [revealRolesAnimation]);
 
   const deadAnimatedStyles = useAnimatedStyle(() => {
+    if (gameStage === "result") return {};
     let rotateValue;
     rotateValue = interpolate(deadRotate.value, [0, 1], [180, 360]);
 
