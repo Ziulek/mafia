@@ -65,7 +65,6 @@ export const Header = ({
       config,
       (finished) => {
         if (finished) {
-          console.log("animation header finished");
           runOnJS(setDisplayedGameStage)(gameStage);
         }
       }
@@ -164,7 +163,7 @@ export const Header = ({
 
   return (
     <Animated.View
-      style={[styles.header, { paddingTop: insets.top * 2 }, animatedStyle]}
+      style={[styles.header, { paddingTop: insets.top * 2.2 }, animatedStyle]}
     >
       <View style={styles.container}>{renderContent()}</View>
     </Animated.View>

@@ -1,14 +1,16 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect, useRef, useState } from "react";
 import { Platform, StyleSheet, View, StatusBar } from "react-native";
 import Toast from "react-native-toast-message";
+import PagerView from "react-native-pager-view";
 
 // components
 import ImageBackground from "@/components/partials/ImageBackground/ImageBackground";
 import Header from "@/components/partials/Header/Header";
+import InfoTab from "@/components/partials/InfoTab/InfoTab";
 import AvatarGrid from "@/components/partials/AvatarsGrid/AvatarsGrid";
 import Button from "@/components/base/Button/Button";
 import ChangeAvatarBottomSheet from "@/components/partials/ChangeAvatarBottomSheet/ChangeAvatarBottomSheet";
-import { PlayerActionsBottomSheet } from "@/components/partials/PlayerActionsBottomSheet/PlayerActionsBottomSheet";
+import PlayerActionsBottomSheet from "@/components/partials/PlayerActionsBottomSheet/PlayerActionsBottomSheet";
 
 // types
 import { Mode } from "@/components/types/Mode";
@@ -18,6 +20,8 @@ import { GameRules } from "@/components/types/GameRules";
 import { GameState } from "@/components/types/GameState";
 import { AdditionalRole } from "@/components/types/AdditionalRole";
 import { AvatarGridMode } from "@/components/types/AvatarGridMode";
+import PageIndicator from "@/components/base/PageIndicator/PageIndicator";
+import { Role } from "@/components/types/Role";
 
 type GameScreenProps = {
   gameState: GameState;
@@ -67,6 +71,11 @@ export const GameScreen: FC<GameScreenProps> = ({
   const winner = gameState?.winner;
   const players = gameState?.players;
   const currentPlayer = players?.find((player) => player.id === playerID);
+
+  const pagerViewRef = useRef<PagerView>(null);
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const selectedRoles: Role[] = ["police", "mafia", ...additionalRoles];
 
   const HandleStartGame = (
     showRolesAfterDeath: boolean,
@@ -138,6 +147,7 @@ export const GameScreen: FC<GameScreenProps> = ({
     onCharacterUpdate(character);
   };
 
+  // przeniaśc do AvatarGrid
   // to jest głupie rozwiazywanie problemu z headerem (chyba) ale bez tego zostanie wyswietlony po stronie playera jak się zacznie gre
   useEffect(() => {
     let newMode: AvatarGridMode;
@@ -153,7 +163,13 @@ export const GameScreen: FC<GameScreenProps> = ({
     }
 
     setAvatarGridMode(newMode);
-  }, [gameState.stage, mode]);
+  }, [gameState?.stage, mode]);
+
+  useEffect(() => {
+    if (gameState.stage === "result" && pagerViewRef.current) {
+      pagerViewRef.current.setPage(1); // 1 is the index for the second page
+    }
+  }, [gameState?.stage]);
 
   // console.log("GameState lol:", gameState);
 
@@ -163,12 +179,14 @@ export const GameScreen: FC<GameScreenProps> = ({
     <>
       <StatusBar
         animated={true}
-        barStyle={gameState.stage === "game" ? "light-content" : "dark-content"}
+        barStyle={
+          gameState?.stage === "game" ? "light-content" : "dark-content"
+        }
       />
       <ImageBackground>
         <Header
           mode={mode}
-          gameStage={gameState.stage}
+          gameStage={gameState?.stage}
           players={players?.length}
           gameCode={gameState?.gameCode}
           winner={winner}
@@ -180,59 +198,81 @@ export const GameScreen: FC<GameScreenProps> = ({
           setAdditionalRoles={setAdditionalRoles}
         />
 
-        <AvatarGrid
-          gameStage={gameState.stage}
-          mode={mode}
-          avatarGridMode={avatarGridMode}
-          showRolesAfterDeath={showRolesAfterDeath}
-          onPressItem={HandleSelectPlayer}
-          items={players}
-        />
+        <PagerView
+          ref={pagerViewRef}
+          style={{ flex: 1 }}
+          initialPage={1}
+          onPageSelected={(e) => setCurrentPage(e.nativeEvent.position)}
+          scrollEnabled={gameState?.stage === "game"}
+        >
+          <View key="1" style={{ flex: 1 }}>
+            <InfoTab
+              mode={mode}
+              playerRole={currentPlayer?.role}
+              selectedRoles={selectedRoles}
+            />
+          </View>
 
-        <View style={styles.button}>
-          {/* Player Side Change Avatar Button */}
-          {mode === "player" && gameState.stage === "waitingForPlayers" && (
-            <Button color="accent" onPress={() => HandleAvatarChange()}>
-              Change Avatar
-            </Button>
-          )}
-          {/* Host Side Start Game Button */}
+          <View key="2">
+            <AvatarGrid
+              gameStage={gameState?.stage}
+              mode={mode}
+              avatarGridMode={avatarGridMode}
+              showRolesAfterDeath={showRolesAfterDeath}
+              onPressItem={HandleSelectPlayer}
+              items={players}
+            />
 
-          {gameState.stage === "waitingForPlayers" && mode === "host" && (
-            <Button
-              color={
-                players?.length >= numberOfMafia * 2 + 1 ? "accent" : "back"
-              }
-              onPress={() =>
-                HandleStartGame(
-                  showRolesAfterDeath,
-                  numberOfMafia,
-                  additionalRoles
-                )
-              }
-            >
-              Start Game
-            </Button>
-          )}
+            <View style={styles.button}>
+              {/* Player Side Change Avatar Button */}
+              {mode === "player" && gameState.stage === "waitingForPlayers" && (
+                <Button color="accent" onPress={() => HandleAvatarChange()}>
+                  Change Avatar
+                </Button>
+              )}
+              {/* Host Side Start Game Button */}
 
-          {/* Host Side Show Roles Button */}
-          {gameState.stage === "game" && mode === "host" && (
-            <Button
-              color="primary"
-              onPressIn={() => setAvatarGridMode("revealed")}
-              PressOutDelay={1000}
-              onPressOut={() => setAvatarGridMode("pressable")}
-            >
-              Show Roles
-            </Button>
-          )}
-          {/* Both Sides New Game Button */}
-          {gameState.stage === "result" && (
-            <Button color="accent" onPress={onNewGame}>
-              New Game
-            </Button>
-          )}
-        </View>
+              {gameState.stage === "waitingForPlayers" && mode === "host" && (
+                <Button
+                  color={
+                    players?.length >= numberOfMafia * 2 + 1 ? "accent" : "back"
+                  }
+                  onPress={() =>
+                    HandleStartGame(
+                      showRolesAfterDeath,
+                      numberOfMafia,
+                      additionalRoles
+                    )
+                  }
+                >
+                  Start Game
+                </Button>
+              )}
+
+              {/* Host Side Show Roles Button */}
+              {gameState.stage === "game" && mode === "host" && (
+                <Button
+                  color="primary"
+                  onPressIn={() => setAvatarGridMode("revealed")}
+                  PressOutDelay={1000}
+                  onPressOut={() => setAvatarGridMode("pressable")}
+                >
+                  Show Roles
+                </Button>
+              )}
+              {/* Both Sides New Game Button */}
+              {gameState.stage === "result" && (
+                <Button color="accent" onPress={onNewGame}>
+                  New Game
+                </Button>
+              )}
+            </View>
+          </View>
+        </PagerView>
+
+        {gameState.stage === "game" && (
+          <PageIndicator currentPage={currentPage} />
+        )}
 
         {mode === "player" && playerID && isAvatarSelectVisible && (
           <ChangeAvatarBottomSheet

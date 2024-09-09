@@ -9,6 +9,7 @@ export const colors = {
   police: "#208197",
   mafia: "#A14141",
   detective: "#284e93",
+  medic: "#46c669",
   dead: "#000000",
 
   validInput: "#A8D5BA",

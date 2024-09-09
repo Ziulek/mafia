@@ -11,7 +11,7 @@ const meta: Meta<typeof AnimatedCharacterAvatar> = {
       control: { type: "radio" },
     },
     role: {
-      options: ["mafia", "police", "detective"],
+      options: ["mafia", "police", "detective", "medic"],
       control: { type: "radio" },
     },
   },

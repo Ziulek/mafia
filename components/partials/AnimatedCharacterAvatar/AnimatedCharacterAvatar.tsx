@@ -123,7 +123,14 @@ export const AnimatedCharacterAvatar = ({
   }, [revealRolesAnimation]);
 
   const deadAnimatedStyles = useAnimatedStyle(() => {
-    if (gameStage === "result") return {};
+    if (gameStage === "result")
+      return {
+        transform: [
+          {
+            rotateY: `180deg`,
+          },
+        ],
+      };
     let rotateValue;
     rotateValue = interpolate(deadRotate.value, [0, 1], [180, 360]);
 

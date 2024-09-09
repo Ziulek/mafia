@@ -2,7 +2,6 @@ import { BottomSheet } from "../../base/BottomSheet/BottomSheet";
 import { ButtonGroup } from "../../base/ButtonGroup/ButtonGroup";
 import { Button } from "../../base/Button/Button";
 
-
 type PlayerActionsBottomSheetProps = {
   nickname: string;
   isDead: boolean;
@@ -12,7 +11,7 @@ type PlayerActionsBottomSheetProps = {
   setIsVisible: (e: boolean) => void;
 };
 
-export const PlayerActionsBottomSheet = ({
+const PlayerActionsBottomSheet = ({
   nickname,
   isDead,
   onKick,
@@ -42,3 +41,5 @@ export const PlayerActionsBottomSheet = ({
     </BottomSheet>
   );
 };
+
+export default PlayerActionsBottomSheet;

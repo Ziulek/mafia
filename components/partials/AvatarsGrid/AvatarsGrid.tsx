@@ -55,7 +55,7 @@ const AvatarGrid = ({
     let calculatedHeight: number;
 
     if (gameStage === "result") {
-      calculatedHeight = height * 0.1;
+      calculatedHeight = height * 0.11;
     } else if (gameStage === "game") {
       calculatedHeight = height * 0.07;
     } else {

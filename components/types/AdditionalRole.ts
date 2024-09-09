@@ -1,1 +1,1 @@
-export type AdditionalRole = "detective" | "medic" | "serial killer" | "medium";
+export type AdditionalRole = "detective" | "medic";

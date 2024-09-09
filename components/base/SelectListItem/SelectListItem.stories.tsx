@@ -28,7 +28,7 @@ export const MultiSelectableFull: Story = {
   args: {
     items: AvailableRoles,
     isMultiSelected: true,
-    value: ["detective", "medic", "serial killer", "medium"],
+    value: ["detective", "medic"],
   },
 };
 

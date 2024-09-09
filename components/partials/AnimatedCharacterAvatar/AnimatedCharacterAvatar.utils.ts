@@ -24,6 +24,8 @@ export const handleBorderColor = (
         newColor = colors.mafia;
       } else if (role === "detective") {
         newColor = colors.detective;
+      } else if (role === "medic") {
+        newColor = colors.medic;
       } else {
         newColor = colors.primary;
       }
@@ -39,6 +41,8 @@ export const handleBorderColor = (
       newColor = colors.mafia;
     } else if (role === "detective") {
       newColor = colors.detective;
+    } else if (role === "medic") {
+      newColor = colors.medic;
     } else {
       newColor = colors.primary;
     }
