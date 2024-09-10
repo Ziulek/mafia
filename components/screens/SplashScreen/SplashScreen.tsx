@@ -1,14 +1,18 @@
 import React from "react";
-import { StyleSheet, View, Animated, Easing } from "react-native";
+import { StyleSheet, View, Animated, Easing, Dimensions } from "react-native";
 import Svg, { Path } from "react-native-svg";
 import Text from "@/components/base/Text/Text";
 import { colors } from "@/theme/colors";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 interface SplashScreenProps {
   simpleLoader?: boolean;
 }
 
+const height = Dimensions.get("window").height;
+
 const SplashScreen: React.FC<SplashScreenProps> = ({ simpleLoader }) => {
+  const insets = useSafeAreaInsets();
   if (simpleLoader) {
     return (
       <View style={styles.simpleLoader}>
@@ -17,7 +21,7 @@ const SplashScreen: React.FC<SplashScreenProps> = ({ simpleLoader }) => {
     );
   } else {
     return (
-      <View style={styles.container}>
+      <View style={[styles.container, { height: height + insets.top }]}>
         <View style={styles.upperTextContainer}>
           <Text size="startScreenSubtitle">Welcome to </Text>
           <Text size="startScreenHeadline" isBold={true}>

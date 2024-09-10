@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useRouter } from "expo-router";
 import getNickname from "@/helpers/getNickname";
 import SplashScreen from "@/components/screens/SplashScreen/SplashScreen";
+import { StatusBar } from "react-native";
 
 const SplashScreenComponent: React.FC = () => {
   const router = useRouter();
@@ -22,7 +23,12 @@ const SplashScreenComponent: React.FC = () => {
     checkNickname();
   }, [router]);
 
-  return <SplashScreen />;
+  return (
+    <>
+      <StatusBar barStyle="light-content" translucent={true} />
+      <SplashScreen />
+    </>
+  );
 };
 
 export default SplashScreenComponent;

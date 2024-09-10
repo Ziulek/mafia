@@ -23,6 +23,7 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import { StatusBar } from "react-native";
 import Toast from "react-native-toast-message";
 import toastConfig from "@/gameConfig/Toast.config";
+import { KeyboardProvider } from "react-native-keyboard-controller";
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 require("es6-promise").polyfill();
@@ -92,11 +93,13 @@ function CommonProviders({ children }: { children: ReactNode }) {
     <ApolloProvider client={client}>
       <TamaguiProvider config={tamaguiConfig}>
         <SafeAreaProvider>
-          <GestureHandlerRootView>
-            <StatusBar translucent={true} barStyle={"dark-content"} />
-            {children}
-            <Toast config={toastConfig} />
-          </GestureHandlerRootView>
+          <KeyboardProvider>
+            <GestureHandlerRootView>
+              <StatusBar translucent={true} />
+              {children}
+              <Toast config={toastConfig} />
+            </GestureHandlerRootView>
+          </KeyboardProvider>
         </SafeAreaProvider>
       </TamaguiProvider>
     </ApolloProvider>
