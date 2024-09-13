@@ -1,7 +1,7 @@
-import { ExtraRole } from "./AdditionalRole";
+import { AdditionalRole } from "./AdditionalRole";
 
 export type GameRules = {
   numberOfMafia: number;
-  extraRoles?: ExtraRole[];
+  extraRoles?: AdditionalRole[];
   revealRolesAfterDeath?: boolean;
 };

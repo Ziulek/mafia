@@ -4,6 +4,7 @@ import { colors } from "@/theme/colors";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Text from "@/components/base/Text/Text";
 import AnimatedLoader from "@/components/base/AnimatedLoader/AnimatedLoader";
+import { useTranslation } from "react-i18next";
 
 interface SplashScreenProps {
   simpleLoader?: boolean;
@@ -11,6 +12,7 @@ interface SplashScreenProps {
 
 const SplashScreen: React.FC<SplashScreenProps> = ({ simpleLoader }) => {
   const insets = useSafeAreaInsets();
+  const { t } = useTranslation();
 
   const ContainerStyles = {
     ...styles.container,
@@ -27,9 +29,11 @@ const SplashScreen: React.FC<SplashScreenProps> = ({ simpleLoader }) => {
         ) : (
           <>
             <View style={styles.upperTextContainer}>
-              <Text size="startScreenSubtitle">Welcome to </Text>
+              <Text size="startScreenSubtitle">
+                {t("splashScreen/welcomeMessage")}
+              </Text>
               <Text size="startScreenHeadline" isBold={true}>
-                Mafia
+                {t("splashScreen/gameName")}
               </Text>
             </View>
 
@@ -37,9 +41,9 @@ const SplashScreen: React.FC<SplashScreenProps> = ({ simpleLoader }) => {
               <AnimatedLoader />
               <View style={styles.textContainer}>
                 <Text size="headline" isBold={true}>
-                  The Mafia
+                  {t("splashScreen/meetingMessageName")}
                 </Text>
-                <Text size="headline"> is having a meeting. </Text>
+                <Text size="headline">{t("splashScreen/meetingMessage")}</Text>
               </View>
             </View>
           </>

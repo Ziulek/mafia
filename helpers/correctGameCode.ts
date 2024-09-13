@@ -1,6 +1,6 @@
 import { GAME_CODE_LENGTH } from "@/gameConfig/inputLengths.config";
 
-const correctGameCode = (gameCode: string) => {
+const correctGameCode = (gameCode: string, t: (key: string) => string) => {
   // Define the minimum and maximum length for the gameCode
   const minLength = GAME_CODE_LENGTH;
   const maxLength = GAME_CODE_LENGTH;
@@ -16,14 +16,14 @@ const correctGameCode = (gameCode: string) => {
   if (gameCode.length < minLength) {
     return {
       isValid: false,
-      message: `Game Code is too short. It should be ${minLength} characters long.`,
+      message: t("gameCode/tooShort").replace("{length}", `${minLength}`),
     };
   }
 
   if (gameCode.length > maxLength) {
     return {
       isValid: false,
-      message: `Game Code is too long. It should be no more than ${maxLength} characters long.`,
+      message: t("gameCode/tooLong").replace("{length}", `${maxLength}`),
     };
   }
 
@@ -34,14 +34,14 @@ const correctGameCode = (gameCode: string) => {
   if (!validPattern.test(gameCode)) {
     return {
       isValid: false,
-      message: "Game Code can only contain letters and numbers.",
+      message: t("gameCode/invalidCharacters"),
     };
   }
 
   // If all checks pass, the Game Code is valid
   return {
     isValid: true,
-    message: "Game Code is correct.",
+    message: t("gameCode/correct"),
   };
 };
 

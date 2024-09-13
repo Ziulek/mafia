@@ -6,6 +6,7 @@ import { colors } from "@/theme/colors";
 import SideButton from "../SideButton/SideButton";
 import { router } from "expo-router";
 import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
+import { useTranslation } from "react-i18next";
 
 interface StartScreenProps {
   image: "mafia" | "police" | "error";
@@ -20,6 +21,7 @@ const StartScreen: React.FC<StartScreenProps> = ({
   sideButton,
   children,
 }) => {
+  const { t } = useTranslation();
   const insets = useSafeAreaInsets();
   const imageStyle = {
     ...styles.image,
@@ -48,7 +50,6 @@ const StartScreen: React.FC<StartScreenProps> = ({
           />
         )}
         {image === "error" && (
-          //Można dodać obrazek jakiegoś smutnego mafiozy na errora
           <Image
             style={imageStyle}
             source={require("@/assets/images/StartImages/start_error.png")}
@@ -75,14 +76,13 @@ const StartScreen: React.FC<StartScreenProps> = ({
           scrollEnabled={false}
         >
           <View style={styles.textContainer}>
-            {image === "error" && (
+            {image === "error" ? (
               <Text size="startScreenHeadline" isTextAlignCenter={true}>
-                Error occured
+                {t("startScreen/errorHeadline")}
               </Text>
-            )}
-            {!(image === "error") && (
+            ) : (
               <Text size="startScreenHeadline" isTextAlignCenter={true}>
-                Let's Play
+                {t("startScreen/letsPlayHeadline")}
               </Text>
             )}
 

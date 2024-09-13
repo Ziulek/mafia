@@ -1,0 +1,78 @@
+{
+  "translation": {
+    "gameCode/tooShort": "Game Code is too short. It should be {length} characters long.",
+    "gameCode/tooLong": "Game Code is too long. It should be no more than {length} characters long.",
+    "gameCode/invalidCharacters": "Game Code can only contain letters and numbers.",
+    "gameCode/correct": "Game Code is correct.",
+
+    "nickname/tooShort": "Nickname is too short. It should be at least {minLength} characters long.",
+    "nickname/tooLong": "Nickname is too long. It should be no more than {maxLength} characters long.",
+    "nickname/invalidCharacters": "Nickname can only contain letters, numbers and spaces.",
+    "nickname/correct": "Nickname is correct.",
+
+    "joinGame/toastGameNotFoundTitle": "Game does not exist",
+    "joinGame/toastGameNotFoundMessage": "Try a different code",
+    "joinGame/toastGameStageErrorTitle": "Game cannot be joined",
+    "joinGame/toastGameStageErrorMessage": "The game already started",
+
+    "splashScreen/welcomeMessage": "Welcome to",
+    "splashScreen/gameName": "Welcome to",
+    "splashScreen/meetingMessageName": "The Mafia",
+    "splashScreen/meetingMessage": " is having a meeting.",
+
+    "joinOrHostScreen/joinGame": "Join Game",
+    "joinOrHostScreen/hostGame": "Host Game",
+    "joinOrHostScreen/subtitle": "Host your own game or join a room with friends",
+
+    "onBoardingScreen/enterNickname": "Please enter your Nickname",
+    "onBoardingScreen/placeholder": "enter nickname",
+    "onBoardingScreen/nextButton": "Next",
+
+    "joinScreen/enterGameCode": "Please enter game code",
+    "joinScreen/placeholder": "game code",
+    "joinScreen/joinGameButton": "Join Game",
+
+    "errorScreen/backButton": "Back",
+
+    "gameScreen/noPlayersTitle": "No players",
+    "gameScreen/noPlayersMessage": "Invite your friends",
+    "gameScreen/notEnoughPlayersTitle": "Not enough players",
+    "gameScreen/notEnoughPlayersMessage": "Add at least 3 players",
+    "gameScreen/tooManyMafiaTitle": "Too many mafia",
+    "gameScreen/tooManyMafiaMessage": "Decrease number of mafia",
+    "gameScreen/cantKillPlayerTitle": "Can't kill player",
+    "gameScreen/cantKillPlayerMessage": "You can only kill in the game stage.",
+    "gameScreen/startGameButton": "Start Game",
+    "gameScreen/changeAvatarButton": "Change Avatar",
+    "gameScreen/showRolesButton": "Show Roles",
+    "gameScreen/newGameButton": "New Game",
+
+    "startScreen/errorHeadline": "Error occurred",
+    "startScreen/letsPlayHeadline": "Let's Play",
+
+    "playerActionsBottomSheet/killPlayer": "Kill Player",
+    "playerActionsBottomSheet/kickPlayer": "Kick Player",
+    "playerActionsBottomSheet/cancel": "Cancel",
+
+    "header/gameCode": "Game Code: ",
+    "header/players": "Players: ",
+    "header/numberOfMafia": "Number of Mafia",
+    "header/revealRolesAfterDeath": "Reveal roles after death",
+    "header/waitingForPlayers": "Waiting for players",
+    "header/winner": " wins!",
+
+    "selectListItem/placeholder": "No extra roles",
+
+    "roleCard/policeName": "Police",
+    "roleCard/policeDescription": "Police is tasked with identifying and eliminating mafia.",
+    "roleCard/mafiaName": "Mafia",
+    "roleCard/mafiaDescription": "Mafia's goal is to eliminate all non-mafia members.",
+    "roleCard/detectiveName": "Detective",
+    "roleCard/detectiveDescription": "Detective investigates players each night to find Mafia members.",
+    "roleCard/medicName": "Medic",
+    "roleCard/medicDescription": "Medic can protect Player from being killed by Mafia members.",
+
+    "AvaiableRoles/detective": "Detective",
+    "AvaiableRoles/medic": "Medic"
+  }
+}

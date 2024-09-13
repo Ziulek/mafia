@@ -6,6 +6,7 @@ import JoinScreen from "@/components/screens/JoinScreen/JoinScreen";
 import getNickname from "@/helpers/getNickname";
 import correctGameCode from "@/helpers/correctGameCode";
 import Toast from "react-native-toast-message";
+import { useTranslation } from "react-i18next";
 
 export default (): ReactElement => {
   const router = useRouter();
@@ -16,9 +17,10 @@ export default (): ReactElement => {
   const [gameCodeMessage, setGameCodeMessage] = useState<string>("");
 
   const [joinGame] = useMutation(JOIN_GAME);
+  const { t } = useTranslation(); // Translation hook
 
   useEffect(() => {
-    const { isValid, message } = correctGameCode(gameCode);
+    const { isValid, message } = correctGameCode(gameCode, t);
     console.log("isValid", isValid, "message", message);
     setIsGameCodeValid(isValid);
     setGameCodeMessage(message);
@@ -62,16 +64,16 @@ export default (): ReactElement => {
   const showGameNotFoundToast = () => {
     Toast.show({
       type: "customToast",
-      text1: "Game does not exist",
-      text2: "Try a different code",
+      text1: t("joinGame/toastGameNotFoundTitle"),
+      text2: t("joinGame/toastGameNotFoundMessage"),
     });
   };
 
   const showGameStageErrorToast = () => {
     Toast.show({
       type: "customToast",
-      text1: "Game cannot be joined",
-      text2: "The game already started",
+      text1: t("joinGame/toastGameStageErrorTitle"),
+      text2: t("joinGame/toastGameStageErrorMessage"),
     });
   };
 

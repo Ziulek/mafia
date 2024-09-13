@@ -1,0 +1,78 @@
+{
+  "translation": {
+    "gameCode/tooShort": "Kod gry jest za krótki. Powinien mieć {length} znaków.",
+    "gameCode/tooLong": "Kod gry jest za długi. Powinien mieć maksymalnie {length} znaków.",
+    "gameCode/invalidCharacters": "Kod gry może zawierać tylko litery i cyfry.",
+    "gameCode/correct": "Kod gry jest poprawny.",
+
+    "nickname/tooShort": "Nick jest za krótki. Powinien mieć co najmniej {minLength} znaków.",
+    "nickname/tooLong": "Nick jest za długi. Powinien mieć maksymalnie {maxLength} znaków.",
+    "nickname/invalidCharacters": "Nick może zawierać tylko litery, cyfry i spacje.",
+    "nickname/correct": "Nick jest poprawny.",
+
+    "joinGame/toastGameNotFoundTitle": "Gra nie istnieje",
+    "joinGame/toastGameNotFoundMessage": "Spróbuj innego kodu",
+    "joinGame/toastGameStageErrorTitle": "Nie można dołączyć do gry",
+    "joinGame/toastGameStageErrorMessage": "Gra już się rozpoczęła",
+
+    "splashScreen/welcomeMessage": "Witaj w",
+    "splashScreen/gameName": "Mafia",
+    "splashScreen/meetingMessageName": "Mafia",
+    "splashScreen/meetingMessage": " ma spotkanie.",
+
+    "joinOrHostScreen/joinGame": "Dołącz do gry",
+    "joinOrHostScreen/hostGame": "Załóż grę",
+    "joinOrHostScreen/subtitle": "Załóż własną grę lub dołącz do pokoju z przyjaciółmi",
+
+    "onBoardingScreen/enterNickname": "Wprowadź swój Nick",
+    "onBoardingScreen/placeholder": "wprowadź nick",
+    "onBoardingScreen/nextButton": "Dalej",
+
+    "joinScreen/enterGameCode": "Wprowadź kod gry",
+    "joinScreen/placeholder": "kod gry",
+    "joinScreen/joinGameButton": "Dołącz do gry",
+
+    "errorScreen/backButton": "Wstecz",
+
+    "gameScreen/noPlayersTitle": "Brak graczy",
+    "gameScreen/noPlayersMessage": "Zaproś swoich przyjaciół",
+    "gameScreen/notEnoughPlayersTitle": "Za mało graczy",
+    "gameScreen/notEnoughPlayersMessage": "Dodaj co najmniej 3 graczy",
+    "gameScreen/tooManyMafiaTitle": "Za dużo mafii",
+    "gameScreen/tooManyMafiaMessage": "Zmniejsz liczbę mafii",
+    "gameScreen/cantKillPlayerTitle": "Nie można zabić gracza",
+    "gameScreen/cantKillPlayerMessage": "Możesz zabijać tylko w trakcie gry.",
+    "gameScreen/startGameButton": "Rozpocznij grę",
+    "gameScreen/changeAvatarButton": "Zmień awatar",
+    "gameScreen/showRolesButton": "Pokaż role",
+    "gameScreen/newGameButton": "Nowa gra",
+
+    "startScreen/errorHeadline": "Wystąpił błąd",
+    "startScreen/letsPlayHeadline": "Zaczynamy",
+
+    "playerActionsBottomSheet/killPlayer": "Zabij gracza",
+    "playerActionsBottomSheet/kickPlayer": "Wyrzuć gracza",
+    "playerActionsBottomSheet/cancel": "Anuluj",
+
+    "header/gameCode": "Kod gry: ",
+    "header/players": "Gracze: ",
+    "header/numberOfMafia": "Liczba mafii",
+    "header/revealRolesAfterDeath": "Odkryj role po śmierci",
+    "header/waitingForPlayers": "Czekam na graczy",
+    "header/winner": " wygrywa!",
+
+    "selectListItem/placeholder": "Brak dodatkowych ról",
+
+    "roleCard/policeName": "Policjant",
+    "roleCard/policeDescription": "Policjant musi zidentyfikować i wyeliminować mafię.",
+    "roleCard/mafiaName": "Mafia",
+    "roleCard/mafiaDescription": "Celem mafii jest wyeliminowanie wszystkich pozostałych graczy.",
+    "roleCard/detectiveName": "Detektyw",
+    "roleCard/detectiveDescription": "Detektyw bada graczy każdej nocy, aby znaleźć członków mafii.",
+    "roleCard/medicName": "Medyk",
+    "roleCard/medicDescription": "Medyk może chronić gracza przed byciem zabitym przez mafię.",
+
+    "AvaiableRoles/detective": "Detektyw",
+    "AvaiableRoles/medic": "Medyk"
+  }
+}

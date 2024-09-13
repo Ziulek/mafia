@@ -3,7 +3,7 @@ import {
   NICKNAME_MIN_LENGTH,
 } from "@/gameConfig/inputLengths.config";
 
-const correctNickname = (nickname: string) => {
+const correctNickname = (nickname: string, t: (key: string) => string) => {
   // Define the minimum and maximum length for the nickname
   const minLength = NICKNAME_MIN_LENGTH;
   const maxLength = NICKNAME_MAX_LENGTH;
@@ -19,14 +19,14 @@ const correctNickname = (nickname: string) => {
   if (nickname.length < minLength) {
     return {
       isValid: false,
-      message: `Nickname is too short. It should be at least ${minLength} characters long.`,
+      message: t("nickname/tooShort").replace("{minLength}", `${minLength}`),
     };
   }
 
   if (nickname.length > maxLength) {
     return {
       isValid: false,
-      message: `Nickname is too long. It should be no more than ${maxLength} characters long.`,
+      message: t("nickname/tooLong").replace("{maxLength}", `${maxLength}`),
     };
   }
 
@@ -37,14 +37,14 @@ const correctNickname = (nickname: string) => {
   if (!validPattern.test(nickname)) {
     return {
       isValid: false,
-      message: "Nickname can only contain letters, numbers and spaces.",
+      message: t("nickname/invalidCharacters"),
     };
   }
 
   // If all checks pass, the nickname is valid
   return {
     isValid: true,
-    message: "Nickname is correct.",
+    message: t("nickname/correct"),
   };
 };
 

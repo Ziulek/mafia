@@ -1,6 +1,7 @@
 import "react-native-get-random-values";
 import { Stack } from "expo-router";
 import * as Sentry from "@sentry/react-native";
+import i18n from "../lang/i18n";
 
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 
@@ -25,6 +26,7 @@ import { StatusBar } from "react-native";
 import Toast from "react-native-toast-message";
 import toastConfig from "@/gameConfig/Toast.config";
 import { KeyboardProvider } from "react-native-keyboard-controller";
+import { I18nextProvider } from "react-i18next";
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 require("es6-promise").polyfill();
@@ -91,22 +93,24 @@ declare module "@tamagui/core" {
 
 Sentry.init({
   dsn: "https://9e3b32c19bc48dfbe851eb294d150966@o4507945824813061.ingest.de.sentry.io/4507945836806224",
-  debug: true, // If `true`, Sentry will try to print out useful debugging information if something goes wrong with sending the event. Set it to `false` in production
+  debug: false, // If `true`, Sentry will try to print out useful debugging information if something goes wrong with sending the event. Set it to `false` in production
 });
 
 function CommonProviders({ children }: { children: ReactNode }) {
   return (
     <ApolloProvider client={client}>
       <TamaguiProvider config={tamaguiConfig}>
-        <SafeAreaProvider>
-          <KeyboardProvider>
-            <GestureHandlerRootView>
-              <StatusBar translucent={true} />
-              {children}
-              <Toast config={toastConfig} />
-            </GestureHandlerRootView>
-          </KeyboardProvider>
-        </SafeAreaProvider>
+        <I18nextProvider i18n={i18n}>
+          <SafeAreaProvider>
+            <KeyboardProvider>
+              <GestureHandlerRootView>
+                <StatusBar translucent={true} />
+                {children}
+                <Toast config={toastConfig} />
+              </GestureHandlerRootView>
+            </KeyboardProvider>
+          </SafeAreaProvider>
+        </I18nextProvider>
       </TamaguiProvider>
     </ApolloProvider>
   );

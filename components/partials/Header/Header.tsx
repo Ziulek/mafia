@@ -17,6 +17,13 @@ import { NumberListItem } from "@/components/base/NumberListItem/NumberListItem"
 import AvailableRolesConfig from "@/gameConfig/AvailableRoles.config";
 import NumberOfMafiaConfig from "@/gameConfig/NumberOfMafia.config";
 import { AdditionalRole } from "@/components/types/AdditionalRole";
+import { useTranslation } from "react-i18next";
+import { TFunction } from "i18next";
+
+const getAvailableRolesConfig = (t: TFunction<"translation", undefined>) => [
+  { label: t("AvaiableRoles/detective"), value: "detective" },
+  { label: t("AvaiableRoles/medic"), value: "medic" },
+];
 
 type HeaderProps = {
   mode: "host" | "player";
@@ -49,6 +56,7 @@ export const Header = ({
   // Winner
   winner,
 }: HeaderProps) => {
+  const { t } = useTranslation();
   const insets = useSafeAreaInsets();
   const translateY = useSharedValue(0);
   const config = {
@@ -92,33 +100,33 @@ export const Header = ({
         return (
           <>
             <View style={styles.text}>
-              <Text size="headline">Game Code: </Text>
+              <Text size="headline">{t("header/gameCode")}</Text>
               <Text size="headline" isBold={true}>
                 {gameCode}
               </Text>
             </View>
             <View style={styles.text}>
-              <Text size="headline">Players: </Text>
+              <Text size="headline">{t("header/players")}</Text>
               <Text size="headline" isBold={true}>
                 {players.toString()}
               </Text>
             </View>
             <View style={styles.items}>
               <SelectListItem
-                items={AvailableRolesConfig}
+                items={getAvailableRolesConfig(t)}
                 isMultiSelected={true}
                 value={additionalRoles}
                 setValue={setAdditionalRoles}
               />
               <NumberListItem
-                title="Number of Mafia"
+                title={t("header/numberOfMafia")}
                 value={numberOfMafia}
                 setValue={setNumberOfMafia}
                 min={NumberOfMafiaConfig.min}
                 max={NumberOfMafiaConfig.max}
               />
               <SwitchListItem
-                title="Reveal roles after death"
+                title={t("header/revealRolesAfterDeath")}
                 isOn={isSwitchOn}
                 setIsOn={setIsSwitchOn}
               />
@@ -129,20 +137,20 @@ export const Header = ({
         return (
           <>
             <View style={styles.text}>
-              <Text size="headline">Game Code: </Text>
+              <Text size="headline">{t("header/gameCode")}</Text>
               <Text size="headline" isBold={true}>
                 {gameCode}
               </Text>
             </View>
             <View style={styles.text}>
-              <Text size="headline">Players: </Text>
+              <Text size="headline">{t("header/players")}</Text>
               <Text size="headline" isBold={true}>
                 {players.toString()}
               </Text>
             </View>
             <View style={styles.text}>
               <Text size="headline" isBold={true}>
-                Waiting for players
+                {t("header/waitingForPlayers")}
               </Text>
             </View>
           </>
@@ -154,7 +162,7 @@ export const Header = ({
           <Text size="headline" isBold={true}>{`${winner
             .charAt(0)
             .toUpperCase()}${winner.slice(1)}`}</Text>
-          <Text size="headline"> wins!</Text>
+          <Text size="headline">{t("header/winner")}</Text>
         </View>
       );
     }

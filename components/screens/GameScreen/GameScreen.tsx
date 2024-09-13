@@ -3,6 +3,7 @@ import PagerView from "react-native-pager-view";
 import { FC, useEffect, useRef, useState } from "react";
 import { StyleSheet, View, StatusBar } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useTranslation } from "react-i18next";
 
 // components
 import ImageBackground from "@/components/partials/ImageBackground/ImageBackground";
@@ -53,6 +54,9 @@ export const GameScreen: FC<GameScreenProps> = ({
   playerID,
   onCharacterUpdate,
 }) => {
+  const { t } = useTranslation();
+  const insets = useSafeAreaInsets();
+
   // BottomSheet States
   const [isBottomSheetVisible, setIsBottomSheetVisible] = useState(false);
   const [isAvatarSelectVisible, setIsAvatarSelectVisible] = useState(false);
@@ -76,8 +80,6 @@ export const GameScreen: FC<GameScreenProps> = ({
 
   const selectedRoles: Role[] = ["police", "mafia", ...additionalRoles];
 
-  const insets = useSafeAreaInsets();
-
   const HandleStartGame = (
     showRolesAfterDeath: boolean,
     numberOfMafia: number,
@@ -86,8 +88,8 @@ export const GameScreen: FC<GameScreenProps> = ({
     if (players?.length === 0) {
       Toast.show({
         type: "customToast",
-        text1: "No players",
-        text2: "Invite your friends",
+        text1: t("gameScreen/noPlayersTitle"),
+        text2: t("gameScreen/noPlayersMessage"),
       });
       return;
     }
@@ -95,8 +97,8 @@ export const GameScreen: FC<GameScreenProps> = ({
     if (players?.length < 3) {
       Toast.show({
         type: "customToast",
-        text1: "Not enough players",
-        text2: "Add at least 3 players",
+        text1: t("gameScreen/notEnoughPlayersTitle"),
+        text2: t("gameScreen/notEnoughPlayersMessage"),
       });
       return;
     }
@@ -104,8 +106,8 @@ export const GameScreen: FC<GameScreenProps> = ({
     if (players?.length < numberOfMafia * 2 + 1) {
       Toast.show({
         type: "customToast",
-        text1: "Too many mafia",
-        text2: "Decrease number of mafia",
+        text1: t("gameScreen/tooManyMafiaTitle"),
+        text2: t("gameScreen/tooManyMafiaMessage"),
       });
       return;
     }
@@ -133,8 +135,8 @@ export const GameScreen: FC<GameScreenProps> = ({
     } else {
       Toast.show({
         type: "customToast",
-        text1: "Can't kill player",
-        text2: "You can only kill in the game stage.",
+        text1: t("gameScreen/cantKillPlayerTitle"),
+        text2: t("gameScreen/cantKillPlayerMessage"),
       });
     }
   };
@@ -148,8 +150,6 @@ export const GameScreen: FC<GameScreenProps> = ({
     onCharacterUpdate(character);
   };
 
-  // przeniaśc do AvatarGrid
-  // to jest głupie rozwiazywanie problemu z headerem (chyba) ale bez tego zostanie wyswietlony po stronie playera jak się zacznie gre
   useEffect(() => {
     let newMode: AvatarGridMode;
 
@@ -223,12 +223,11 @@ export const GameScreen: FC<GameScreenProps> = ({
             <View style={[styles.button, { bottom: insets.bottom + 10 }]}>
               {/* Player Side Change Avatar Button */}
               {mode === "player" && gameState.stage === "waitingForPlayers" && (
-                <Button color="accent" onPress={() => HandleAvatarChange()}>
-                  Change Avatar
+                <Button color="accent" onPress={HandleAvatarChange}>
+                  {t("gameScreen/changeAvatarButton")}
                 </Button>
               )}
               {/* Host Side Start Game Button */}
-
               {gameState.stage === "waitingForPlayers" && mode === "host" && (
                 <Button
                   color={
@@ -242,7 +241,7 @@ export const GameScreen: FC<GameScreenProps> = ({
                     )
                   }
                 >
-                  Start Game
+                  {t("gameScreen/startGameButton")}
                 </Button>
               )}
 
@@ -254,13 +253,13 @@ export const GameScreen: FC<GameScreenProps> = ({
                   PressOutDelay={1000}
                   onPressOut={() => setAvatarGridMode("pressable")}
                 >
-                  Show Roles
+                  {t("gameScreen/showRolesButton")}
                 </Button>
               )}
               {/* Both Sides New Game Button */}
               {gameState.stage === "result" && (
                 <Button color="accent" onPress={onNewGame}>
-                  New Game
+                  {t("gameScreen/newGameButton")}
                 </Button>
               )}
             </View>

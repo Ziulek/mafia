@@ -2,6 +2,7 @@ import React from "react";
 import StartScreen from "@/components/partials/StartScreen/StartScreen";
 import { TextEditListItem } from "@/components/base/TextEditListItem/TextEditListItem";
 import Button from "@/components/base/Button/Button";
+import { useTranslation } from "react-i18next";
 
 interface OnBoardingScreenProps {
   onPress: () => void;
@@ -18,13 +19,16 @@ const OnBoardingScreen: React.FC<OnBoardingScreenProps> = ({
   isNicknameValid,
   nicknameMessage,
 }) => {
+  const { t } = useTranslation();
   return (
     <StartScreen
       image="police"
-      text={nicknameMessage ? nicknameMessage : "Please enter your Nickname"}
+      text={
+        nicknameMessage ? nicknameMessage : t("onBoardingScreen/enterNickname")
+      }
     >
       <TextEditListItem
-        placeholder="enter nickname"
+        placeholder={t("onBoardingScreen/placeholder")}
         text={nickname}
         setText={setNickname}
         isInputValid={isNicknameValid}
@@ -36,32 +40,10 @@ const OnBoardingScreen: React.FC<OnBoardingScreenProps> = ({
         onPress={onPress}
         isBold={true}
       >
-        Next
+        {t("onBoardingScreen/nextButton")}
       </Button>
     </StartScreen>
   );
 };
 
 export default OnBoardingScreen;
-
-// const [isTyping, setIsTyping] = useState<boolean>(false);
-
-// useEffect(() => {
-//   const keyboardDidShowListener = Keyboard.addListener(
-//     "keyboardDidShow",
-//     () => {
-//       setIsTyping(true);
-//     }
-//   );
-//   const keyboardDidHideListener = Keyboard.addListener(
-//     "keyboardDidHide",
-//     () => {
-//       setIsTyping(false);
-//     }
-//   );
-
-//   return () => {
-//     keyboardDidHideListener.remove();
-//     keyboardDidShowListener.remove();
-//   };
-// }, []);

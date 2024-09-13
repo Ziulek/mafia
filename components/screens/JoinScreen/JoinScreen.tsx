@@ -3,19 +3,9 @@ import StartScreen from "@/components/partials/StartScreen/StartScreen";
 import { TextEditListItem } from "@/components/base/TextEditListItem/TextEditListItem";
 import Button from "@/components/base/Button/Button";
 import { GAME_CODE_LENGTH } from "@/gameConfig/inputLengths.config";
-
 import { useKeyboardHeight } from "@/helpers/useKeyboardHeight";
-import {
-  Image,
-  KeyboardAvoidingView,
-  Platform,
-  StyleSheet,
-  View,
-} from "react-native";
-import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
-import ImageBackground from "@/components/partials/ImageBackground/ImageBackground";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { colors } from "@/theme/colors";
+import { useTranslation } from "react-i18next";
 
 interface JoinScreenProps {
   onPress: () => void; // Type for the onPress prop
@@ -32,17 +22,16 @@ const JoinScreen: React.FC<JoinScreenProps> = ({
   gameCodeMessage,
   isGameCodeValid,
 }) => {
-  const keyboardHeight = useKeyboardHeight();
-  const insets = useSafeAreaInsets();
+  const { t } = useTranslation();
 
   return (
     <StartScreen
       image="mafia"
-      text={gameCodeMessage ? gameCodeMessage : "Please enter game code"}
+      text={gameCodeMessage ? gameCodeMessage : t("joinScreen/enterGameCode")}
       sideButton="arrowLeft"
     >
       <TextEditListItem
-        placeholder="game code"
+        placeholder={t("joinScreen/placeholder")}
         text={gameCode}
         setText={setGameCode}
         isInputValid={isGameCodeValid}
@@ -55,7 +44,7 @@ const JoinScreen: React.FC<JoinScreenProps> = ({
         onPress={onPress}
         isDisabled={!isGameCodeValid || gameCode.length < GAME_CODE_LENGTH}
       >
-        Join Game
+        {t("joinScreen/joinGameButton")}
       </Button>
     </StartScreen>
   );

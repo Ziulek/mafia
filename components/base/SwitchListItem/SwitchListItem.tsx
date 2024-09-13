@@ -40,7 +40,6 @@ export function SwitchListItem({ title, isOn, setIsOn }: SwitchListItemProps) {
         }}
         style={styles.switch}
       >
-        {/* <Switch.Thumb animation="quicker" style={styles.thumb} /> */}
         <Switch.Thumb animation="quickest" style={styles.thumb} />
       </Switch>
     </View>

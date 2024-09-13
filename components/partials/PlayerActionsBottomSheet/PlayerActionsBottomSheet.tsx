@@ -1,6 +1,7 @@
 import { BottomSheet } from "../../base/BottomSheet/BottomSheet";
 import { ButtonGroup } from "../../base/ButtonGroup/ButtonGroup";
 import { Button } from "../../base/Button/Button";
+import { useTranslation } from "react-i18next";
 
 type PlayerActionsBottomSheetProps = {
   nickname: string;
@@ -19,7 +20,7 @@ const PlayerActionsBottomSheet = ({
   isVisible,
   setIsVisible,
 }: PlayerActionsBottomSheetProps) => {
-  // const [showBottomSheet, setShowBottomSheet] = useState(true);
+  const { t } = useTranslation();
   return (
     <BottomSheet
       title={nickname}
@@ -28,14 +29,14 @@ const PlayerActionsBottomSheet = ({
     >
       <ButtonGroup>
         <Button color="kill" onPress={onKill} isDisabled={isDead}>
-          Kill Player
+          {t("playerActionsBottomSheet/killPlayer")}
         </Button>
         <Button color="secondary" onPress={onKick}>
-          Kick Player
+          {t("playerActionsBottomSheet/kickPlayer")}
         </Button>
 
         <Button color="back" onPress={() => setIsVisible(false)}>
-          Cancel
+          {t("playerActionsBottomSheet/cancel")}
         </Button>
       </ButtonGroup>
     </BottomSheet>

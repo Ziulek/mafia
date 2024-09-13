@@ -1,5 +1,6 @@
 import { AdditionalRole } from "@/components/types/AdditionalRole";
 import { Dispatch, FC, SetStateAction, useState } from "react";
+import { useTranslation } from "react-i18next";
 import DropDownPicker from "react-native-dropdown-picker";
 
 interface SelectItem {
@@ -20,6 +21,7 @@ const SelectListItem: FC<SelectListItemProps> = ({
   value,
   setValue,
 }) => {
+  const { t } = useTranslation();
   const [open, setOpen] = useState(false);
   const [singleValue, setSingleValue] = useState<string | null>(null);
   const [dropDownItems, setDropDownItems] = useState(items);
@@ -39,7 +41,7 @@ const SelectListItem: FC<SelectListItemProps> = ({
 
   return (
     <DropDownPicker
-      placeholder="No extra roles"
+      placeholder={t("selectListItem/placeholder")}
       open={open}
       items={dropDownItems}
       setOpen={setOpen}
