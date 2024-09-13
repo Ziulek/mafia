@@ -48,7 +48,7 @@
     "gameScreen/newGameButton": "Nowa gra",
 
     "startScreen/errorHeadline": "Wystąpił błąd",
-    "startScreen/letsPlayHeadline": "Zaczynamy",
+    "startScreen/letsPlayHeadline": "Zagrajmy",
 
     "playerActionsBottomSheet/killPlayer": "Zabij gracza",
     "playerActionsBottomSheet/kickPlayer": "Wyrzuć gracza",
@@ -70,7 +70,7 @@
     "roleCard/detectiveName": "Detektyw",
     "roleCard/detectiveDescription": "Detektyw bada graczy każdej nocy, aby znaleźć członków mafii.",
     "roleCard/medicName": "Medyk",
-    "roleCard/medicDescription": "Medyk może chronić gracza przed byciem zabitym przez mafię.",
+    "roleCard/medicDescription": "Medyk może chronić gracza przed zabićem przez mafię.",
 
     "AvaiableRoles/detective": "Detektyw",
     "AvaiableRoles/medic": "Medyk"

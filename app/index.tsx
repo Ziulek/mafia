@@ -2,4 +2,4 @@
 export { default } from "./splashScreen";
 // export { default } from "./game";
 // export { default } from "./onBoarding";
-// export { default } from "./joinOrHost"
+// export { default } from "./joinOrHost";
