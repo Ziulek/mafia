@@ -32,7 +32,7 @@
       [
         "@sentry/react-native/expo",
         {
-          "organization": "smakolyszeXDDDDDD",
+          "organization": "smakolysze",
           "project": "mafia",
           "url": "https://sentry.io/"
         }
