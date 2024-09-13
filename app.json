@@ -28,6 +28,14 @@
             "./assets/fonts/AmericanTypewriterBold.ttf"
           ]
         }
+      ],
+      [
+        "@sentry/react-native/expo",
+        {
+          "organization": "smakolysze",
+          "project": "mafia",
+          "url": "https://sentry.io/"
+        }
       ]
     ],
     "experiments": {

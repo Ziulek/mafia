@@ -1,5 +1,5 @@
 const path = require("path");
-const { getDefaultConfig } = require("expo/metro-config");
+const { getSentryExpoConfig } = require("@sentry/react-native/metro");
 const { generate } = require("@storybook/react-native/scripts/generate");
 
 // Automatically generate the storybook.requires.ts file
@@ -8,7 +8,7 @@ generate({
 });
 
 /** @type {import('expo/metro-config').MetroConfig} */
-const config = getDefaultConfig(__dirname);
+const config = getSentryExpoConfig(__dirname);
 
 // Enable dynamic story imports
 config.transformer.unstable_allowRequireContext = true;

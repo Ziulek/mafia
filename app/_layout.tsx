@@ -1,5 +1,6 @@
 import "react-native-get-random-values";
 import { Stack } from "expo-router";
+import * as Sentry from "@sentry/react-native";
 
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 
@@ -88,6 +89,11 @@ declare module "@tamagui/core" {
   interface TamaguiCustomConfig extends Conf {}
 }
 
+Sentry.init({
+  dsn: "https://9e3b32c19bc48dfbe851eb294d150966@o4507945824813061.ingest.de.sentry.io/4507945836806224",
+  debug: true, // If `true`, Sentry will try to print out useful debugging information if something goes wrong with sending the event. Set it to `false` in production
+});
+
 function CommonProviders({ children }: { children: ReactNode }) {
   return (
     <ApolloProvider client={client}>
@@ -106,7 +112,7 @@ function CommonProviders({ children }: { children: ReactNode }) {
   );
 }
 
-export default function RootLayout() {
+function RootLayout() {
   return (
     <CommonProviders>
       <Stack screenOptions={{ headerShown: false }}>
@@ -120,6 +126,8 @@ export default function RootLayout() {
     </CommonProviders>
   );
 }
+
+export default Sentry.wrap(RootLayout);
 
 registerStorybook(() => (
   <CommonProviders>
