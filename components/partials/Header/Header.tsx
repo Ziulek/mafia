@@ -163,7 +163,7 @@ export const Header = ({
 
   return (
     <Animated.View
-      style={[styles.header, { paddingTop: insets.top * 2.2 }, animatedStyle]}
+      style={[styles.header, { paddingTop: insets.top + 10 }, animatedStyle]}
     >
       <View style={styles.container}>{renderContent()}</View>
     </Animated.View>

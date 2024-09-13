@@ -29,7 +29,7 @@ export type AnimatedCharacterAvatarProps = {
   onPress?: () => void;
   isPressable?: boolean;
   showRolesAfterDeath?: boolean;
-  gameStage: Stage;
+  gameStage?: Stage;
   avatarSelect?: boolean;
 };
 
@@ -45,7 +45,7 @@ export const AnimatedCharacterAvatar = ({
   isPressable,
   showRolesAfterDeath = false,
   gameStage = "game",
-  avatarSelect,
+  avatarSelect = false,
 }: AnimatedCharacterAvatarProps) => {
   const configFlip = {
     duration: 1000,
@@ -62,7 +62,8 @@ export const AnimatedCharacterAvatar = ({
         "default",
         role,
         false,
-        showRolesAfterDeath
+        showRolesAfterDeath,
+        avatarSelect
       ),
     },
     revealedBorder: {

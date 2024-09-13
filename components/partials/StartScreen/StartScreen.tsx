@@ -1,17 +1,11 @@
 import React, { ReactNode } from "react";
-import {
-  Dimensions,
-  Image,
-  Platform,
-  StatusBar,
-  StyleSheet,
-  View,
-} from "react-native";
+import { Image, StatusBar, StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Text from "@/components/base/Text/Text";
 import { colors } from "@/theme/colors";
 import SideButton from "../SideButton/SideButton";
 import { router } from "expo-router";
+import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
 
 interface StartScreenProps {
   image: "mafia" | "police" | "error";
@@ -20,8 +14,6 @@ interface StartScreenProps {
   children: ReactNode;
 }
 
-const height = Dimensions.get("window").height;
-
 const StartScreen: React.FC<StartScreenProps> = ({
   image,
   text,
@@ -29,6 +21,10 @@ const StartScreen: React.FC<StartScreenProps> = ({
   children,
 }) => {
   const insets = useSafeAreaInsets();
+  const imageStyle = {
+    ...styles.image,
+    top: insets.top,
+  };
 
   return (
     <>
@@ -39,62 +35,67 @@ const StartScreen: React.FC<StartScreenProps> = ({
           {
             paddingTop: insets.top,
             paddingBottom: insets.bottom,
-            height: Platform.OS === "ios" ? height : height + insets.top + 2,
           },
         ]}
       >
-        <View style={styles.imageContainer}>
-          {sideButton && (
-            <SideButton
-              icon={sideButton}
-              onPress={() => {
-                sideButton === "arrowLeft" && router.replace(`/joinOrHost`);
-                sideButton === "account" && router.replace(`/onBoarding`);
-              }}
-            />
-          )}
-          {image === "error" && (
-            //Można dodać obrazek jakiegoś smutnego mafiozy na errora
-            <Image
-              style={styles.image}
-              source={require("@/assets/images/StartImages/start_error.png")}
-            />
-          )}
-          {image === "mafia" && (
-            <Image
-              style={styles.image}
-              source={require("@/assets/images/StartImages/start_mafia.png")}
-            />
-          )}
-          {image === "police" && (
-            <Image
-              style={styles.image}
-              source={require("@/assets/images/StartImages/start_police.png")}
-            />
-          )}
-        </View>
+        {sideButton && (
+          <SideButton
+            icon={sideButton}
+            onPress={() => {
+              sideButton === "arrowLeft" && router.replace(`/joinOrHost`);
+              sideButton === "account" && router.replace(`/onBoarding`);
+            }}
+          />
+        )}
+        {image === "error" && (
+          //Można dodać obrazek jakiegoś smutnego mafiozy na errora
+          <Image
+            style={imageStyle}
+            source={require("@/assets/images/StartImages/start_error.png")}
+          />
+        )}
+        {image === "mafia" && (
+          <Image
+            style={imageStyle}
+            source={require("@/assets/images/StartImages/start_mafia.png")}
+          />
+        )}
+        {image === "police" && (
+          <Image
+            style={imageStyle}
+            source={require("@/assets/images/StartImages/start_police.png")}
+          />
+        )}
 
-        <View style={styles.textContainer}>
-          {image === "error" && (
-            <Text size="startScreenHeadline" isTextAlignCenter={true}>
-              Error occured
-            </Text>
-          )}
-          {!(image === "error") && (
-            <Text size="startScreenHeadline" isTextAlignCenter={true}>
-              Let's Play
-            </Text>
-          )}
+        <KeyboardAwareScrollView
+          style={styles.keyboardStyle}
+          contentContainerStyle={styles.keyboardContentStyle}
+          disableScrollOnKeyboardHide={true}
+          extraKeyboardSpace={-62 - insets.bottom}
+          scrollEnabled={false}
+        >
+          <View style={styles.textContainer}>
+            {image === "error" && (
+              <Text size="startScreenHeadline" isTextAlignCenter={true}>
+                Error occured
+              </Text>
+            )}
+            {!(image === "error") && (
+              <Text size="startScreenHeadline" isTextAlignCenter={true}>
+                Let's Play
+              </Text>
+            )}
 
-          <Text
-            size="startScreenSubtitle"
-            isTextAlignCenter={true}
-            color="grey"
-          >
-            {text}
-          </Text>
-        </View>
-        <View style={styles.interactiveContainer}>{children}</View>
+            <Text
+              size="startScreenSubtitle"
+              isTextAlignCenter={true}
+              color="grey"
+            >
+              {text}
+            </Text>
+          </View>
+          <View style={styles.interactiveContainer}>{children}</View>
+        </KeyboardAwareScrollView>
       </View>
     </>
   );
@@ -104,38 +105,52 @@ export default StartScreen;
 
 const styles = StyleSheet.create({
   container: {
-    // flexShrink: 0,
-    // height: height ,
+    flex: 1,
+    justifyContent: "flex-end",
+    alignItems: "center",
     backgroundColor: colors.primary,
-    justifyContent: "space-between",
-    alignItems: "center",
-    // paddingTop: 500,
-    // paddingVertical: "25%", // Optional padding to ensure consistent spacing
-  },
-  imageContainer: {
-    height: height * 0.6, // Set a percentage height for the image container
-    width: "75%",
-    alignItems: "center",
-    // backgroundColor: "red",
+    ...StyleSheet.absoluteFillObject,
   },
   image: {
-    height: "100%", // Ensure the image fills the container
-    width: "100%",
+    position: "absolute",
+    // top: 10,
+    bottom: 0,
+    right: "10%",
+    left: "10%",
+    height: "60%",
+    width: "80%",
     resizeMode: "contain",
   },
-  textContainer: {
-    height: "20%",
-    // width: "80%", // Adjust width to control text area
-    justifyContent: "flex-start",
-    paddingHorizontal: 40,
-    gap: 10,
-    // backgroundColor: "blue",
+  keyboardStyle: {
+    flex: 1,
+    width: "100%",
   },
+  keyboardContentStyle: {
+    flex: 1,
+    justifyContent: "flex-end",
+    paddingHorizontal: "5%",
+  },
+  textContainer: {
+    width: "100%",
+    justifyContent: "center",
+    marginBottom: 20,
+    padding: 10,
+    gap: 10,
+    backgroundColor: colors.primary,
+    borderRadius: 40,
+    borderWidth: 2,
+    borderColor: colors.accent,
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 8,
+  },
+
   interactiveContainer: {
     width: "100%",
-    justifyContent: "space-between",
-    paddingHorizontal: 20,
+
     gap: 10,
-    paddingBottom: "5%", // Ensure it doesn't overlap with safe area
+
+    paddingBottom: 10,
   },
 });

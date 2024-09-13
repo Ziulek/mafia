@@ -30,7 +30,7 @@ export const Button = ({
   let textColor: "black" | "white";
 
   if (isDisabled) {
-    buttonColor = colors.isDisabled
+    buttonColor = colors.isDisabled;
     textColor = "white";
   } else {
     switch (color) {
@@ -60,10 +60,10 @@ export const Button = ({
   const styles = StyleSheet.create({
     button: {
       backgroundColor: buttonColor,
-      justifyContent: "center",
+      // justifyContent: "center",
       alignItems: "center",
-      borderRadius: 50,
       width: "100%",
+      borderRadius: 50,
       paddingVertical: 15,
     },
   });

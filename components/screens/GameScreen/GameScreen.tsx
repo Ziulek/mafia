@@ -1,13 +1,15 @@
-import { FC, useEffect, useRef, useState } from "react";
-import { Platform, StyleSheet, View, StatusBar } from "react-native";
 import Toast from "react-native-toast-message";
 import PagerView from "react-native-pager-view";
+import { FC, useEffect, useRef, useState } from "react";
+import { StyleSheet, View, StatusBar } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 // components
 import ImageBackground from "@/components/partials/ImageBackground/ImageBackground";
 import Header from "@/components/partials/Header/Header";
 import InfoTab from "@/components/partials/InfoTab/InfoTab";
 import AvatarGrid from "@/components/partials/AvatarsGrid/AvatarsGrid";
+import PageIndicator from "@/components/base/PageIndicator/PageIndicator";
 import Button from "@/components/base/Button/Button";
 import ChangeAvatarBottomSheet from "@/components/partials/ChangeAvatarBottomSheet/ChangeAvatarBottomSheet";
 import PlayerActionsBottomSheet from "@/components/partials/PlayerActionsBottomSheet/PlayerActionsBottomSheet";
@@ -20,13 +22,11 @@ import { GameRules } from "@/components/types/GameRules";
 import { GameState } from "@/components/types/GameState";
 import { AdditionalRole } from "@/components/types/AdditionalRole";
 import { AvatarGridMode } from "@/components/types/AvatarGridMode";
-import PageIndicator from "@/components/base/PageIndicator/PageIndicator";
 import { Role } from "@/components/types/Role";
 
 type GameScreenProps = {
   gameState: GameState;
   mode: Mode;
-
   // host
   onStartGame: (
     showRolesAfterDeath: boolean,
@@ -37,7 +37,6 @@ type GameScreenProps = {
   onKillPlayer: (id: string) => void;
   onKickPlayer: (id: string) => void;
   onUpdateGameRules: (gameRules: GameRules) => void;
-
   // player
   playerID?: string;
   onCharacterUpdate: (character: Character) => void;
@@ -76,6 +75,8 @@ export const GameScreen: FC<GameScreenProps> = ({
   const [currentPage, setCurrentPage] = useState(1);
 
   const selectedRoles: Role[] = ["police", "mafia", ...additionalRoles];
+
+  const insets = useSafeAreaInsets();
 
   const HandleStartGame = (
     showRolesAfterDeath: boolean,
@@ -159,7 +160,7 @@ export const GameScreen: FC<GameScreenProps> = ({
     } else if (gameState.stage === "game") {
       newMode = mode === "host" ? "pressable" : "default";
     } else {
-      newMode = "default"; // Fallback, in case of any unexpected stages
+      newMode = "default";
     }
 
     setAvatarGridMode(newMode);
@@ -167,13 +168,9 @@ export const GameScreen: FC<GameScreenProps> = ({
 
   useEffect(() => {
     if (gameState.stage === "result" && pagerViewRef.current) {
-      pagerViewRef.current.setPage(1); // 1 is the index for the second page
+      pagerViewRef.current.setPage(1);
     }
   }, [gameState?.stage]);
-
-  // console.log("GameState lol:", gameState);
-
-  // console.log("avatar grid mode", avatarGridMode);
 
   return (
     <>
@@ -223,7 +220,7 @@ export const GameScreen: FC<GameScreenProps> = ({
               items={players}
             />
 
-            <View style={styles.button}>
+            <View style={[styles.button, { bottom: insets.bottom + 10 }]}>
               {/* Player Side Change Avatar Button */}
               {mode === "player" && gameState.stage === "waitingForPlayers" && (
                 <Button color="accent" onPress={() => HandleAvatarChange()}>
@@ -302,7 +299,6 @@ export const GameScreen: FC<GameScreenProps> = ({
 const styles = StyleSheet.create({
   button: {
     position: "absolute",
-    bottom: Platform.OS === "ios" ? 50 : 10,
     left: 20,
     right: 20,
     justifyContent: "center",

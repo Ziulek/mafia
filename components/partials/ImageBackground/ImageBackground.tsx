@@ -3,21 +3,15 @@ import {
   ImageBackground as RNImageBackground,
   StyleSheet,
   View,
-  Platform,
 } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 interface CustomBackgroundProps {
   children: ReactNode;
 }
 
 const ImageBackground: React.FC<CustomBackgroundProps> = ({ children }) => {
-  const insets = useSafeAreaInsets();
-
   const styles = StyleSheet.create({
     background: {
-      marginTop: -insets.top,
-      marginBottom: -insets.bottom,
       flex: 1,
     },
     overlay: {

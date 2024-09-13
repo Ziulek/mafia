@@ -32,7 +32,8 @@ export function TextEditListItem({
         style={styles.input}
         size="$5"
         placeholder={placeholder}
-        value={textToUpperCase ? text.toUpperCase() : text}
+        value={text}
+        autoCapitalize={textToUpperCase ? "characters" : undefined}
         onChangeText={handleTextChange}
         onFocus={onFocus}
         onBlur={onBlur}

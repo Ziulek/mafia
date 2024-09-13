@@ -23,12 +23,7 @@ const SplashScreenComponent: React.FC = () => {
     checkNickname();
   }, [router]);
 
-  return (
-    <>
-      <StatusBar barStyle="light-content" translucent={true} />
-      <SplashScreen />
-    </>
-  );
+  return <SplashScreen />;
 };
 
 export default SplashScreenComponent;

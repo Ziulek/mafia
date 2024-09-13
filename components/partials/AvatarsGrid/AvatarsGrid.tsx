@@ -12,6 +12,7 @@ import { Mode } from "@/components/types/Mode";
 import { Player } from "@/components/types/Player";
 import { AvatarGridMode } from "@/components/types/AvatarGridMode";
 import { Stage } from "@/components/types/Stage";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 type AvatarGridProps = {
   gameStage: Stage;
@@ -32,13 +33,9 @@ const AvatarGrid = ({
   onPressItem,
   items,
 }: AvatarGridProps) => {
+  const insets = useSafeAreaInsets();
   const revealRolesAnimation = useSharedValue(0);
-  const paddingTop = useSharedValue(
-    mode === "host" ? height * 0.23 : height * 0.17
-  );
-  const headerHeight = useSharedValue(
-    mode === "host" ? height * 0.23 : height * 0.17
-  );
+  const paddingTop = useSharedValue(mode === "host" ? 295 : 170);
 
   const configFlip = {
     duration: 1000,
@@ -50,35 +47,27 @@ const AvatarGrid = ({
     easing: Easing.linear,
     reduceMotion: ReduceMotion.Never,
   };
+  let calculatedHeight: number;
+
+  if (gameStage === "result") {
+    calculatedHeight = 80;
+  } else if (gameStage === "game") {
+    calculatedHeight = 0;
+  } else {
+    if (mode === "host") {
+      calculatedHeight = 295;
+    } else {
+      calculatedHeight = 170;
+    }
+  }
 
   useEffect(() => {
-    let calculatedHeight: number;
-
-    if (gameStage === "result") {
-      calculatedHeight = height * 0.11;
-    } else if (gameStage === "game") {
-      calculatedHeight = height * 0.07;
-    } else {
-      if (mode === "host") {
-        calculatedHeight = height * 0.23;
-      } else {
-        calculatedHeight = height * 0.17;
-      }
-    }
-
     paddingTop.value = withTiming(calculatedHeight, configPadding);
-    headerHeight.value = withTiming(calculatedHeight, configPadding);
-  }, [gameStage, mode]);
+  }, [calculatedHeight]);
 
   const animatedContentContainerStyle = useAnimatedStyle(() => {
     return {
-      paddingTop: paddingTop.value,
-    };
-  });
-
-  const animatedHeaderStyle = useAnimatedStyle(() => {
-    return {
-      height: headerHeight.value,
+      paddingTop: insets.top + paddingTop.value,
     };
   });
 
@@ -116,15 +105,16 @@ const AvatarGrid = ({
       columnWrapperStyle={styles.column}
       style={animatedContentContainerStyle}
       contentContainerStyle={styles.contentContainer}
-      ListHeaderComponent={<Animated.View style={animatedHeaderStyle} />}
-      ListFooterComponent={<View style={styles.footer} />}
+      ListFooterComponent={
+        <View style={{ height: insets.bottom + calculatedHeight }} />
+      }
     />
   );
 };
 
 const styles = StyleSheet.create({
   contentContainer: {
-    paddingBottom: height * 0.12,
+    paddingBottom: height * 0.13,
     paddingHorizontal: 20,
   },
   avatarContainer: {
@@ -133,9 +123,6 @@ const styles = StyleSheet.create({
   column: {
     width: "100%",
     justifyContent: "space-between",
-  },
-  footer: {
-    height: height * 0.12,
   },
 });
 
