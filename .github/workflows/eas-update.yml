@@ -1,0 +1,49 @@
+name: EAS Update
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "21.7.3"
+
+      - name: Install dependencies
+        run: yarn
+
+      - name: Install EAS CLI
+        run: npm install -g eas-cli
+
+      - name: Authenticate with Expo
+        run: eas whoami || eas login --token ${{ secrets.EXPO_TOKEN }}
+
+      - name: Build JS bundle
+        run: expo export --output-dir dist
+
+      - name: EAS Update and Print JSON
+        id: eas_update
+        run: |
+          # Run the EAS Update command and save the JSON output
+          UPDATE_INFO=$(eas update --branch testing --message "GitHub Actions: Updated JS code" --json)
+
+          # Print the entire JSON
+          echo "EAS Update JSON Response:"
+          echo "$UPDATE_INFO"
+
+          # Extract specific details (if needed)
+          GROUP_ID=$(echo "$UPDATE_INFO" | jq -r '.group')
+          UPDATE_LINK=$(echo "$UPDATE_INFO" | jq -r '.manifestPermalink')
+
+          # Print extracted details
+          echo "Update Group ID: $GROUP_ID"
+          echo "Update Link: $UPDATE_LINK"
