@@ -16,15 +16,15 @@ Mafia is a mobile app designed to play the popular social game Mafia. In the gam
 ### Onboarding Process
 
 - **Creating a Nickname**  
-  ![Gif 1: Creating a Nickname](url-to-your-gif-1)
+  ![Gif 1: Creating a Nickname](readMeAssets/SimulatorScreenRecording-iPhone15Pro-2024-10-10at20.00.49-ezgif.com-video-to-gif-converter.gif)
 
 - **Navigating the Menu**  
-  ![Gif 2: Navigating the Menu](url-to-your-gif-2)
+  ![Gif 2: Navigating the Menu](readMeAssets/SimulatorScreenRecording-iPhone15Pro-2024-10-10at20.00.49-ezgif.com-video-to-gif-converter.gif)
 
 ### Gameplay Process
 
 - **Player Perspective**  
-  ![Gif 3: Player Avatar Selection](url-to-your-gif-3)
+  ![Gif 3: Player Avatar Selection](readMeAssets/SimulatorScreenRecording-iPhone15Pro-2024-10-10at20.00.49-ezgif.com-video-to-gif-converter.gif)
 
 - **Host Perspective**
   - Customizes the game settings (roles, number of Mafia members, etc.).
