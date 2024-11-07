@@ -87,7 +87,7 @@ const ChangeAvatarBottomSheet: React.FC<ChangeAvatarBottomSheetProps> = ({
                 character={item}
                 nickname={nickname}
                 role="mafia"
-                isPressable={true}
+                isPressable={false}
                 avatarSelect={true}
               />
             </View>

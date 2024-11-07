@@ -1,50 +1,38 @@
-# Welcome to your Expo app 👋
+# Mafia Game Mobile App
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+## What the App Does
 
-## Get started
+Mafia is a mobile app designed to play the popular social game Mafia. In the game, two teams, the Mafia and the Detectives, try to outwit and eliminate each other. The Mafia secretly attempts to eliminate the Detectives, while the Detectives work together to identify the Mafia members. The game continues until one group is eliminated. Players take on different roles, such as Mafia, Detective, or Medic, and must strategize and communicate to win.
 
-1. Install dependencies
+### Basic Game Rules:
 
-   ```bash
-   npm install
-   ```
+- **Mafia**: Eliminate all Detectives without being identified.
+- **Detectives**: Identify and eliminate all Mafia members.
+- **Medic**: Protect players from being eliminated at night.
+- **The Host**: Customizes the game settings, starts the game, and manages gameplay.
 
-2. Start the app
+## User Stories
 
-   ```bash
-    npx expo start
-   ```
+### Onboarding Process
 
-In the output, you'll find options to open the app in a
+- **Creating a Nickname**  
+  ![Gif 1: Creating a Nickname](url-to-your-gif-1)
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+- **Navigating the Menu**  
+  ![Gif 2: Navigating the Menu](url-to-your-gif-2)
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+### Gameplay Process
 
-## Get a fresh project
+- **Player Perspective**  
+  ![Gif 3: Player Avatar Selection](url-to-your-gif-3)
 
-When you're ready, run:
+- **Host Perspective**
+  - Customizes the game settings (roles, number of Mafia members, etc.).
+  - Can show roles after death.
+  - Starts the game.
+  - Manages the game by checking roles and eliminating players.
+  - Announces the winner when the game ends.
 
-```bash
-npm run reset-project
-```
+## Technologies Used
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+TBD
