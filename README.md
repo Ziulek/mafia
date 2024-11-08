@@ -26,66 +26,17 @@ Currently, the game features two additional roles:
 - **Detective**, who can check other players' roles during the night.
 - **Medic**, who can save another player from being assassinated during the night.
 
----
-
 # App Flow
 
-<div style="display: flex; flex-direction: row; justify-content: space-between; align-items: center;  margin-bottom: 40px;">
-  <div style="justify-content: flex-start;">
-    <h3 style="font-weight: bold; ">Onboarding and Main Menu</h3>
-    <p style="margin-right: 20px; margin-top: 30px; margin-left: 15px;">
-      Upon opening the app, you're greeted with a screen to create a <b>unique nickname</b>. 
-      <br><br>
-      Once your nickname is set, you're directed to the main menu, where you can choose to either <b>host</b> a game or <b>join</b> an existing one.
-      <br><br>
-      If you decide to join, you’ll be prompted to enter a <b>code</b> provided by the game host. After entering the code, you’ll join the game, ready to take on your role and start playing.
-    </p>
-  </div>
-  <img src="readMeAssets/SimulatorScreenRecording-iPhone15Pro-2024-10-10at20.00.49-ezgif.com-video-to-gif-converter.gif" alt="Gif 1: Creating a Nickname" width="300" style="margin-left: 60px;">
-</div>
+|                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Onboarding and Main Menu**<br><br>Upon opening the app, you're greeted with a screen to create a **unique nickname**. <br> Once your nickname is set, you're directed to the main menu, where you can choose to either **host** a game or **join** an existing one.<br> If you decide to join, you’ll be prompted to enter a **code** provided by the game host. After entering the code, you’ll join the game, ready to take on your role and start playing.                                                                                                                                                                                                 | ![Gif 1: Creating a Nickname](readMeAssets/SimulatorScreenRecording-iPhone15Pro-2024-10-10at20.00.49-ezgif.com-video-to-gif-converter.gif)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+|                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| ![Gif 1: Host Perspective](readMeAssets/SimulatorScreenRecording-iPhone15Pro-2024-10-10at20.00.49-ezgif.com-video-to-gif-converter.gif)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         | **Host Perspective**<br><br>As the host, once you create a game, you’ll receive a <b>unique game code</b> to share with other players so they can join your room. <br><br>Before starting the game, you can adjust various <b>settings</b> to customize the experience. Options include: <br>- Selecting <b>additional roles</b> (such as Medic and Detective). <br>- Setting the <b>number of Mafia</b> members. <br>- Enabling or disabling the <b>“Show Roles After Death”</b> feature. <br><br>In the lobby, you’ll see the avatars of players who have joined. Once everyone is ready, you can start the game. <br><br>During the game, you have full control as the host. You can see an <b>overview of all the roles, as well as each individual player's role</b>, and manage the game by <b>assigning kills</b> based on votes or assassinations. <br><br>Once the game concludes, the <b>winning team will be announced</b>, letting everyone know who outwitted whom. |
+|                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| **Player Side**<br><br>After joining a game, you’ll enter the game lobby. Here, you can <b>customize your avatar</b> to give yourself a unique look. Then, you’ll wait for the host to start the game. <br><br>When the game begins, you’ll be shown your role and objective, which may be as a Mafia member, Policeman, or a Detective, and Medic if the additional roles are enabled. Your role will guide your actions as the game progresses. <br><br>Throughout the game, you can keep track of the events and see which players are eliminated in each round. At the end, the winning team will be announced, and you'll see whether your team succeeded. | ![Gif 1: Player Side](readMeAssets/SimulatorScreenRecording-iPhone15Pro-2024-10-10at20.00.49-ezgif.com-video-to-gif-converter.gif)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
 
 ---
-
-<div style="display: flex; flex-direction: row; justify-content: space-between; align-items: center; margin-top: 40px; margin-bottom: 40px;">
-  <img src="readMeAssets/SimulatorScreenRecording-iPhone15Pro-2024-10-10at20.00.49-ezgif.com-video-to-gif-converter.gif" alt="Gif 1: Creating a Nickname" width="300" style="margin-right: 60px;">
-  
-  <div style="justify-content: flex-end; text-align: left;">
-    <h3 style="font-weight: bold;">Host Perspective</h3>
-    <p style="margin-right: 20px; margin-top: 30px; margin-left: 15px;">
-      As the host, once you create a game, you’ll receive a <b>unique game code</b> to share with other players so they can join your room.
-      <br><br>
-      Before starting the game, you can adjust various <b>settings</b> to customize the experience. Options include:
-      <br>
-      - Selecting <b>additional roles</b> (such as Medic and Detective).
-      <br>
-      - Setting the <b>number of Mafia</b> members.
-      <br>
-      - Enabling or disabling the <b>“Show Roles After Death”</b> feature.
-      <br><br>
-      In the lobby, you’ll see the avatars of players who have joined. Once everyone is ready, you can start the game.
-      <br><br>
-      During the game, you have full control as the host. You can see an <b>overview of all the roles, as well as each individual player's role</b>, and manage the game by <b>assigning kills</b> based on votes or assassinations.
-      <br><br>
-      Once the game concludes, the <b>winning team will be announced</b>, letting everyone know who outwitted whom.
-    </p>
-  </div>
-</div>
-
----
-
-<div style="display: flex; flex-direction: row; justify-content: space-between; align-items: center; margin-top: 40px; margin-bottom: 40px;">
-  <div style="justify-content: flex-start;">
-    <h3 style="font-weight: bold;">Player Side</h3>
-    <p style="margin-right: 20px; margin-top: 30px; margin-left: 15px; text-align: left;">
-      After joining a game, you’ll enter the game lobby. Here, you can <b>customize your avatar</b> to give yourself a unique look. Then, you’ll wait for the host to start the game.
-      <br><br>
-      When the game begins, you’ll be shown your role and objective, which may be as a Mafia member, Policeman, or a Detective, and Medic if the additional roles are enabled. Your role will guide your actions as the game progresses.
-      <br><br>
-      Throughout the game, you can keep track of the events and see which players are eliminated in each round. At the end, the winning team will be announced, and you'll see whether your team succeeded.
-    </p>
-  </div>
-  <img src="readMeAssets/SimulatorScreenRecording-iPhone15Pro-2024-10-10at20.00.49-ezgif.com-video-to-gif-converter.gif" alt="Gif 1: Creating a Nickname" width="300" style="margin-left: 60px;">
-</div>
 
 # Technologies Used
 
