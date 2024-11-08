@@ -34,5 +34,3 @@ export default (): ReactElement => {
     />
   );
 };
-
-//456789ABCDEFG
