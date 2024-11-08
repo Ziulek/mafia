@@ -22,7 +22,7 @@ i18n
     compatibilityJSON: "v3", // for older JSON compatibility if needed
     resources,
     lng: getInitialLanguage(), // default language
-    fallbackLng: "pl", // fallback language if translation is missing
+    fallbackLng: "en", // fallback language if translation is missing
     interpolation: {
       escapeValue: false, // react already safes from xss
     },
