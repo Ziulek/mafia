@@ -1,0 +1,9 @@
+appId: com.mafia
+---
+- clearState
+- launchApp
+- tapOn: "http://localhost:8081"
+- assertVisible: "Continue"
+- tapOn: "Continue"
+- tapOn:
+    point: "50%,25%"

@@ -12,6 +12,7 @@ interface StartScreenProps {
   image: "mafia" | "police" | "error";
   text: string;
   sideButton?: "arrowLeft" | "account";
+  testID?: string;
   children: ReactNode;
 }
 
@@ -19,6 +20,7 @@ const StartScreen: React.FC<StartScreenProps> = ({
   image,
   text,
   sideButton,
+  testID,
   children,
 }) => {
   const { t } = useTranslation();
@@ -39,6 +41,7 @@ const StartScreen: React.FC<StartScreenProps> = ({
             paddingBottom: insets.bottom,
           },
         ]}
+        testID={testID}
       >
         {sideButton && (
           <SideButton

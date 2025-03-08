@@ -1,0 +1,8 @@
+appId: com.mafia
+---
+- tapOn:
+    id: "onboarding-nickname-input"
+- inputText: "nickname"
+- hideKeyboard
+- tapOn:
+    id: "onboarding-next-button"

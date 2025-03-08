@@ -32,6 +32,7 @@ const OnBoardingScreen: React.FC<OnBoardingScreenProps> = ({
         text={nickname}
         setText={setNickname}
         isInputValid={isNicknameValid}
+        testID="onboarding-nickname-input"
       />
 
       <Button
@@ -39,6 +40,7 @@ const OnBoardingScreen: React.FC<OnBoardingScreenProps> = ({
         isDisabled={!isNicknameValid || nickname.length < 1}
         onPress={onPress}
         isBold={true}
+        testID="onboarding-next-button"
       >
         {t("onBoardingScreen/nextButton")}
       </Button>

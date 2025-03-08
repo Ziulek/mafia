@@ -20,10 +20,20 @@ const JoinOrHostScreen: React.FC<JoinOrHostScreenProps> = ({
       text={t("joinOrHostScreen/subtitle")}
       sideButton="account"
     >
-      <Button color="accent" isBold={true} onPress={onJoinPress}>
+      <Button
+        color="accent"
+        isBold={true}
+        onPress={onJoinPress}
+        testID="join-or-host-screen-join-game-button"
+      >
         {t("joinOrHostScreen/joinGame")}
       </Button>
-      <Button color="accent" isBold={true} onPress={onHostPress}>
+      <Button
+        color="accent"
+        isBold={true}
+        onPress={onHostPress}
+        testID="join-or-host-screen-host-game-button"
+      >
         {t("joinOrHostScreen/hostGame")}
       </Button>
     </StartScreen>

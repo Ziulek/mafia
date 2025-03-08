@@ -13,6 +13,7 @@ interface TextProps {
   color?: "white" | "black" | "grey";
   children: string | number;
   isTextAlignCenter?: boolean;
+  testID?: string;
 }
 
 const Text = ({
@@ -20,6 +21,7 @@ const Text = ({
   isBold = false,
   color = "black",
   isTextAlignCenter = false,
+  testID,
   children,
 }: TextProps) => {
   const textSize = getTextSize(size);
@@ -36,7 +38,11 @@ const Text = ({
     },
   });
 
-  return <TextComponent style={styles.text}>{children}</TextComponent>;
+  return (
+    <TextComponent style={styles.text} testID={testID}>
+      {children}
+    </TextComponent>
+  );
 };
 
 const getTextSize = (size: string) => {

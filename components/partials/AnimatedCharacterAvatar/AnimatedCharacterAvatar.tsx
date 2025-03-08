@@ -175,6 +175,7 @@ export const AnimatedCharacterAvatar = ({
         }
       }}
       // disabled={!isPressable}
+      testID={`avatar-${character}`}
     >
       <View>
         {/* default */}

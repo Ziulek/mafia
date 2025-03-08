@@ -1,0 +1,5 @@
+appId: com.mafia
+---
+- longPressOn:
+    id: "${INPUT_ID}"
+- tapOn: "Select All"

@@ -11,6 +11,7 @@ type TextEditListItemProps = {
   setText: (newText: string) => void;
   onFocus?: () => void; // Add this prop
   onBlur?: () => void; // Add this prop
+  testID?: string;
 };
 
 export function TextEditListItem({
@@ -21,6 +22,7 @@ export function TextEditListItem({
   setText,
   onFocus = () => {},
   onBlur = () => {},
+  testID,
 }: TextEditListItemProps) {
   const handleTextChange = (newText: string) => {
     setText(newText);
@@ -44,6 +46,7 @@ export function TextEditListItem({
         focusStyle={{
           borderColor: isInputValid ? "grey" : colors.invalidInputBorder,
         }}
+        testID={testID}
       />
     </View>
   );

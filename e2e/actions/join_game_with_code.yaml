@@ -1,0 +1,15 @@
+appId: com.mafia
+---
+- tapOn:
+    id: "join-game-code-input"
+
+- runFlow:
+    when:
+      true: ${ERASE}
+      platform: iOS
+    file: select_all_ios.yaml
+    env:
+      INPUT_ID: "join-game-code-input"
+- eraseText
+- inputText: "${CODE}"
+- hideKeyboard

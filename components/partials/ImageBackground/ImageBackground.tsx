@@ -6,10 +6,14 @@ import {
 } from "react-native";
 
 interface CustomBackgroundProps {
+  testID?: string;
   children: ReactNode;
 }
 
-const ImageBackground: React.FC<CustomBackgroundProps> = ({ children }) => {
+const ImageBackground: React.FC<CustomBackgroundProps> = ({
+  testID,
+  children,
+}) => {
   const styles = StyleSheet.create({
     background: {
       flex: 1,
@@ -28,6 +32,7 @@ const ImageBackground: React.FC<CustomBackgroundProps> = ({ children }) => {
       source={require("@/assets/images/Backgrounds/GameScreenBackground.png")}
       style={styles.background}
       resizeMode="cover"
+      testID={testID}
     >
       <View style={styles.overlay} />
       <View style={styles.content}>{children}</View>

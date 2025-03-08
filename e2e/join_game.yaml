@@ -1,0 +1,77 @@
+appId: com.mafia
+env:
+  TOO_SHORT_CODE: "123"
+  TOO_LONG_CODE: "1234567890"
+  INVALID_CHARACTER_CODE: "123!8&"
+  NON_EXISTING_GAME_CODE: "123456"
+---
+# setup
+- runFlow:
+    file: actions/handle_clear_state.yaml
+- runFlow:
+    file: actions/handle_onboarding.yaml
+- tapOn:
+    id: "join-or-host-screen-join-game-button"
+- assertVisible:
+    id: "join-game-screen"
+# too short game code
+- runFlow:
+    file: actions/join_game_with_code.yaml
+    env:
+      CODE: ${TOO_SHORT_CODE}
+      ERASE: false
+- assertVisible:
+    text: "Game Code is too short. It should be 6 characters long."
+# too long game code
+- runFlow:
+    file: actions/join_game_with_code.yaml
+    env:
+      CODE: ${TOO_LONG_CODE}
+      ERASE: true
+- assertVisible:
+    text: "Game Code is too long. It should be no more than 6 characters long."
+# invalid characters game code
+- runFlow:
+    file: actions/join_game_with_code.yaml
+    env:
+      CODE: ${INVALID_CHARACTER_CODE}
+      ERASE: true
+- assertVisible:
+    text: "Game Code can only contain letters and numbers."
+# non existing game code
+- runFlow:
+    file: actions/join_game_with_code.yaml
+    env:
+      CODE: ${NON_EXISTING_GAME_CODE}
+      ERASE: true
+- assertVisible:
+    text: "Game Code is correct."
+- tapOn:
+    id: "join-screen-join-game-button"
+- assertVisible:
+    text: "Game does not exist"
+# valid game code
+- runScript: scripts/generateGame.js
+- tapOn:
+    id: "join-game-code-input"
+- runFlow:
+    when:
+      true: ${ERASE}
+      platform: iOS
+    file: actions/select_all_ios.yaml
+    env:
+      INPUT_ID: "join-game-code-input"
+- eraseText
+- inputText: "${output.gameCodeChar1}"
+- inputText: "${output.gameCodeChar2}"
+- inputText: "${output.gameCodeChar3}"
+- inputText: "${output.gameCodeChar4}"
+- inputText: "${output.gameCodeChar5}"
+- inputText: "${output.gameCodeChar6}"
+- hideKeyboard
+- assertVisible:
+    text: "Game Code is correct."
+- tapOn:
+    id: "join-screen-join-game-button"
+- assertVisible:
+    text: "Waiting for players"

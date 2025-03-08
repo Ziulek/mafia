@@ -13,6 +13,7 @@ export type ButtonProps = {
   onPressOut?: () => void;
   onPressIn?: () => void;
   onPress?: () => void;
+  testID?: string;
 };
 
 export const Button = ({
@@ -24,6 +25,7 @@ export const Button = ({
   onPressOut = () => {},
   onPressIn = () => {},
   onPress = () => {},
+  testID,
   children,
 }: ButtonProps) => {
   let buttonColor: string;
@@ -77,6 +79,7 @@ export const Button = ({
       onPressIn={() => onPressIn()}
       delayPressOut={PressOutDelay}
       onPressOut={() => onPressOut()}
+      testID={testID}
     >
       <Text size="button" isBold={isBold} color={textColor}>
         {children}

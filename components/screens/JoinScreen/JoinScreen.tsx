@@ -29,6 +29,7 @@ const JoinScreen: React.FC<JoinScreenProps> = ({
       image="mafia"
       text={gameCodeMessage ? gameCodeMessage : t("joinScreen/enterGameCode")}
       sideButton="arrowLeft"
+      testID="join-game-screen"
     >
       <TextEditListItem
         placeholder={t("joinScreen/placeholder")}
@@ -36,6 +37,7 @@ const JoinScreen: React.FC<JoinScreenProps> = ({
         setText={setGameCode}
         isInputValid={isGameCodeValid}
         textToUpperCase={true}
+        testID="join-game-code-input"
       />
 
       <Button
@@ -43,6 +45,7 @@ const JoinScreen: React.FC<JoinScreenProps> = ({
         isBold={true}
         onPress={onPress}
         isDisabled={!isGameCodeValid || gameCode.length < GAME_CODE_LENGTH}
+        testID="join-screen-join-game-button"
       >
         {t("joinScreen/joinGameButton")}
       </Button>

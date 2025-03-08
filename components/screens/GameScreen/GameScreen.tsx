@@ -180,7 +180,7 @@ export const GameScreen: FC<GameScreenProps> = ({
           gameState?.stage === "game" ? "light-content" : "dark-content"
         }
       />
-      <ImageBackground>
+      <ImageBackground testID="game-screen">
         <Header
           mode={mode}
           gameStage={gameState?.stage}
@@ -230,8 +230,9 @@ export const GameScreen: FC<GameScreenProps> = ({
               {/* Host Side Start Game Button */}
               {gameState.stage === "waitingForPlayers" && mode === "host" && (
                 <Button
-                  color={
-                    players?.length >= numberOfMafia * 2 + 1 ? "accent" : "back"
+                  color="accent"
+                  isDisabled={
+                    players?.length >= numberOfMafia * 2 + 1 ? false : true
                   }
                   onPress={() =>
                     HandleStartGame(
