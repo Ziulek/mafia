@@ -170,7 +170,7 @@ const CharacterChip = () => {
   );
 
   const [frontImage, setFrontImage] = useState<SkImage | null>(null);
-  const fontSize = 60;
+  const fontSize = 120;
   const font = useFont(
     require("../../../assets/fonts/AmericanTypewriter.ttf"),
     fontSize
@@ -211,8 +211,13 @@ const CharacterChip = () => {
     );
     canvas.restore();
 
+    if (!font) {
+      console.error("Font is null");
+      return;
+    }
+
     // 3. Draw curved text along an arc.
-    const nickname = "NICKN".toUpperCase();
+    const nickname = "QIERTY".toUpperCase();
     // Set up text paint.
     const textPaint = Skia.Paint();
     textPaint.setColor(Skia.Color("white"));
@@ -220,16 +225,21 @@ const CharacterChip = () => {
 
     // Define arc parameters.
     // We'll draw the text along an arc outside the circular image.
-    const arcRadius = radius + 50;
+    const arcRadius = radius + 100;
     // Define the arc: bottom half of a circle.
     // Start at 180° (Math.PI radians) and sweep -180° (-Math.PI radians).
-    const startAngle = Math.PI; // 180°
-    const sweepAngle = -Math.PI; // -180°
+    // const startAngle = (Math.PI * 3) / 4; // 180°
+    const sweepAngle = -Math.PI * 0.35; // -180°
+
     const arcCenter = { x: center, y: center };
 
     const numChars = nickname.length;
+    const startAngle =
+      Math.PI / 2 - ((Math.floor(numChars / 2) + 0.5) / numChars) * sweepAngle;
     for (let i = 0; i < numChars; i++) {
       const letter = nickname[i];
+      let letterWidth = font.measureText(letter).width;
+
       // Compute an offset angle for each character so that they are evenly spaced.
       const angleOffset = ((i + 0.5) / numChars) * sweepAngle;
       const angle = startAngle + angleOffset;
@@ -241,22 +251,18 @@ const CharacterChip = () => {
       const angleInDegrees = angle * (180 / Math.PI);
       const rotation = angleInDegrees - 90;
 
+      // Create a text blob for the letter.
+      const blob = Skia.TextBlob.MakeFromText(letter, font);
+      // Measure the letter's width so we can center it horizontally.
+
       console.log({
         letter,
         angle,
         angleInDegrees,
         x,
         y,
+        letterWidth,
       });
-
-      if (!font) {
-        console.error("Font is null");
-        return;
-      }
-      // Create a text blob for the letter.
-      const blob = Skia.TextBlob.MakeFromText(letter, font);
-      // Measure the letter's width so we can center it horizontally.
-      const letterWidth = font.getTextWidth(letter);
 
       canvas.save();
       // Move to the letter's computed position.
