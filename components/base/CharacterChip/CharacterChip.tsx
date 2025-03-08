@@ -14,6 +14,7 @@ import {
   ClipOp,
   SkImage,
   useFont,
+  SkFont,
 } from "@shopify/react-native-skia";
 import { extrudePolygon } from "geometry-extrude";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
@@ -164,12 +165,110 @@ const plate = [
   ),
 ];
 
+interface ProcessImageOptions {
+  backgroundColor?: string; // Hex color string
+  isFlipped?: boolean;
+}
+
+const processImage = (
+  originalImage: SkImage,
+  font: SkFont | null,
+  nickname: string,
+  options: ProcessImageOptions = {}
+) => {
+  const { backgroundColor = "blue", isFlipped = false } = options;
+
+  const origSize = originalImage.width();
+  const newSize = origSize * 1.25;
+
+  const surface = Skia.Surface.Make(newSize, newSize);
+  if (!surface) {
+    console.error("Failed to create a Skia surface");
+    return null;
+  }
+  const canvas = surface.getCanvas();
+
+  // Apply background color from options
+  const backgroundPaint = Skia.Paint();
+  backgroundPaint.setColor(Skia.Color(backgroundColor));
+  canvas.drawRect(Skia.XYWHRect(0, 0, newSize, newSize), backgroundPaint);
+
+  // Apply horizontal flip if needed
+  if (isFlipped) {
+    canvas.translate(newSize / 2, newSize / 2);
+    canvas.scale(-1, 1);
+    canvas.translate(-newSize / 2, -newSize / 2);
+  }
+
+  // 2. Draw the circular cut-out of the original image.
+  const clipPath = Skia.Path.Make();
+  const center = newSize / 2;
+  const radius = origSize / 2;
+  clipPath.addCircle(center, center, radius);
+  canvas.save();
+  canvas.clipPath(clipPath, ClipOp.Intersect, true);
+  canvas.drawImage(originalImage, center - origSize / 2, center - origSize / 2);
+  canvas.restore();
+
+  if (!font) {
+    console.error("Font is null");
+    return null;
+  }
+
+  // 3. Draw curved text along an arc.
+  const textPaint = Skia.Paint();
+  textPaint.setColor(Skia.Color("white"));
+  textPaint.setAntiAlias(true);
+
+  const arcRadius = radius + 100;
+  const fixedGapAngle = 0.07;
+
+  const numChars = nickname.length;
+  const angularWidths = nickname
+    .split("")
+    .map((letter) => font.measureText(letter).width / arcRadius);
+
+  const totalAngularSpan =
+    angularWidths.reduce((acc, w) => acc + w, 0) +
+    fixedGapAngle * (numChars - 1);
+
+  const centerAngle = Math.PI / 2;
+  let currentAngle = centerAngle + totalAngularSpan / 2;
+
+  nickname.split("").forEach((letter, i) => {
+    const letterAngWidth = angularWidths[i];
+    const letterCenterAngle = currentAngle - letterAngWidth / 2;
+    currentAngle = currentAngle - letterAngWidth - fixedGapAngle;
+
+    const x = center + arcRadius * Math.cos(letterCenterAngle);
+    const y = center + arcRadius * Math.sin(letterCenterAngle);
+    const rotation = (letterCenterAngle * 180) / Math.PI - 90;
+
+    const blob = Skia.TextBlob.MakeFromText(letter, font);
+    const letterWidth = font.measureText(letter).width;
+
+    canvas.save();
+    canvas.translate(x, y);
+    canvas.rotate(rotation, 0, 0);
+    canvas.drawTextBlob(blob, -letterWidth / 2, 0, textPaint);
+    canvas.restore();
+  });
+
+  return surface.makeImageSnapshot();
+};
+
 const CharacterChip = () => {
   const originalFrontImage = useImage(
     require("../../../assets/images/Male1/male1_dead.png")
   );
 
+  const originalBackImage = useImage(
+    require("../../../assets/images/Male1/male1_police.png")
+  );
+
   const [frontImage, setFrontImage] = useState<SkImage | null>(null);
+  const [backImage, setBackImage] = useState<SkImage | null>(null);
+
   const fontSize = 120;
   const font = useFont(
     require("../../../assets/fonts/AmericanTypewriter.ttf"),
@@ -177,107 +276,33 @@ const CharacterChip = () => {
   );
 
   useEffect(() => {
-    if (!originalFrontImage) return;
+    if (!originalFrontImage || !originalBackImage || !font) return;
 
-    // Assume the original image is square.
-    const origSize = originalFrontImage.width();
-    // New size is 25% larger.
-    const newSize = origSize * 1.25;
-
-    // Create an offscreen Skia surface.
-    const surface = Skia.Surface.Make(newSize, newSize);
-    if (!surface) {
-      console.error("Failed to create a Skia surface");
-      return;
-    }
-    const canvas = surface.getCanvas();
-
-    // 1. Fill the canvas with blue.
-    const bluePaint = Skia.Paint();
-    bluePaint.setColor(Skia.Color("blue"));
-    canvas.drawRect(Skia.XYWHRect(0, 0, newSize, newSize), bluePaint);
-
-    // 2. Draw the circular cut-out of the original image.
-    const clipPath = Skia.Path.Make();
-    const center = newSize / 2;
-    const radius = origSize / 2;
-    clipPath.addCircle(center, center, radius);
-    canvas.save();
-    canvas.clipPath(clipPath, ClipOp.Intersect, true);
-    canvas.drawImage(
+    const processedFrontImage = processImage(
       originalFrontImage,
-      center - origSize / 2,
-      center - origSize / 2
+      font,
+      "NICKNAME",
+      {
+        backgroundColor: "#0000FF",
+        isFlipped: false,
+      }
     );
-    canvas.restore();
-
-    if (!font) {
-      console.error("Font is null");
-      return;
+    if (processedFrontImage) {
+      setFrontImage(processedFrontImage);
     }
-
-    // 3. Draw curved text along an arc.
-    const nickname = "QIERTY".toUpperCase();
-    // Set up text paint.
-    const textPaint = Skia.Paint();
-    textPaint.setColor(Skia.Color("white"));
-    textPaint.setAntiAlias(true);
-
-    // Define arc parameters.
-    // We'll draw the text along an arc outside the circular image.
-    const arcRadius = radius + 100;
-    // Define the arc: bottom half of a circle.
-    // Start at 180° (Math.PI radians) and sweep -180° (-Math.PI radians).
-    // const startAngle = (Math.PI * 3) / 4; // 180°
-    const sweepAngle = -Math.PI * 0.35; // -180°
-
-    const arcCenter = { x: center, y: center };
-
-    const numChars = nickname.length;
-    const startAngle =
-      Math.PI / 2 - ((Math.floor(numChars / 2) + 0.5) / numChars) * sweepAngle;
-    for (let i = 0; i < numChars; i++) {
-      const letter = nickname[i];
-      let letterWidth = font.measureText(letter).width;
-
-      // Compute an offset angle for each character so that they are evenly spaced.
-      const angleOffset = ((i + 0.5) / numChars) * sweepAngle;
-      const angle = startAngle + angleOffset;
-      // Compute position along the arc.
-      const x = arcCenter.x + arcRadius * Math.cos(angle);
-      const y = arcCenter.y + arcRadius * Math.sin(angle);
-      // To have the letter parallel to the radius (line from letter to center),
-      // use the radial angle (angle) as the rotation.
-      const angleInDegrees = angle * (180 / Math.PI);
-      const rotation = angleInDegrees - 90;
-
-      // Create a text blob for the letter.
-      const blob = Skia.TextBlob.MakeFromText(letter, font);
-      // Measure the letter's width so we can center it horizontally.
-
-      console.log({
-        letter,
-        angle,
-        angleInDegrees,
-        x,
-        y,
-        letterWidth,
-      });
-
-      canvas.save();
-      // Move to the letter's computed position.
-      canvas.translate(x, y);
-      // Rotate the canvas so the letter's baseline is parallel to the radial line.
-      canvas.rotate(rotation, 0, 0);
-      // Draw the letter centered horizontally.
-      canvas.drawTextBlob(blob, -letterWidth / 2, 0, textPaint);
-      canvas.restore();
+    const processedBackImage = processImage(
+      originalBackImage,
+      font,
+      "NICKNAME",
+      {
+        backgroundColor: "#ff0000",
+        isFlipped: true,
+      }
+    );
+    if (processedBackImage) {
+      setBackImage(processedBackImage);
     }
-
-    // 4. Snapshot the surface.
-    const snapshot = surface.makeImageSnapshot();
-    setFrontImage(snapshot);
-  }, [originalFrontImage]);
+  }, [originalFrontImage, originalBackImage, font]);
 
   const rotateX = useSharedValue(0);
   const rotateY = useSharedValue(0);
@@ -381,10 +406,6 @@ const CharacterChip = () => {
   const edgeTextures = useDerivedValue(() => {
     return model.value.edge.flatMap((point) => point.uv);
   });
-
-  const backImage = useImage(
-    require("../../../assets/images/Male1/male1_police.png")
-  );
 
   const edgeImage = useImage(
     require("../../../assets/images/Male1/male1_detective.png")
