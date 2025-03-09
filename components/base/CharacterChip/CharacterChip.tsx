@@ -167,6 +167,7 @@ const plate = [
 
 interface ProcessImageOptions {
   backgroundColor?: string; // Hex color string
+  textColor?: string; // Hex color string
   isFlipped?: boolean;
 }
 
@@ -176,7 +177,11 @@ const processImage = (
   nickname: string,
   options: ProcessImageOptions = {}
 ) => {
-  const { backgroundColor = "blue", isFlipped = false } = options;
+  const {
+    backgroundColor = "blue",
+    textColor = "white",
+    isFlipped = false,
+  } = options;
 
   const origSize = originalImage.width();
   const newSize = origSize * 1.25;
@@ -217,7 +222,7 @@ const processImage = (
 
   // 3. Draw curved text along an arc.
   const textPaint = Skia.Paint();
-  textPaint.setColor(Skia.Color("white"));
+  textPaint.setColor(Skia.Color(textColor));
   textPaint.setAntiAlias(true);
 
   const arcRadius = radius + 100;
@@ -259,11 +264,11 @@ const processImage = (
 
 const CharacterChip = () => {
   const originalFrontImage = useImage(
-    require("../../../assets/images/Male1/male1_dead.png")
+    require("../../../assets/images/Male1/male1_police.png")
   );
 
   const originalBackImage = useImage(
-    require("../../../assets/images/Male1/male1_police.png")
+    require("../../../assets/images/Male1/male1_mafia.png")
   );
 
   const [frontImage, setFrontImage] = useState<SkImage | null>(null);
@@ -283,7 +288,8 @@ const CharacterChip = () => {
       font,
       "NICKNAME",
       {
-        backgroundColor: "#0000FF",
+        backgroundColor: "#e6e6e6",
+        textColor: "#000000",
         isFlipped: false,
       }
     );
@@ -295,7 +301,8 @@ const CharacterChip = () => {
       font,
       "NICKNAME",
       {
-        backgroundColor: "#ff0000",
+        backgroundColor: "#a40808",
+        textColor: "#fff",
         isFlipped: true,
       }
     );
@@ -408,7 +415,8 @@ const CharacterChip = () => {
   });
 
   const edgeImage = useImage(
-    require("../../../assets/images/Male1/male1_detective.png")
+    require("../../../assets/images/textures/coin_edge.png")
+    // require("../../../assets/images/Male1/male1_detective.png")
   );
 
   const visibleImage = useDerivedValue(() => {
@@ -440,14 +448,7 @@ const CharacterChip = () => {
 
         {/** Edge */}
         <Vertices vertices={edgeVertices} textures={edgeTextures}>
-          <ImageShader
-            image={edgeImage}
-            fit="contain"
-            x={0}
-            y={0}
-            width={width}
-            height={height}
-          />
+          <ImageShader image={edgeImage} />
         </Vertices>
 
         {/** Coin visible Side */}
